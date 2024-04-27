@@ -88,6 +88,9 @@ public class Board {
      */
     public void generateNewHints(char colorToPlay, int row, int col) {
         //TODO: implement this method
+        //hello
+
+
     }
 
     /**
