@@ -86,10 +86,110 @@ public class Board {
      * @param row         The row index of the inserted position (0-based) (range: [0, 7]).
      * @param col         The column index of the inserted position (0-based) (range: [0, 7]).
      */
-    public void generateNewHints(char colorToPlay, int row, int col) {
-        //TODO: implement this method
+    public void generateNewHints(char colorToPlay) {
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++) {
+                if (board[row*8 + col] == 'E') {
+                    if (isValid(row, col, colorToPlay))
+                        board[row * 8 + col] = 'H';
+                }
+            }
+        }
     }
 
+    /**
+     * Checks if the given row and column indices are out of bounds of an 8x8 board.
+     * @param r The row index.
+     * @param c The column index.
+     * @return true if the indices are out of bounds, false otherwise.
+     */
+    private boolean outOfBounds(int r, int c){
+        if(r < 0 || r >= 8 || c < 0 || c >= 8)
+            return true;
+        return false;
+    }
+
+    /**
+     * Checks if a move in a specified direction (dx, dy) from a given position (r, c)
+     * can be translated into the current player's color.
+     * @param r The starting row index.
+     * @param c The starting column index.
+     * @param dx The change in row index for each step.
+     * @param dy The change in column index for each step.
+     * @param colorToPlay The color of the current player.
+     * @return true if the move can be translated into the current player's color, false otherwise.
+     * @throws ArrayIndexOutOfBoundsException if the move results in an out-of-bounds access.
+     */
+    private boolean translate(int r, int c, int dx, int dy, char colorToPlay) throws ArrayIndexOutOfBoundsException{
+        try {
+            while (!outOfBounds(r, c)) {
+                r += dx;
+                c += dy;
+                if (board[r * 8 + c] == 'E' || board[r * 8 + c] == 'H')
+                    return false;
+                else if (board[r * 8 + c] == colorToPlay)
+                    return true;
+            }
+            return false;
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a move at the specified row and column indices is valid for the current player.
+     * @param row The row index.
+     * @param col The column index.
+     * @param colorToPlay The color of the current player.
+     * @return true if the move is valid for the current player, false otherwise.
+     */
+    private boolean isValid(int row, int col, char colorToPlay){
+        char opponentToPlay = (colorToPlay == 'W') ? 'B' : 'W';
+        boolean result;
+        if(!outOfBounds((row-1),(col-1)) && (board[(row-1)*8 + (col-1)] == opponentToPlay)){
+            result = translate(row,col,-1,-1,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row-1),(col)) && (board[(row-1)*8 + (col)] == opponentToPlay)){
+            result =  translate(row,col,-1,0,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row-1),(col+1)) && (board[(row-1)*8 + (col+1)] == opponentToPlay)){
+            result =  translate(row,col,-1,1,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row),(col-1)) && (board[(row)*8 + (col-1)] == opponentToPlay)){
+            result = translate(row,col,0,-1,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row),(col+1)) && (board[(row)*8 + (col+1)] == opponentToPlay)){
+            result = translate(row,col,0,1,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row+1),(col-1)) && (board[(row+1)*8 + (col-1)] == opponentToPlay)){
+            result = translate(row,col,1,-1,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row+1),(col)) && (board[(row+1)*8 + (col)] == opponentToPlay)){
+            result = translate(row,col,1,0,colorToPlay);
+            if(result)
+                return result;
+        }
+        if(!outOfBounds((row+1),(col+1)) && (board[(row+1)*8 + (col+1)] == opponentToPlay)){
+            result = translate(row,col,1,1,colorToPlay);
+            if(result)
+                return result;
+        }
+        return false;
+    }
+    
     /**
      * Checks if the Othello game has ended.
      * <p>
