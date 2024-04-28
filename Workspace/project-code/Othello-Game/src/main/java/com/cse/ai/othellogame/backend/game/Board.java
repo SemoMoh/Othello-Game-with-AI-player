@@ -37,6 +37,7 @@ public class Board {
     /**
      * Constructs a new game board with default dimensions and initializes its black and white disks,
      * also it shows the hint values for the first move of the game for the black.
+     * areThereAnyHints's value is set false. 
      */
     public Board() {
         board = new char[64];
@@ -82,7 +83,7 @@ public class Board {
     }
 
     /**
-     * Generates new hints for the next move by analyzing the current state of the board and the newly inserted position.
+     * Generates new hints(if there) for the next move by analyzing the current state of the board, and sets the flag true.
      * used in the {@link #updateBoard(char, int, int)} method.
      *
      * @param colorToPlay the next players color ('B' or 'W')
