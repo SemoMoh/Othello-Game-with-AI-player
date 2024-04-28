@@ -32,6 +32,8 @@ import java.util.stream.IntStream;
 public class Board {
     private char[] board;
 
+    private boolean areThereAnyHints;
+
     /**
      * Constructs a new game board with default dimensions and initializes its black and white disks,
      * also it shows the hint values for the first move of the game for the black.
@@ -50,6 +52,7 @@ public class Board {
         setPos('H', 3, 2);
         setPos('H', 4, 5);
         setPos('H', 5, 4);
+        this.areThereAnyHints = false;
     }
 
     /**
@@ -88,8 +91,10 @@ public class Board {
         for(int row = 0; row < 8; row++){
             for(int col = 0; col < 8; col++) {
                 if (board[row*8 + col] == 'E') {
-                    if (isValid(row, col, colorToPlay))
+                    if (isValid(row, col, colorToPlay)) {
                         board[row * 8 + col] = 'H';
+                        setAreThereAnyHints(true);
+                    }
                 }
             }
         }
@@ -186,6 +191,43 @@ public class Board {
                 return result;
         }
         return false;
+    }
+
+    /**
+     * This method removes all the hints for the previous player, and it must be called before
+     * changing the turn.
+     *
+     * @return void
+     */
+    public void removeAllHints(){
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++) {
+                if (board[row*8 + col] == 'H') {
+                    board[row * 8 + col] = 'E';
+                }
+            }
+        }
+        setAreThereAnyHints(false);
+    }
+
+    /**
+     * This method returns the current value of the flag
+     * areThereAnyHints.
+     *
+     * @return the current value of the flag, whether true or false
+     */
+    public boolean isAreThereAnyHints() {
+        return areThereAnyHints;
+    }
+
+    /**
+     * This method changes the current value of the flag to the desired value.
+     *
+     * @param  areThereAnyHints the desired value for the flag
+     * @return  void
+     */
+    public void setAreThereAnyHints(boolean areThereAnyHints) {
+        this.areThereAnyHints = areThereAnyHints;
     }
     
     /**
