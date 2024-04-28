@@ -83,8 +83,6 @@ public class Board {
      * used in the {@link #updateBoard(char, int, int)} method.
      *
      * @param colorToPlay the next players color ('B' or 'W')
-     * @param row         The row index of the inserted position (0-based) (range: [0, 7]).
-     * @param col         The column index of the inserted position (0-based) (range: [0, 7]).
      */
     public void generateNewHints(char colorToPlay) {
         for(int row = 0; row < 8; row++){
