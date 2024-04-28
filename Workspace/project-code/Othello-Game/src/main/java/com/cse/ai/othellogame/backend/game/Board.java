@@ -85,6 +85,11 @@ public class Board {
      * @param colorToPlay the next players color ('B' or 'W')
      */
     //mohamed ayman shared here ya regalla
+    private void shared(){
+
+        String myname="mohamed ayman";
+
+    }
     public void generateNewHints(char colorToPlay) {
         for(int row = 0; row < 8; row++){
             for(int col = 0; col < 8; col++) {
