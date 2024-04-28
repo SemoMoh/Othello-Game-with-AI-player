@@ -84,6 +84,7 @@ public class Board {
      *
      * @param colorToPlay the next players color ('B' or 'W')
      */
+    //mohamed ayman shared here ya regalla
     public void generateNewHints(char colorToPlay) {
         for(int row = 0; row < 8; row++){
             for(int col = 0; col < 8; col++) {
@@ -142,6 +143,7 @@ public class Board {
      * @param colorToPlay The color of the current player.
      * @return true if the move is valid for the current player, false otherwise.
      */
+
     private boolean isValid(int row, int col, char colorToPlay){
         char opponentToPlay = (colorToPlay == 'W') ? 'B' : 'W';
         boolean result;
