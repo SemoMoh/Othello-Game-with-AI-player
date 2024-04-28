@@ -84,7 +84,7 @@ public class Board {
      *
      * @param colorToPlay the next players color ('B' or 'W')
      */
-    //mohamed ayman shared here ya regalla
+    //mohamed ayman shared here ya regallA
     private void shared(){
 
         String myname="mohamed ayman";
