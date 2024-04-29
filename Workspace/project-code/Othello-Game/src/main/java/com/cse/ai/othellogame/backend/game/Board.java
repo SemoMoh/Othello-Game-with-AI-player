@@ -11,10 +11,10 @@ import java.util.stream.IntStream;
  * <p>
  * The board consists of 64 cells arranged in 8x8 grid. Each cell can contain one of the following values:
  * <ul>
- *     <li>'W' for white disc</li>
- *     <li>'B' for black disc</li>
- *     <li>'H' for hints where to play</li>
- *     <li>'E' for empty cell</li>
+ *     <li>DISK.WHITE for white disc</li>
+ *     <li>DISK.BLACK for black disc</li>
+ *     <li>DISK.HINT for hints where to play</li>
+ *     <li>DISK.EMPTY for empty cell</li>
  * </ul>
  * <p>
  * The initial configuration of the board is as follows:
@@ -30,7 +30,7 @@ import java.util.stream.IntStream;
  * <a href="https://othelloacademy.weebly.com/rules.html">Othello Rules</a>
  */
 public class Board {
-    private char[] board;
+    private DISK[] board;
 
     private boolean areThereAnyHints;
 
@@ -40,19 +40,19 @@ public class Board {
      * areThereAnyHints's value is set false. 
      */
     public Board() {
-        board = new char[64];
-        // Init all with empty --> 'E'
-        IntStream.range(0, board.length).forEach(i -> board[i] = 'E');
-        // put the starting position of black and white --> 'B' and 'W'
-        setPos('W', 3, 3);
-        setPos('B', 3, 4);
-        setPos('B', 4, 3);
-        setPos('W', 4, 4);
-        // put the initial hints for the black --> 'H'
-        setPos('H', 2, 3);
-        setPos('H', 3, 2);
-        setPos('H', 4, 5);
-        setPos('H', 5, 4);
+        board = new DISK[64];
+        // Init all with empty --> DISK.EMPTY
+        IntStream.range(0, board.length).forEach(i -> board[i] = DISK.EMPTY);
+        // put the starting position of black and white --> DISK.BLACK and DISK.WHITE
+        setPos(DISK.WHITE, 3, 3);
+        setPos(DISK.BLACK, 3, 4);
+        setPos(DISK.BLACK, 4, 3);
+        setPos(DISK.WHITE, 4, 4);
+        // put the initial hints for the black --> DISK.HINT
+        setPos(DISK.HINT, 2, 3);
+        setPos(DISK.HINT, 3, 2);
+        setPos(DISK.HINT, 4, 5);
+        setPos(DISK.HINT, 5, 4);
         this.areThereAnyHints = false;
     }
 
@@ -63,30 +63,30 @@ public class Board {
      * <ol>
      *   <li>Check if the position is valid:
      *     <ul>
-     *       <li>Ensure the position corresponds to one of the 'H' positions.</li>
+     *       <li>Ensure the position corresponds to one of the DISK.HINT positions.</li>
      *       <li>Ensure the position is within the range of the board.</li>
      *     </ul>
      *   </li>
-     *   <li>Delete all old 'H' characters from the board.</li>
+     *   <li>Delete all old DISK.HINT characters from the board.</li>
      *   <li>Place the new disk at its position, representing the player's move.</li>
      *   <li>Update the other disks on the board according to the insertion position and its color.</li>
      *   <li>Generate new hints for the next move by the opposing player.</li>
      * </ol>
      * </p>
      *
-     * @param color The player who played this turn ('B' or 'W').
+     * @param color The player who played this turn (DISK.BLACK or DISK.WHITE).
      * @param row   The row index of the inserted position (0-based) (range: [0, 7]).
      * @param col   The column index of the inserted position (0-based) (range: [0, 7]).
      */
-    public void updateBoard(char color, int row, int col) {
+    public void updateBoard(DISK color, int row, int col) {
         //TODO: implement this method
         // valid position check
-        if(outOfBounds(row, col) || board[row * 8 + col]!= 'H')
+        if(outOfBounds(row, col) || board[row * 8 + col]!= DISK.HINT)
             return;
-        // delete all old 'H' characters from the board
+        // delete all old DISK.HINT characters from the board
         for(int i = 0; i < board.length; i++){
-            if(board[i] == 'H')
-                board[i] = 'E';
+            if(board[i] == DISK.HINT)
+                board[i] = DISK.EMPTY;
         }
         // place the new disk at its position, representing the player's move
         setPos(color, row, col);
@@ -95,7 +95,7 @@ public class Board {
         // ***Left of insertion
         int colOfLeftNeighbourBlackSquare = -1;
         for(int i=row*8; i< col; i++){
-            if(board[i] == 'B') { colOfLeftNeighbourBlackSquare = i;}
+            if(board[i] == DISK.BLACK) { colOfLeftNeighbourBlackSquare = i;}
         }
         // Update left of insertion
         while(colOfLeftNeighbourBlackSquare != -1 && colOfLeftNeighbourBlackSquare != col){
@@ -114,29 +114,29 @@ public class Board {
     /**
      * Called after player's move is inserted on the board.
      * Updates disks opposite of inserted disk horizontally, vertically and diagonally.
-     * used in the {@link #updateBoard(char, int, int)} method
+     * used in the {@link #updateBoard(DISK, int, int)} method
      *
-     * @param color The player who played this turn ('B' or 'W').
+     * @param color The player who played this turn (DISK.BLACK or DISK.WHITE).
      * @param row   The row index of the inserted position (0-based) (range: [0, 7]).
      * @param col   The column index of the inserted position (0-based) (range: [0, 7]).
      */
-    private void updateOtherDisks(char color, int row, int col){
+    private void updateOtherDisks(DISK color, int row, int col){
         // Search for the next black square Horizontally (left)
 
     }
 
     /**
      * Generates new hints(if there) for the next move by analyzing the current state of the board, and sets the flag true.
-     * used in the {@link #updateBoard(char, int, int)} method.
+     * used in the {@link #updateBoard(DISK, int, int)} method.
      *
-     * @param colorToPlay the next players color ('B' or 'W')
+     * @param colorToPlay the next players color (DISK.BLACK or DISK.WHITE)
      */
-    public void generateNewHints(char colorToPlay) {
+    public void generateNewHints(DISK colorToPlay) {
         for(int row = 0; row < 8; row++){
             for(int col = 0; col < 8; col++) {
-                if (board[row*8 + col] == 'E') {
+                if (board[row*8 + col] == DISK.EMPTY) {
                     if (isValid(row, col, colorToPlay)) {
-                        board[row * 8 + col] = 'H';
+                        board[row * 8 + col] = DISK.HINT;
                         setAreThereAnyHints(true);
                     }
                 }
@@ -167,12 +167,12 @@ public class Board {
      * @return true if the move can be translated into the current player's color, false otherwise.
      * @throws ArrayIndexOutOfBoundsException if the move results in an out-of-bounds access.
      */
-    private boolean translate(int r, int c, int dx, int dy, char colorToPlay) throws ArrayIndexOutOfBoundsException{
+    private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException{
         try {
             while (!outOfBounds(r, c)) {
                 r += dx;
                 c += dy;
-                if (board[r * 8 + c] == 'E' || board[r * 8 + c] == 'H')
+                if (board[r * 8 + c] == DISK.EMPTY || board[r * 8 + c] == DISK.HINT)
                     return false;
                 else if (board[r * 8 + c] == colorToPlay)
                     return true;
@@ -191,8 +191,8 @@ public class Board {
      * @param colorToPlay The color of the current player.
      * @return true if the move is valid for the current player, false otherwise.
      */
-    private boolean isValid(int row, int col, char colorToPlay){
-        char opponentToPlay = (colorToPlay == 'W') ? 'B' : 'W';
+    private boolean isValid(int row, int col, DISK colorToPlay){
+        DISK opponentToPlay = (colorToPlay == DISK.WHITE) ? DISK.BLACK : DISK.WHITE;
         boolean result;
         if(!outOfBounds((row-1),(col-1)) && (board[(row-1)*8 + (col-1)] == opponentToPlay)){
             result = translate(row,col,-1,-1,colorToPlay);
@@ -246,8 +246,8 @@ public class Board {
     public void removeAllHints(){
         for(int row = 0; row < 8; row++){
             for(int col = 0; col < 8; col++) {
-                if (board[row*8 + col] == 'H') {
-                    board[row * 8 + col] = 'E';
+                if (board[row*8 + col] == DISK.HINT) {
+                    board[row * 8 + col] = DISK.EMPTY;
                 }
             }
         }
@@ -306,7 +306,7 @@ public class Board {
      * the game is considered a tie.
      * </p>
      *
-     * @return The color of the winning player ('W' for white, 'B' for black, 'T' for tie).
+     * @return The color of the winning player (DISK.WHITE for white, DISK.BLACK for black, 'T' for tie).
      */
     public char getWinner() {
         return getWhiteScore() > getBlackScore() ? 'W' :
@@ -323,7 +323,7 @@ public class Board {
      * @return The score of the white player.
      */
     public int getWhiteScore() {
-        return getScore('W');
+        return getScore(DISK.WHITE);
     }
 
     /**
@@ -336,7 +336,7 @@ public class Board {
      * @return The score of the black player.
      */
     public int getBlackScore() {
-        return getScore('B');
+        return getScore(DISK.BLACK);
     }
 
     /**
@@ -347,13 +347,13 @@ public class Board {
      * currently on the board.
      * </p>
      *
-     * @param color The color of the player whose score is to be calculated ('W' for white, 'B' for black).
+     * @param color The color of the player whose score is to be calculated (DISK.WHITE for white, DISK.BLACK for black).
      * @return The score of the specified player.
      */
-    private int getScore(char color) {
+    private int getScore(DISK color) {
         int count = 0;
-        for (char c : board) {
-            if (c == 'W') {
+        for (DISK c : board) {
+            if (c == DISK.WHITE) {
                 count++;
             }
         }
@@ -363,21 +363,21 @@ public class Board {
     /**
      * Sets a position at the specified row and column with the given value.
      *
-     * @param value the value of the disc ('W', 'B', 'H', or 'E')
+     * @param value the value of the disc (DISK.WHITE, DISK.BLACK, DISK.HINT, or DISK.EMPTY)
      * @param row   the row index (0-based) (range: [0, 7])
      * @param col   the column index (0-based) (range: [0, 7])
      */
-    public void setPos(char value, int row, int col) {
+    public void setPos(DISK value, int row, int col) {
         setPos(value, row * 8 + col);
     }
 
     /**
      * Sets a position at the specified position with the given value.
      *
-     * @param value the value of the disc ('W', 'B', 'H', or 'E')
+     * @param value the value of the disc (DISK.WHITE, DISK.BLACK, DISK.HINT, or DISK.EMPTY)
      * @param pos   the position index (0-based) (range: [0, 63])
      */
-    public void setPos(char value, int pos) {
+    public void setPos(DISK value, int pos) {
         board[pos] = value;
     }
 
@@ -388,7 +388,7 @@ public class Board {
      * @param col the column index (0-based) (range: [0, 7])
      * @return the value of the disc at the specified position
      */
-    public char getPos(int row, int col) {
+    public DISK getPos(int row, int col) {
         return getPos(row * 8 + col);
     }
 
@@ -398,7 +398,7 @@ public class Board {
      * @param pos the position index (0-based) (range: [0, 63])
      * @return the value of the disc at the specified position
      */
-    public char getPos(int pos) {
+    public DISK getPos(int pos) {
         return board[pos];
     }
 
@@ -407,7 +407,7 @@ public class Board {
      *
      * @return the 1D array representing the board
      */
-    public char[] getBoard() {
+    public DISK[] getBoard() {
         return board;
     }
 
@@ -416,8 +416,8 @@ public class Board {
      *
      * @return the 2D array representing the board
      */
-    public char[][] getBoard2D() {
-        char[][] board2D = new char[8][8];
+    public DISK[][] getBoard2D() {
+        DISK[][] board2D = new DISK[8][8];
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 board2D[row][col] = this.getPos(row, col);
@@ -431,7 +431,7 @@ public class Board {
      *
      * @return the list representing the board
      */
-    public List<Character> getBoardList() {
+    public List<DISK> getBoardList() {
         return IntStream.range(0, board.length)
                 .mapToObj(i -> board[i])
                 .collect(Collectors.toList());
@@ -442,8 +442,8 @@ public class Board {
      *
      * @return the 2D list representing the board
      */
-    public List<List<Character>> getBoardList2D() {
-        char[][] board2D = this.getBoard2D();
+    public List<List<DISK>> getBoardList2D() {
+        DISK[][] board2D = this.getBoard2D();
         return Arrays.stream(board2D).map(chars -> IntStream.range(0, chars.length)
                         .mapToObj(j -> chars[j])
                         .collect(Collectors.toList()))

@@ -14,10 +14,10 @@ public class HumanPlayer extends Player{
     /**
      * Initializes a new instance of the AbstractPlayer class with the specified color and game board.
      *
-     * @param board The color assigned to the player. 'B' for black players, 'W' for white players.
+     * @param board The color assigned to the player. DISK.BLACK for black players, DISK.WHITE for white players.
      * @param color A reference to the game's board.
      */
-    public HumanPlayer(Board board, char color) {
+    public HumanPlayer(Board board, DISK color) {
         super(board, color);
     }
 
