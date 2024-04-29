@@ -1,5 +1,7 @@
 package com.cse.ai.othellogame.backend.player;
 
+import com.cse.ai.othellogame.backend.game.Board;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -239,6 +241,7 @@ public class minimax {
                 }
             }
         }
+        System.out.println("number of possible moves : " + result.size());
         return result;
     }
 
@@ -248,6 +251,7 @@ public class minimax {
 
         int mySC = getPlayerStoneCount(board,player);
         int opSC = getPlayerStoneCount(board,oplayer);
+        System.out.println("the value of node heuristic is "+ 100 * (mySC - opSC) / (mySC + opSC)+"**************************");
 
         return 100 * (mySC - opSC) / (mySC + opSC);
     }
@@ -275,6 +279,52 @@ public class minimax {
         board[4][4] = 2;
         return board;
     }
+    public static boolean isGameFinished(int[][] board){
+        return !(hasAnyMoves(board,1) || hasAnyMoves(board,2));
+    }
+    public static boolean hasAnyMoves(int[][] board, int player){
+        return getAllPossibleMoves(board,player).size() > 0;
+    }
+    //returns minimax value for a given node (without A/B pruning)
+    public static int MM(int[][] node,int player,int depth,boolean max){
+        AIPlayer.nodesExplored++;
+        System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
+        printBoard(node);
+        //if terminal reached or depth limit reached evaluate
+        if(depth == 0 || isGameFinished(node)){
+            //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
+            return evalDiscDiff(node,player);
+        }
+        int oplayer = (player==1) ? 2 : 1;
+        //if no moves available then forfeit turn
+        if((max && !hasAnyMoves(node,player)) || (!max && !hasAnyMoves(node,oplayer))){
+            System.out.println("Forfeit State Reached !");
+            return MM(node,player,depth-1,!max);
+        }
+        int score;
+        if(max){
+            //maximizing
+            score = Integer.MIN_VALUE;
+            for(Point move : getAllPossibleMoves(node,player)){ //my turn
+                //create new node
+                int[][] newNode = getNewBoardAfterMove(node,move,player);
+                //recursive call
+                int childScore = MM(newNode,player,depth-1,false);
+                if(childScore > score) score = childScore;
+            }
+        }else{
+            //minimizing
+            score = Integer.MAX_VALUE;
+            for(Point move : getAllPossibleMoves(node,oplayer)){ //opponent turn
+                //create new node
+                int[][] newNode = getNewBoardAfterMove(node,move,oplayer);
+                //recursive call
+                int childScore = MM(newNode,player,depth-1,true);
+                if(childScore < score) score = childScore;
+            }
+        }
+        return score;
+    }
 
     public static void printBoard(int [][] board){
         StringBuilder sb = new StringBuilder();
@@ -290,10 +340,21 @@ public class minimax {
         System.out.println(sb);
     }
 
+
     public static void main(String[] args)
     {
+        Board b = new Board();
         int[][] board = resetBoard();
         printBoard(board);
-        System.out.println(getAllPossibleMoves(board,2));
+        AIPlayer ai = new AIPlayer(b,'B', 2);
+        System.out.println("the best move is  " + ai.makeMove(board, 2,3));
+//        ArrayList<Point> points = getAllPossibleMoves(board,2);
+//        for (Point p:points)
+//        {
+//            board[p.x][p.y]=5;
+//        }
+//        printBoard(board);
     }
+
+
 }

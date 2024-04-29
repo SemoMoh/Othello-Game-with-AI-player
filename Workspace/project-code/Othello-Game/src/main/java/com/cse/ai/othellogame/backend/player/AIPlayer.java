@@ -2,6 +2,8 @@ package com.cse.ai.othellogame.backend.player;
 
 import com.cse.ai.othellogame.backend.game.Board;
 
+import java.awt.*;
+
 /**
  * A class representing an AI player in the game, inheriting from {@link #Player}.
  * <p>
@@ -12,6 +14,10 @@ public class AIPlayer extends Player{
      * The difficulty level of the AI player.
      */
     private final int difficulty;
+    /**
+     * tracker for number of nodes tested by the agent.
+     */
+    public static int nodesExplored;
 
     /**
      * Initializes a new instance of the AIPlayer class with the specified color, game board, and difficulty level.
@@ -36,8 +42,26 @@ public class AIPlayer extends Player{
      * @Note Position = row * 8 + column
      */
     @Override
-    public int makeMove() {
+    public int makeMove(){
         return 0;
+    }
+
+        public int makeMove(int [][]board, int player,int depth) {
+        nodesExplored = 0;
+        int bestScore = Integer.MIN_VALUE;
+        Point bestMove = null;
+        for(Point move : minimax.getAllPossibleMoves(board,player)){
+            //create new node
+            int[][] newNode = minimax.getNewBoardAfterMove(board,move,player);
+            //recursive call
+            int childScore = minimax.MM(newNode,player,depth-1,false);
+            if(childScore > bestScore) {
+                bestScore = childScore;
+                bestMove = move;
+            }
+        }
+        System.out.println("Nodes Explored : " + nodesExplored);
+        return bestMove.x*8+ bestMove.y;
     }
 
     /**
@@ -49,14 +73,8 @@ public class AIPlayer extends Player{
      *
      * @return None, for now.
      */
-    public void calculateHeuristic(){
-        // TODO: implement this method
-
-        // TODO: You can add more data fields to the class to save your values, or you can
-        //       return the heuristic value of each position. Organize your work with the developer of the {@link #algorithmEval}
-        //       method.
-
-        // TODO: Update the documentation of the method when you determine the return type.
+    public int calculateHeuristic(int [][]board,int player){
+        return minimax.evalDiscDiff(board,player);
     }
 
     /**
