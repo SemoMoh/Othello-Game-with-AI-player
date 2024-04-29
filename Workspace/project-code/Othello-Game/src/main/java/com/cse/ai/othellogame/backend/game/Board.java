@@ -80,6 +80,49 @@ public class Board {
      */
     public void updateBoard(char color, int row, int col) {
         //TODO: implement this method
+        // valid position check
+        if(outOfBounds(row, col) || board[row * 8 + col]!= 'H')
+            return;
+        // delete all old 'H' characters from the board
+        for(int i = 0; i < board.length; i++){
+            if(board[i] == 'H')
+                board[i] = 'E';
+        }
+        // place the new disk at its position, representing the player's move
+        setPos(color, row, col);
+        // update the other disks on the board according to the insertion position and its color
+        // horizontally
+        // ***Left of insertion
+        int colOfLeftNeighbourBlackSquare = -1;
+        for(int i=row*8; i< col; i++){
+            if(board[i] == 'B') { colOfLeftNeighbourBlackSquare = i;}
+        }
+        // Update left of insertion
+        while(colOfLeftNeighbourBlackSquare != -1 && colOfLeftNeighbourBlackSquare != col){
+
+        }
+        // Right of insertion
+        int colOfRightNeighbourBlackSquare = -1;
+        // vertically
+        // diagonally
+        updateBoard(color, row, col);
+        // generate new hints for the next move by the opposing player
+        generateNewHints(color);
+
+    }
+
+    /**
+     * Called after player's move is inserted on the board.
+     * Updates disks opposite of inserted disk horizontally, vertically and diagonally.
+     * used in the {@link #updateBoard(char, int, int)} method
+     *
+     * @param color The player who played this turn ('B' or 'W').
+     * @param row   The row index of the inserted position (0-based) (range: [0, 7]).
+     * @param col   The column index of the inserted position (0-based) (range: [0, 7]).
+     */
+    private void updateOtherDisks(char color, int row, int col){
+        // Search for the next black square Horizontally (left)
+
     }
 
     /**
