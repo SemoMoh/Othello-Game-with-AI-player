@@ -2,6 +2,7 @@ package com.cse.ai.othellogame.backend.player;
 
 
 import com.cse.ai.othellogame.backend.game.Board;
+import com.cse.ai.othellogame.backend.game.DISK;
 
 /**
  * A class representing a human player in the game, inheriting from {@link #Player}.

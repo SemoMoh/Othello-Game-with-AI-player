@@ -1,6 +1,8 @@
 package com.cse.ai.othellogame.backend.player;
 
 import com.cse.ai.othellogame.backend.game.Board;
+import com.cse.ai.othellogame.backend.game.DISK;
+
 
 /**
  * An abstract class representing players in a game, adhering to the principles of polymorphism.
