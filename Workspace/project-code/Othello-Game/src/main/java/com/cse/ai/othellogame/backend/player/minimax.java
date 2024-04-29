@@ -243,8 +243,8 @@ public class minimax {
     }
 
 
-    public static int evalDiscDiff(int[][] board , char player){
-        char oplayer = (player == 'B') ? 'W' : 'B';
+    public static int evalDiscDiff(int[][] board , int player){
+        int oplayer = (player==1) ? 2 : 1;
 
         int mySC = getPlayerStoneCount(board,player);
         int opSC = getPlayerStoneCount(board,oplayer);
@@ -252,7 +252,7 @@ public class minimax {
         return 100 * (mySC - opSC) / (mySC + opSC);
     }
 
-    public static int getPlayerStoneCount(int[][] board, char player){
+    public static int getPlayerStoneCount(int[][] board, int player){
         int score = 0;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -261,5 +261,39 @@ public class minimax {
         }
         return score;
     }
+    public static int[][] resetBoard(){
+        int[][]board = new int[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                board[i][j]=0;
+            }
+        }
+        //initial board state
+        board[3][3] = 2;
+        board[3][4] = 1;
+        board[4][3] = 1;
+        board[4][4] = 2;
+        return board;
+    }
 
+    public static void printBoard(int [][] board){
+        StringBuilder sb = new StringBuilder();
+        sb.append("  a b c d e f g h \n");
+        for (int row = 0; row < 8; row++) {
+            sb.append(row+1 +" ");
+            for (int col = 0; col < 8; col++) {
+                sb.append(board[row][col]).append(" ");
+            }
+            sb.append("\n");
+        }
+        sb.append("  1 2 3 4 5 6 7 8");
+        System.out.println(sb);
+    }
+
+    public static void main(String[] args)
+    {
+        int[][] board = resetBoard();
+        printBoard(board);
+        System.out.println(getAllPossibleMoves(board,2));
+    }
 }
