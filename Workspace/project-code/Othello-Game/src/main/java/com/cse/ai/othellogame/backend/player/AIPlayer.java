@@ -54,7 +54,7 @@ public class AIPlayer extends Player{
             //create new node
             int[][] newNode = minimax.getNewBoardAfterMove(board,move,player);
             //recursive call
-            int childScore = minimax.MM(newNode,player,depth-1,false);
+            int childScore = minimax.MMAB(newNode,player,depth-1,false,Integer.MIN_VALUE,Integer.MIN_VALUE);
             if(childScore > bestScore) {
                 bestScore = childScore;
                 bestMove = move;

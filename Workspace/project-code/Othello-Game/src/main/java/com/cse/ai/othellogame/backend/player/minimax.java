@@ -4,6 +4,7 @@ import com.cse.ai.othellogame.backend.game.Board;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class minimax {
     public static ArrayList<Point> getReversePoints(int[][] board,int player,int i,int j){
@@ -287,6 +288,7 @@ public class minimax {
     }
     //returns minimax value for a given node (without A/B pruning)
     public static int MM(int[][] node,int player,int depth,boolean max){
+        System.out.println("Nodes Explored : " + AIPlayer.nodesExplored);
         AIPlayer.nodesExplored++;
         System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
         printBoard(node);
@@ -323,6 +325,53 @@ public class minimax {
                 if(childScore < score) score = childScore;
             }
         }
+        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
+        return score;
+    }
+    public static int MMAB(int[][] node,int player,int depth,boolean max,int alpha,int beta){
+        AIPlayer.nodesExplored++;
+        System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
+        printBoard(node);
+        //if terminal reached or depth limit reached evaluate
+        if(depth == 0 || isGameFinished(node)){
+            //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
+            return evalDiscDiff(node,player);
+        }
+        int oplayer = (player==1) ? 2 : 1;
+        //if no moves available then forfeit turn
+        if((max && !minimax.hasAnyMoves(node,player)) || (!max && !minimax.hasAnyMoves(node,oplayer))){
+            //System.out.println("Forfeit State Reached !");
+            return MMAB(node,player,depth-1,!max,alpha,beta);
+        }
+        int score;
+        if(max){
+            //maximizing
+            score = Integer.MIN_VALUE;
+            for(Point move : minimax.getAllPossibleMoves(node,player)){ //my turn
+                //create new node
+                int[][] newNode = minimax.getNewBoardAfterMove(node,move,player);
+                //recursive call
+                int childScore = MMAB(newNode,player,depth-1,false,alpha,beta);
+                if(childScore > score) score = childScore;
+                //update alpha
+                if(score > alpha) alpha = score;
+                if(beta <= alpha) break; //Beta Cutoff
+            }
+        }else{
+            //minimizing
+            score = Integer.MAX_VALUE;
+            for(Point move : minimax.getAllPossibleMoves(node,oplayer)){ //opponent turn
+                //create new node
+                int[][] newNode = minimax.getNewBoardAfterMove(node,move,oplayer);
+                //recursive call
+                int childScore = MMAB(newNode,player,depth-1,true,alpha,beta);
+                if(childScore < score) score = childScore;
+                //update beta
+                if(score < beta) beta = score;
+                if(beta <= alpha) break; //Alpha Cutoff
+            }
+        }
+        System.out.println("the score is: "+score+"\tat node "+AIPlayer.nodesExplored);
         return score;
     }
 
@@ -347,7 +396,7 @@ public class minimax {
         int[][] board = resetBoard();
         printBoard(board);
         AIPlayer ai = new AIPlayer(b,'B', 2);
-        System.out.println("the best move is  " + ai.makeMove(board, 2,3));
+        System.out.println("the best move is  " + ai.makeMove(board, 2,15));
 //        ArrayList<Point> points = getAllPossibleMoves(board,2);
 //        for (Point p:points)
 //        {
