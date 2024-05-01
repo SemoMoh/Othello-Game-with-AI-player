@@ -1,6 +1,7 @@
 package com.cse.ai.othellogame.backend.player;
 
 import com.cse.ai.othellogame.backend.game.Board;
+import com.cse.ai.othellogame.backend.game.DISK;
 
 /**
  * A class representing an AI player in the game, inheriting from {@link #Player}.
@@ -17,10 +18,10 @@ public class AIPlayer extends Player{
      * Initializes a new instance of the AIPlayer class with the specified color, game board, and difficulty level.
      *
      * @param board      A reference to the game's board.
-     * @param color      The color assigned to the player. 'B' for black players, 'W' for white players.
+     * @param color      The color assigned to the player. DISK.BLACK for black players, DISK.WHITE for white players.
      * @param difficulty The difficulty level of the AI player. Ranges from 0 to 2, with 2 being the hardest.
      */
-    public AIPlayer(Board board, char color, int difficulty) {
+    public AIPlayer(Board board, DISK color, int difficulty) {
         super(board, color);
         this.difficulty = difficulty;
     }
@@ -29,7 +30,7 @@ public class AIPlayer extends Player{
      * Generates a move for the AI player based on the current state of the board.
      * <p>
      * Warning:
-     * The chosen position must be a position of a hint position ('H') in the board.
+     * The chosen position must be a position of a hint position (DISK.HINT) in the board.
      * </p>
      *
      * @return An integer representing the position chosen by the AI player. (Range: [0, 63])
