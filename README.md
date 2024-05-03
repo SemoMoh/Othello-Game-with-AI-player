@@ -57,7 +57,6 @@ This project is an implementation of the classic board game Othello (also known 
 
 - [Mahmoud Abdelraouf Mahmoud](https://github.com/Mahmoud-Abdelraouf)
 - [Abdelrahman Elsayed Mohamed](https://github.com/d3cypherd)
-- [Contributor 2](https://github.com/contributor2)
 - [Omar Muhammad Mahmoud Al-Tahan](https://github.com/UmarTahanix)
 
 ## License
