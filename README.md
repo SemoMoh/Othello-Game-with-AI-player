@@ -4,7 +4,7 @@ Sure! Here's a basic README.md template for your Othello game project with an AI
 
 # Othello Game with AI Player
 
-![Othello Game](othello_game_screenshot.png)
+![Othello Game](https://github.com/SemoMoh/Othello-Game-with-AI-player/assets/90259729/18050616-bce6-4cbd-8881-1d6be94a2fe9)
 
 ## Overview
 
