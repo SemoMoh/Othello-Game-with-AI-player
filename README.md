@@ -1,6 +1,6 @@
 # Othello Game with AI Player
 
-![Othello Game](othello_game_screenshot.png)
+![Othello Game](https://github.com/SemoMoh/Othello-Game-with-AI-player/assets/90259729/18050616-bce6-4cbd-8881-1d6be94a2fe9)
 
 ## Overview
 
@@ -55,8 +55,8 @@ This project is an implementation of the classic board game Othello (also known 
 
 ## Contributors
 
-- [Your Name](https://github.com/yourusername)
-- [Contributor 1](https://github.com/contributor1)
+- [Mahmoud Abdelraouf Mahmoud](https://github.com/Mahmoud-Abdelraouf)
+- [Contributor ](https://github.com/contributor1)
 - [Contributor 2](https://github.com/contributor2)
 
 ## License
@@ -66,7 +66,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgements
 
 - Inspiration: [Reference to any tutorials, articles, or resources used as inspiration for the project]
-
----
-
-Feel free to customize this template according to your project's specific details, such as adding more detailed setup instructions, gameplay rules, or expanding the feature list.
