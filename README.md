@@ -1,7 +1,3 @@
-Sure! Here's a basic README.md template for your Othello game project with an AI player:
-
----
-
 # Othello Game with AI Player
 
 ![Othello Game](othello_game_screenshot.png)
