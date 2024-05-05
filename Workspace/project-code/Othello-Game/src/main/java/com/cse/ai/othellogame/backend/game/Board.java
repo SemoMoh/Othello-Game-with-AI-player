@@ -29,10 +29,43 @@ import java.util.stream.IntStream;
  * For the rules of the Othello game, see:
  * <a href="https://othelloacademy.weebly.com/rules.html">Othello Rules</a>
  */
-public class Board {
+public class Board implements Cloneable{
     private char[] board;
 
     private boolean areThereAnyHints;
+
+    /**
+     * Constructs a new game board with currrent board state
+     */
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object newBoard = new Board();
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++) {
+                ((Board)newBoard).board[row*8+col] = board[row*8+col];
+            }
+        }
+        return newBoard;
+    }
+    /**
+     * gets List of positions of possible moves
+     * <p>
+     *     iterates on board to find positions with Disk.Hint value
+     * </p>
+     */
+
+    public ArrayList<Point> getAllPossibleMoves() {
+        ArrayList<Point> possibleMoves = new ArrayList<>();
+//        DISK [] board = node.getBoard();
+        for(int row = 0; row < 8; row++){
+            for(int col = 0; col < 8; col++) {
+                if (board[row*8 + col] == DISK.HINT) {
+                    possibleMoves.add(new Point(row,col));
+                }
+            }
+        }
+        return possibleMoves;
+    }
 
     /**
      * Constructs a new game board with default dimensions and initializes its black and white disks,
@@ -307,7 +340,7 @@ public class Board {
      * @param color The color of the player whose score is to be calculated ('W' for white, 'B' for black).
      * @return The score of the specified player.
      */
-    private int getScore(char color) {
+    public int getScore(char color) {
         int count = 0;
         for (char c : board) {
             if (c == 'W') {
