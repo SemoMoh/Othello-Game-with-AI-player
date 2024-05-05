@@ -94,6 +94,28 @@ public class Minimax {
 //        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
         return score;
     }
+    /* This function implements the Minimax algorithm with Alfa Beta pruning.
+      Base Case: If the depth is 0 (reached the search limit) or the game is finished, it evaluates the current state using the evalDiscDiff function and returns the score.
+      Maximizing Player:
+     *       Initializes the score to the minimum possible integer value (assuming the player wants to maximize their score).
+     *       Iterates through all possible moves for the current player using the getAllPossibleMoves function.
+     *       For each move:
+     *       Creates a new board representing the game state after the move using the getNewBoardAfterMove function.
+     *       Recursively calls MMAB on the new board with the opponent's turn (!max) and decreased depth (depth-1).
+     *       Updates the score if the returned child score is greater than the current score.
+     *       if a child score is greater than the current alpha, it updates alpha but doesn't explore further child nodes if alpha is greater than beta since they cannot possibly yield a better score.
+     *** Minimizing Player: Similar to the maximizing player but tries to minimize the score (assuming the opponent wants to minimize the maximizing player's score).
+     * if a child score is less than the current beta, it updates beta but doesn't explore further child nodes if alpha is greater than beta since they cannot possibly yield a worse score for the minimizing player.
+     *      Returns the final score for the current node.
+     *
+     * @param node     representation of the game state ( a 2D array representing the board)
+     * @param player   The current player
+     * @param depth    The remaining depth in the search tree.
+     * @param max      A boolean indicating whether it's the maximizing player's turn (True) or the minimizing player's turn (False).
+     * @param alpha    The current minimum score for the maximizing player along the current path.
+     * @param beta     The current maximum score for the minimizing player along the current path.
+     */
+
  public static int MMAB(Board node,DISK player,int depth,boolean max,int alpha,int beta){
         System.out.println("Nodes Explored : " + nodesExplored);
         nodesExplored++;
