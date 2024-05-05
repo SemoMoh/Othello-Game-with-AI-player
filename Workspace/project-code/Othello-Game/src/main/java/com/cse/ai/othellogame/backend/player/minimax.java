@@ -94,7 +94,74 @@ public class Minimax {
 //        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
         return score;
     }
-
+ public static int MMAB(Board node,DISK player,int depth,boolean max,int alpha,int beta){
+        System.out.println("Nodes Explored : " + nodesExplored);
+        nodesExplored++;
+        System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
+        System.out.println(node);
+        //if terminal reached or depth limit reached evaluate
+        if(depth == 0  node.gameEnded()){
+            //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
+            return evalDiscDiff(node,player);
+        }
+        DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
+        //if no moves available then forfeit turn
+//        if((max && !minimax.hasAnyMoves(node,player))  (!max && !minimax.hasAnyMoves(node,oplayer))){
+//            //System.out.println("Forfeit State Reached !");
+//            return MMAB(node,player,depth-1,!max,alpha,beta);
+//        }
+        int score;
+        if(max){
+            //maximizing
+            score = Integer.MIN_VALUE;
+            for(Point move : node.getAllPossibleMoves()){ //my turn
+                Board newNode = new Board();
+                try {
+                    newNode = (Board) node.clone();
+                }catch (CloneNotSupportedException e)
+                {
+                    e.printStackTrace();
+                }
+                //create new node
+                newNode.updateBoard(player,move.x, move.y);
+                //recursive call
+                int childScore = MMAB(newNode,player,depth-1,false,alpha,beta);
+                if(childScore > score) score = childScore;
+                //update alpha
+                if(score > alpha) alpha = score;
+                if(beta <= alpha) {
+                    System.out.println("---------------------------------------cut off----------------------------------------------");
+                    break;
+                } //Beta Cutoff
+            }
+        }else{
+            //minimizing
+            score = Integer.MAX_VALUE;
+            for(Point move : node.getAllPossibleMoves()){ //opponent turn
+                Board newNode = new Board();
+                try {
+                    newNode = (Board) node.clone();
+                }catch (CloneNotSupportedException e)
+                {
+                    e.printStackTrace();
+                }
+                //create new node
+                newNode.updateBoard(oplayer, move.x, move.y);
+                //recursive call
+                int childScore = MMAB(newNode,player,depth-1,true,alpha,beta);
+                if(childScore < score) score = childScore;
+                //update beta
+                if(score < beta) beta = score;
+                if(beta <= alpha) {
+                    System.out.println("alpha: "+ alpha+"beta: "+ beta);
+                    System.out.println("---------------------------------------cut off----------------------------------------------");
+                    break;
+                } //Alpha Cutoff
+            }
+        }
+        System.out.println("the score is: "+score+"\tat node "+nodesExplored);
+        return score;
+    }
 
     public static int evalDiscDiff(Board board , DISK player){
         DISK oplayer = (player==DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
