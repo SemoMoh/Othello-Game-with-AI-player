@@ -1,5 +1,6 @@
 package com.cse.ai.othellogame.backend.game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,24 +92,9 @@ public class Board {
         // place the new disk at its position, representing the player's move
         setPos(color, row, col);
         // update the other disks on the board according to the insertion position and its color
-        // horizontally
-        // ***Left of insertion
-        int colOfLeftNeighbourBlackSquare = -1;
-        for(int i=row*8; i< col; i++){
-            if(board[i] == DISK.BLACK) { colOfLeftNeighbourBlackSquare = i;}
-        }
-        // Update left of insertion
-        while(colOfLeftNeighbourBlackSquare != -1 && colOfLeftNeighbourBlackSquare != col){
-
-        }
-        // Right of insertion
-        int colOfRightNeighbourBlackSquare = -1;
-        // vertically
-        // diagonally
-        updateBoard(color, row, col);
+        updateOtherDisks(color, row, col);
         // generate new hints for the next move by the opposing player
         generateNewHints(color);
-
     }
 
     /**
@@ -116,14 +102,129 @@ public class Board {
      * Updates disks opposite of inserted disk horizontally, vertically and diagonally.
      * used in the {@link #updateBoard(DISK, int, int)} method
      *
-     * @param color The player who played this turn (DISK.BLACK or DISK.WHITE).
+     * @param player The player who played this turn (DISK.BLACK or DISK.WHITE).
      * @param row   The row index of the inserted position (0-based) (range: [0, 7]).
      * @param col   The column index of the inserted position (0-based) (range: [0, 7]).
      */
-    private void updateOtherDisks(DISK color, int row, int col){
-        // Search for the next black square Horizontally (left)
+    private void updateOtherDisks(DISK player, int row, int col){
+        // Initial variables
+        ArrayList<Integer> flipped = new ArrayList<Integer>(); // stores disks position to be flipped
+        ArrayList<Integer> temp_flipped = new ArrayList<Integer>(); // temp to be used in each loop
+        DISK opponent= (player == DISK.BLACK) ?  (DISK.WHITE) : (DISK.BLACK); // define opponent's color
 
+        // Search Horizontally
+        // Search left for opponent disks
+        int adjacentDisk_LEFT = col - 1;
+        while(!outOfBounds(row,adjacentDisk_LEFT) && board[8*row + adjacentDisk_LEFT] == opponent) {
+            temp_flipped.add(8*row + adjacentDisk_LEFT);
+            adjacentDisk_LEFT--;
+        }
+        // if adjacentDisk_LEFT stopped at player disk -> flip
+        // else -> drop temp_flipped
+        if(!outOfBounds(row, adjacentDisk_LEFT) && board[8*row + adjacentDisk_LEFT] == player) {
+            flipped.addAll(temp_flipped);
+        }
+
+        // Search right for opponent disks
+        temp_flipped.clear();
+        int adjacentDisk_RIGHT = col + 1;
+        while(!outOfBounds(row,adjacentDisk_RIGHT) && board[8*row + adjacentDisk_RIGHT] == opponent) {
+            temp_flipped.add(8*row + adjacentDisk_RIGHT);
+            adjacentDisk_RIGHT++;
+        }
+        // Check if adjacentDisk_RIGHT stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(row, adjacentDisk_RIGHT) && board[8*row + adjacentDisk_RIGHT] == player){
+            flipped.addAll(temp_flipped);
+        }
+
+        // Search Vertically
+        // Search upwards for opponent
+        temp_flipped.clear();
+        int adjacentDisk_UP = row - 1;
+        while(!outOfBounds(adjacentDisk_UP, col) && board[8*adjacentDisk_UP + col] == opponent) {
+            temp_flipped.add(8*adjacentDisk_UP + col);
+            adjacentDisk_UP--;
+        }
+        // Check if adjacentDisk_UP stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(adjacentDisk_UP, col) && board[8*adjacentDisk_UP + col] == player) {
+            flipped.addAll(temp_flipped);
+        }
+
+        // Search downwards for opponent
+        temp_flipped.clear();
+        int adjacentDisk_DOWN = row + 1;
+        while(!outOfBounds(adjacentDisk_DOWN, col) && board[8*adjacentDisk_DOWN + col] == opponent) {
+            temp_flipped.add(8*adjacentDisk_DOWN + col);
+            adjacentDisk_DOWN++;
+        }
+        // Check if adjacentDisk_DOWN stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(adjacentDisk_DOWN, col) && board[8*adjacentDisk_DOWN + col] == player) {
+            flipped.addAll(temp_flipped);
+        }
+
+        // Search Diagonally
+        // Search upwards and left for opponent
+        temp_flipped.clear();
+        int adjacentDisk_UP_LEFT = row - 1;
+        adjacentDisk_LEFT = col - 1;
+        while(!outOfBounds(adjacentDisk_UP_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_UP_LEFT + adjacentDisk_LEFT] == opponent) {
+            temp_flipped.add(8*adjacentDisk_UP_LEFT + adjacentDisk_LEFT);
+            adjacentDisk_UP_LEFT--;
+            adjacentDisk_LEFT--;
+        }
+        // Check if adjacentDisk_UP_LEFT stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(adjacentDisk_UP_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_UP_LEFT + adjacentDisk_LEFT] == player){
+           flipped.addAll(temp_flipped);
+        }
+
+        // Search upwards and right for opponent
+        temp_flipped.clear();
+        int adjacentDisk_UP_RIGHT = row - 1;
+        adjacentDisk_RIGHT = col + 1;
+        while(!outOfBounds(adjacentDisk_UP_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT] == opponent) {
+            temp_flipped.add(8*adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT);
+            adjacentDisk_UP_RIGHT--;
+            adjacentDisk_RIGHT++;
+        }
+        // Check if adjacentDisk_UP_RIGHT stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(adjacentDisk_UP_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT] == player){
+            flipped.addAll(temp_flipped);
+        }
+
+        // Search downwards and left for opponent
+        temp_flipped.clear();
+        int adjacentDisk_DOWN_LEFT = row + 1;
+        adjacentDisk_LEFT = col - 1;
+        while(!outOfBounds(adjacentDisk_DOWN_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT] == opponent) {
+            temp_flipped.add(8*adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT);
+            adjacentDisk_DOWN_LEFT++;
+            adjacentDisk_LEFT--;
+        }
+        // Check if adjacentDisk_DOWN_LEFT stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(adjacentDisk_DOWN_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT] == player){
+            flipped.addAll(temp_flipped);
+        }
+
+        // Search downwards and right for opponent
+        temp_flipped.clear();
+        int adjacentDisk_DOWN_RIGHT = row + 1;
+        adjacentDisk_RIGHT = col + 1;
+        while(!outOfBounds(adjacentDisk_DOWN_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT] == opponent) {
+            temp_flipped.add(8*adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT);
+            adjacentDisk_DOWN_RIGHT++;
+            adjacentDisk_RIGHT++;
+        }
+        // Check if adjacentDisk_DOWN_RIGHT stopped at player disk -> flip, else -> drop flipped
+        if(!outOfBounds(adjacentDisk_DOWN_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT] == player){
+            flipped.addAll(temp_flipped);
+        }
+
+        // Flip disks
+        for(int i = 0; i < flipped.size(); i++){
+            board[flipped.get(i)] = player;
+        }
     }
+
 
     /**
      * Generates new hints(if there) for the next move by analyzing the current state of the board, and sets the flag true.
