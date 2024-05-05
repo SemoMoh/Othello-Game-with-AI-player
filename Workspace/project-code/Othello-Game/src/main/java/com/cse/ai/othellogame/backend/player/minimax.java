@@ -1,409 +1,110 @@
 package com.cse.ai.othellogame.backend.player;
 
 import com.cse.ai.othellogame.backend.game.Board;
+import com.cse.ai.othellogame.backend.game.DISK;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class minimax {
-    public static ArrayList<Point> getReversePoints(int[][] board,int player,int i,int j){
+public class Minimax {
+    static int nodesExplored;
+    /**
+     *This function implements the Minimax algorithm .
 
-        ArrayList<Point> allReversePoints = new ArrayList<>();
+     * Base Case: If the depth is 0 (reached the search limit) or the game is finished, it evaluates the current state using the evalDiscDiff function and returns the score.
+     * Maximizing Player:
+     ** Initializes the score to the minimum possible integer value (assuming the player wants to maximize their score).
+     ** Iterates through all possible moves for the current player using the getAllPossibleMoves function.
+     ** For each move:
+     ** Creates a new board representing the game state after the move using the getNewBoardAfterMove function.
+     ** Recursively calls MM on the new board with the opponent's turn (!max) and decreased depth (depth-1).
+     ** Updates the score if the returned child score is greater than the current score.
+     ** Minimizing Player: Similar to the maximizing player but tries to minimize the score (assuming the opponent wants to minimize the maximizing player's score).
+     Returns the final score for the current node.
+     * @param node     representation of the game state ( a 2D array representing the board)
+     * @param player   The current player
+     * @param depth    The remaining depth in the search tree.
+     * @param max      A boolean indicating whether it's the maximizing player's turn (True) or the minimizing player's turn (False).
+     */
 
-        int mi , mj , c;
-        int oplayer = ((player == 1) ? 2 : 1);
-
-        //move up
-        ArrayList<Point> mupts = new ArrayList<>();
-        mi = i - 1;
-        mj = j;
-        while(mi>0 && board[mi][mj] == oplayer){
-            mupts.add(new Point(mi,mj));
-            mi--;
-        }
-        if(mi>=0 && board[mi][mj] == player && mupts.size()>0){
-            allReversePoints.addAll(mupts);
-        }
-
-
-        //move down
-        ArrayList<Point> mdpts = new ArrayList<>();
-        mi = i + 1;
-        mj = j;
-        while(mi<7 && board[mi][mj] == oplayer){
-            mdpts.add(new Point(mi,mj));
-            mi++;
-        }
-        if(mi<=7 && board[mi][mj] == player && mdpts.size()>0){
-            allReversePoints.addAll(mdpts);
-        }
-
-        //move left
-        ArrayList<Point> mlpts = new ArrayList<>();
-        mi = i;
-        mj = j - 1;
-        while(mj>0 && board[mi][mj] == oplayer){
-            mlpts.add(new Point(mi,mj));
-            mj--;
-        }
-        if(mj>=0 && board[mi][mj] == player && mlpts.size()>0){
-            allReversePoints.addAll(mlpts);
-        }
-
-        //move right
-        ArrayList<Point> mrpts = new ArrayList<>();
-        mi = i;
-        mj = j + 1;
-        while(mj<7 && board[mi][mj] == oplayer){
-            mrpts.add(new Point(mi,mj));
-            mj++;
-        }
-        if(mj<=7 && board[mi][mj] == player && mrpts.size()>0){
-            allReversePoints.addAll(mrpts);
-        }
-
-        //move up left
-        ArrayList<Point> mulpts = new ArrayList<>();
-        mi = i - 1;
-        mj = j - 1;
-        while(mi>0 && mj>0 && board[mi][mj] == oplayer){
-            mulpts.add(new Point(mi,mj));
-            mi--;
-            mj--;
-        }
-        if(mi>=0 && mj>=0 && board[mi][mj] == player && mulpts.size()>0){
-            allReversePoints.addAll(mulpts);
-        }
-
-        //move up right
-        ArrayList<Point> murpts = new ArrayList<>();
-        mi = i - 1;
-        mj = j + 1;
-        while(mi>0 && mj<7 && board[mi][mj] == oplayer){
-            murpts.add(new Point(mi,mj));
-            mi--;
-            mj++;
-        }
-        if(mi>=0 && mj<=7 && board[mi][mj] == player && murpts.size()>0){
-            allReversePoints.addAll(murpts);
-        }
-
-        //move down left
-        ArrayList<Point> mdlpts = new ArrayList<>();
-        mi = i + 1;
-        mj = j - 1;
-        while(mi<7 && mj>0 && board[mi][mj] == oplayer){
-            mdlpts.add(new Point(mi,mj));
-            mi++;
-            mj--;
-        }
-        if(mi<=7 && mj>=0 && board[mi][mj] == player && mdlpts.size()>0){
-            allReversePoints.addAll(mdlpts);
-        }
-
-        //move down right
-        ArrayList<Point> mdrpts = new ArrayList<>();
-        mi = i + 1;
-        mj = j + 1;
-        while(mi<7 && mj<7 && board[mi][mj] == oplayer){
-            mdrpts.add(new Point(mi,mj));
-            mi++;
-            mj++;
-        }
-        if(mi<=7 && mj<=7 && board[mi][mj] == player && mdrpts.size()>0){
-            allReversePoints.addAll(mdrpts);
-        }
-
-        return allReversePoints;
-    }
-    public static int[][] getNewBoardAfterMove(int[][] board, Point move , int player){
-        //get clone of old board
-        int[][] newboard = new int[8][8];
-        for (int k = 0; k < 8; k++) {
-            for (int l = 0; l < 8; l++) {
-                newboard[k][l] = board[k][l];
-            }
-        }
-
-        //place piece
-        newboard[move.x][move.y] = player;
-        //reverse pieces
-        ArrayList<Point> rev = getReversePoints(newboard,player,move.x,move.y);
-        for(Point pt : rev){
-            newboard[pt.x][pt.y] = player;
-        }
-
-        return newboard;
-    }
-
-    public static boolean canPlay(int[][] board,int player,int i,int j){
-
-        if(board[i][j] != 0) return false;
-
-        int mi , mj , c;
-        int oplayer = ((player == 1) ? 2 : 1);
-
-        //move up
-        mi = i - 1;
-        mj = j;
-        c = 0;
-        while(mi>0 && board[mi][mj] == oplayer){
-            mi--;
-            c++;
-        }
-        if(mi>=0 && board[mi][mj] == player && c>0) return true;
-
-
-        //move down
-        mi = i + 1;
-        mj = j;
-        c = 0;
-        while(mi<7 && board[mi][mj] == oplayer){
-            mi++;
-            c++;
-        }
-        if(mi<=7 && board[mi][mj] == player && c>0) return true;
-
-        //move left
-        mi = i;
-        mj = j - 1;
-        c = 0;
-        while(mj>0 && board[mi][mj] == oplayer){
-            mj--;
-            c++;
-        }
-        if(mj>=0 && board[mi][mj] == player && c>0) return true;
-
-        //move right
-        mi = i;
-        mj = j + 1;
-        c = 0;
-        while(mj<7 && board[mi][mj] == oplayer){
-            mj++;
-            c++;
-        }
-        if(mj<=7 && board[mi][mj] == player && c>0) return true;
-
-        //move up left
-        mi = i - 1;
-        mj = j - 1;
-        c = 0;
-        while(mi>0 && mj>0 && board[mi][mj] == oplayer){
-            mi--;
-            mj--;
-            c++;
-        }
-        if(mi>=0 && mj>=0 && board[mi][mj] == player && c>0) return true;
-
-        //move up right
-        mi = i - 1;
-        mj = j + 1;
-        c = 0;
-        while(mi>0 && mj<7 && board[mi][mj] == oplayer){
-            mi--;
-            mj++;
-            c++;
-        }
-        if(mi>=0 && mj<=7 && board[mi][mj] == player && c>0) return true;
-
-        //move down left
-        mi = i + 1;
-        mj = j - 1;
-        c = 0;
-        while(mi<7 && mj>0 && board[mi][mj] == oplayer){
-            mi++;
-            mj--;
-            c++;
-        }
-        if(mi<=7 && mj>=0 && board[mi][mj] == player && c>0) return true;
-
-        //move down right
-        mi = i + 1;
-        mj = j + 1;
-        c = 0;
-        while(mi<7 && mj<7 && board[mi][mj] == oplayer){
-            mi++;
-            mj++;
-            c++;
-        }
-        if(mi<=7 && mj<=7 && board[mi][mj] == player && c>0) return true;
-
-        //when all hopes fade away
-        return false;
-    }
-
-    public static ArrayList<Point> getAllPossibleMoves(int[][] board, int player){
-        ArrayList<Point> result = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if(canPlay(board,player,i,j)){
-                    result.add(new Point(i,j));
-                }
-            }
-        }
-        System.out.println("number of possible moves : " + result.size());
-        return result;
-    }
-
-
-    public static int evalDiscDiff(int[][] board , int player){
-        int oplayer = (player==1) ? 2 : 1;
-
-        int mySC = getPlayerStoneCount(board,player);
-        int opSC = getPlayerStoneCount(board,oplayer);
-        System.out.println("the value of node heuristic is "+ 100 * (mySC - opSC) / (mySC + opSC)+"**************************");
-
-        return 100 * (mySC - opSC) / (mySC + opSC);
-    }
-
-    public static int getPlayerStoneCount(int[][] board, int player){
-        int score = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if(board[i][j] == player) score++;
-            }
-        }
-        return score;
-    }
-    public static int[][] resetBoard(){
-        int[][]board = new int[8][8];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j]=0;
-            }
-        }
-        //initial board state
-        board[3][3] = 2;
-        board[3][4] = 1;
-        board[4][3] = 1;
-        board[4][4] = 2;
-        return board;
-    }
-    public static boolean isGameFinished(int[][] board){
-        return !(hasAnyMoves(board,1) || hasAnyMoves(board,2));
-    }
-    public static boolean hasAnyMoves(int[][] board, int player){
-        return getAllPossibleMoves(board,player).size() > 0;
-    }
     //returns minimax value for a given node (without A/B pruning)
-    public static int MM(int[][] node,int player,int depth,boolean max){
-        System.out.println("Nodes Explored : " + AIPlayer.nodesExplored);
-        AIPlayer.nodesExplored++;
+    public static int MM(Board node, DISK player, int depth, boolean max){
+        System.out.println("Nodes Explored : " + nodesExplored);
+        nodesExplored++;
         System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
-        printBoard(node);
+        System.out.println(node);
         //if terminal reached or depth limit reached evaluate
-        if(depth == 0 || isGameFinished(node)){
-            //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
+        if(depth == 0 || node.gameEnded()){
+//            heuristic calculation
+            System.out.println("value of heuristic is : " + evalDiscDiff(node,player));
             return evalDiscDiff(node,player);
         }
-        int oplayer = (player==1) ? 2 : 1;
+        DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
-        if((max && !hasAnyMoves(node,player)) || (!max && !hasAnyMoves(node,oplayer))){
-            System.out.println("Forfeit State Reached !");
-            return MM(node,player,depth-1,!max);
-        }
+//        if((max && !hasAnyMoves(node,player)) || (!max && !hasAnyMoves(node,oplayer))){
+//            System.out.println("Forfeit State Reached !");
+//            return MM(node,player,depth-1,!max);
+//        }
         int score;
         if(max){
+            Board newNode = new Board();
+            try {
+                newNode = (Board) node.clone();
+            }catch (CloneNotSupportedException e)
+            {
+                e.printStackTrace();
+            }
             //maximizing
             score = Integer.MIN_VALUE;
-            for(Point move : getAllPossibleMoves(node,player)){ //my turn
+//            System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
+            for(Point move : newNode.getAllPossibleMoves())
+            { //my turn
                 //create new node
-                int[][] newNode = getNewBoardAfterMove(node,move,player);
+//                System.out.println("node before update : **************************************************");
+                newNode.updateBoard(oplayer,move.x,move.y);
+//                System.out.println("node after update : **************************************************");
+
                 //recursive call
                 int childScore = MM(newNode,player,depth-1,false);
                 if(childScore > score) score = childScore;
             }
-        }else{
+        }
+        else{
             //minimizing
+            Board newNode = new Board();
+            try{
+                newNode = (Board) node.clone();
+            }catch (CloneNotSupportedException e){
+                e.printStackTrace();
+            }
+
+
             score = Integer.MAX_VALUE;
-            for(Point move : getAllPossibleMoves(node,oplayer)){ //opponent turn
+//            System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
+            for(Point move : newNode.getAllPossibleMoves()){ //opponent turn
                 //create new node
-                int[][] newNode = getNewBoardAfterMove(node,move,oplayer);
+//                System.out.println("node before update : **************************************************");
+                newNode.updateBoard(oplayer,move.x,move.y);
+//                System.out.println("node after update : **************************************************");
                 //recursive call
                 int childScore = MM(newNode,player,depth-1,true);
                 if(childScore < score) score = childScore;
             }
         }
-        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
-        return score;
-    }
-    public static int MMAB(int[][] node,int player,int depth,boolean max,int alpha,int beta){
-        AIPlayer.nodesExplored++;
-        System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
-        printBoard(node);
-        //if terminal reached or depth limit reached evaluate
-        if(depth == 0 || isGameFinished(node)){
-            //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
-            return evalDiscDiff(node,player);
-        }
-        int oplayer = (player==1) ? 2 : 1;
-        //if no moves available then forfeit turn
-        if((max && !minimax.hasAnyMoves(node,player)) || (!max && !minimax.hasAnyMoves(node,oplayer))){
-            //System.out.println("Forfeit State Reached !");
-            return MMAB(node,player,depth-1,!max,alpha,beta);
-        }
-        int score;
-        if(max){
-            //maximizing
-            score = Integer.MIN_VALUE;
-            for(Point move : minimax.getAllPossibleMoves(node,player)){ //my turn
-                //create new node
-                int[][] newNode = minimax.getNewBoardAfterMove(node,move,player);
-                //recursive call
-                int childScore = MMAB(newNode,player,depth-1,false,alpha,beta);
-                if(childScore > score) score = childScore;
-                //update alpha
-                if(score > alpha) alpha = score;
-                if(beta <= alpha) break; //Beta Cutoff
-            }
-        }else{
-            //minimizing
-            score = Integer.MAX_VALUE;
-            for(Point move : minimax.getAllPossibleMoves(node,oplayer)){ //opponent turn
-                //create new node
-                int[][] newNode = minimax.getNewBoardAfterMove(node,move,oplayer);
-                //recursive call
-                int childScore = MMAB(newNode,player,depth-1,true,alpha,beta);
-                if(childScore < score) score = childScore;
-                //update beta
-                if(score < beta) beta = score;
-                if(beta <= alpha) break; //Alpha Cutoff
-            }
-        }
-        System.out.println("the score is: "+score+"\tat node "+AIPlayer.nodesExplored);
+//        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
         return score;
     }
 
-    public static void printBoard(int [][] board){
-        StringBuilder sb = new StringBuilder();
-        sb.append("  a b c d e f g h \n");
-        for (int row = 0; row < 8; row++) {
-            sb.append(row+1 +" ");
-            for (int col = 0; col < 8; col++) {
-                sb.append(board[row][col]).append(" ");
-            }
-            sb.append("\n");
-        }
-        sb.append("  1 2 3 4 5 6 7 8");
-        System.out.println(sb);
+    public static int evalDiscDiff(Board board , DISK player){
+        DISK oplayer = (player==DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
+
+        int mySC = board.getScore(player);
+        int opSC = board.getScore(oplayer);
+//        System.out.println("the value of node heuristic is "+ 100 * (mySC - opSC) / (mySC + opSC)+"**************************");
+
+        return 100 * (mySC - opSC) / (mySC + opSC);
     }
 
-
-    public static void main(String[] args)
-    {
-        Board b = new Board();
-        int[][] board = resetBoard();
-        printBoard(board);
-        AIPlayer ai = new AIPlayer(b,'B', 2);
-        System.out.println("the best move is  " + ai.makeMove(board, 2,15));
-//        ArrayList<Point> points = getAllPossibleMoves(board,2);
-//        for (Point p:points)
-//        {
-//            board[p.x][p.y]=5;
-//        }
-//        printBoard(board);
-    }
 
 
 }
