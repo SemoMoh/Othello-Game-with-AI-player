@@ -29,14 +29,15 @@ public class Minimax {
 
     //returns minimax value for a given node (without A/B pruning)
     public static int MM(Board node, DISK player, int depth, boolean max){
-        System.out.println("Nodes Explored : " + nodesExplored);
         nodesExplored++;
+        System.out.println("Nodes Explored : " + nodesExplored);
+
         System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
         System.out.println(node);
         //if terminal reached or depth limit reached evaluate
         if(depth == 0 || node.gameEnded()){
 //            heuristic calculation
-            System.out.println("value of heuristic is : " + evalDiscDiff(node,player));
+            System.out.println("value of heuristic is : " + evalDiscDiff(node,player)+"***************************************************************");
             return evalDiscDiff(node,player);
         }
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
@@ -47,18 +48,18 @@ public class Minimax {
 //        }
         int score;
         if(max){
-            Board newNode = new Board();
-            try {
-                newNode = (Board) node.clone();
-            }catch (CloneNotSupportedException e)
-            {
-                e.printStackTrace();
-            }
             //maximizing
             score = Integer.MIN_VALUE;
 //            System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
-            for(Point move : newNode.getAllPossibleMoves())
+            for(Point move : node.getAllPossibleMoves())
             { //my turn
+                Board newNode = new Board();
+                try {
+                    newNode = (Board) node.clone();
+                }catch (CloneNotSupportedException e)
+                {
+                    e.printStackTrace();
+                }
                 //create new node
 //                System.out.println("node before update : **************************************************");
                 newNode.updateBoard(oplayer,move.x,move.y);
@@ -71,19 +72,18 @@ public class Minimax {
         }
         else{
             //minimizing
-            Board newNode = new Board();
-            try{
-                newNode = (Board) node.clone();
-            }catch (CloneNotSupportedException e){
-                e.printStackTrace();
-            }
-
 
             score = Integer.MAX_VALUE;
 //            System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
-            for(Point move : newNode.getAllPossibleMoves()){ //opponent turn
+            for(Point move : node.getAllPossibleMoves()){ //opponent turn
                 //create new node
 //                System.out.println("node before update : **************************************************");
+                Board newNode = new Board();
+                try{
+                    newNode = (Board) node.clone();
+                }catch (CloneNotSupportedException e){
+                    e.printStackTrace();
+                }
                 newNode.updateBoard(oplayer,move.x,move.y);
 //                System.out.println("node after update : **************************************************");
                 //recursive call
@@ -94,6 +94,7 @@ public class Minimax {
 //        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
         return score;
     }
+
 
     public static int evalDiscDiff(Board board , DISK player){
         DISK oplayer = (player==DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
