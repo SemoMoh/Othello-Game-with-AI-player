@@ -1,11 +1,13 @@
 package com.cse.ai.othellogame.gui.gamescreen;
 
+import com.cse.ai.othellogame.backend.game.DISK;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
@@ -21,7 +23,12 @@ public class Cell extends StackPane implements Initializable {
     private static Image blackHint;
     private static Image whiteHint;
     private ImageView displayedImage;
+    private int index;
 
+    public Cell(int index) {
+        this();
+        this.index = index;
+    }
 
     public Cell() {
         // load all images if not loaded
@@ -30,11 +37,6 @@ public class Cell extends StackPane implements Initializable {
             whiteDisc = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/board/cells/white.png")));
             whiteHint = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/board/cells/white-hint.png")));
             blackHint = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/board/cells/black-hint.png")));
-/*            blackDisc = loadSVGImage("/images/board/cells/black.svg");
-            whiteDisc = loadSVGImage("/images/board/cells/white.svg");
-            whiteHint = loadSVGImage("/images/board/cells/white-hint.svg");
-            blackHint = loadSVGImage("/images/board/cells/black-hint.svg");*/
-
         }
 
         //load fxml file
@@ -49,55 +51,49 @@ public class Cell extends StackPane implements Initializable {
         }
     }
 
-    /**
-     * @param color
-     * @param isHint
-     */
-    public void setDisplayedImage(char color, boolean isHint) {
-        if (color == 'E') {
-            this.displayedImage.setImage(null);
-        }
 
-        if (isHint) {
-            if (color == 'B') {
+    public void setDisplayedImage(DISK color) {
+        switch (color) {
+            case EMPTY:
+                this.displayedImage.setImage(null);
+                break;
+            case BLACK_HINT:
                 this.displayedImage.setImage(blackHint);
-            } else {
+                break;
+            case WHITE_HINT:
                 this.displayedImage.setImage(whiteHint);
-            }
-        } else {
-            if (color == 'B') {
+                break;
+            case BLACK:
                 this.displayedImage.setImage(blackDisc);
-            } else {
+                break;
+            case WHITE:
                 this.displayedImage.setImage(whiteDisc);
-            }
+                break;
         }
     }
 
-    /**
-     * @return
-     */
-    public char getState() {
-        if (displayedImage.getImage().equals(blackDisc)) {
-            return 'B';
+
+    public DISK getState() {
+        if (displayedImage.getImage() == null) {
+            return DISK.EMPTY;
+        } else if (displayedImage.getImage().equals(blackDisc)) {
+            return DISK.BLACK;
         } else if (displayedImage.getImage().equals(whiteDisc)) {
-            return 'W';
-        } else if (displayedImage.getImage() == null) {
-            return 'E';
+            return DISK.WHITE;
         } else {
-            return 'H';
+            return DISK.HINT;
         }
     }
 
-    public void changeState() {
-        char state = getState();
-        if (state == 'H') {
+    public void changeState(MouseEvent event) {
+        DISK state = getState();
+        if (state == DISK.HINT) {
             if (displayedImage.getImage().equals(blackHint)) {
-                setDisplayedImage('B', false);
+                setDisplayedImage(DISK.BLACK);
             } else if (displayedImage.getImage().equals((whiteHint))) {
-                setDisplayedImage('W', false);
+                setDisplayedImage(DISK.WHITE);
             }
         }
-        System.out.println("Pressed");
     }
 
     @Override
@@ -123,17 +119,16 @@ public class Cell extends StackPane implements Initializable {
         return this;
     }
 
-/*    private Image loadSVGImage(String path) {
-        try {
-            FileInputStream inputStream = new FileInputStream(path);
-            SVGImage svgImage = new SVGImage();
+    public void setIndex(int x) {
+        index = x;
+    }
 
-            return new Image(inputStream);
-        } catch (FileNotFoundException e) {
-            System.err.println("SVG file not found: " + path);
-            e.printStackTrace();
-            return null;
-        }
-    }*/
+    public int getIndex() {
+        return index;
+    }
 
+    @Override
+    public String toString() {
+        return Integer.toString(index);
+    }
 }

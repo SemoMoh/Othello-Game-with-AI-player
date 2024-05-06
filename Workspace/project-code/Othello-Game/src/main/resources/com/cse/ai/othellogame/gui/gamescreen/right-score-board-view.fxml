@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="162.0" prefWidth="654.0" style="-fx-background-color: transparent; -fx-border-color: transparent;"
+         type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <StackPane fx:id="scoreRec" alignment="CENTER_LEFT" layoutX="79.0" layoutY="24.0" prefHeight="115.0"
+              prefWidth="575.0"
+              style="-fx-background-color: linear-gradient(to left, rgba(2, 2, 2, 0) 0%, rgba(14, 45, 41, 0.72) 43.5%, rgba(6, 38, 21, 0.9) 97.5%);;">
+      <padding>
+         <Insets left="94.0"/>
+      </padding>
+      <Label fx:id="playerName" text="AI Player" textFill="WHITE">
+         <font>
+            <Font name="Arial Nova Cond" size="48.0"/>
+         </font>
+      </Label>
+   </StackPane>
+   <Label fx:id="turnLabel" alignment="CENTER" layoutX="554.0" layoutY="52.0" prefHeight="58.0" prefWidth="115.0"
+          rotate="270.0" text="TURN" textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </Label>
+   <StackPane layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+              prefHeight="158.0" prefWidth="158.0">
+      <ImageView fitHeight="158.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../../../../../../images/board/cells/black.png"/>
+      </ImageView>
+      <Label fx:id="scoreNumber" text="13" textFill="WHITE">
+         <font>
+            <Font name="Maiandra GD" size="102.0"/>
+         </font>
+      </Label>
+   </StackPane>
+</fx:root>

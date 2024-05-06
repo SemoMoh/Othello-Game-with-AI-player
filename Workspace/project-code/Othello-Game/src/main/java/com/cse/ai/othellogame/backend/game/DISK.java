@@ -4,5 +4,9 @@ public enum DISK {
     BLACK,
     WHITE,
     EMPTY,
-    HINT;
+    HINT,
+
+    // Used by GUI
+    BLACK_HINT,
+    WHITE_HINT;
 }

@@ -98,6 +98,33 @@ public class Board {
     }
 
     /**
+     * Called when any player makes a move to update the board with the inserted position.
+     * <p>
+     * <b>Steps:</b>
+     * <ol>
+     *   <li>Check if the position is valid:
+     *     <ul>
+     *       <li>Ensure the position corresponds to one of the DISK.HINT positions.</li>
+     *       <li>Ensure the position is within the range of the board.</li>
+     *     </ul>
+     *   </li>
+     *   <li>Delete all old DISK.HINT characters from the board.</li>
+     *   <li>Place the new disk at its position, representing the player's move.</li>
+     *   <li>Update the other disks on the board according to the insertion position and its color.</li>
+     *   <li>Generate new hints for the next move by the opposing player.</li>
+     * </ol>
+     * </p>
+     *
+     * @param color The player who played this turn (DISK.BLACK or DISK.WHITE).
+     * @param pos   The index of the inserted position (0-based) (range: [0, 63]).
+     */
+    public void updateBoard(DISK color, int pos) {
+        int row = pos / 8;
+        int col = pos % 8;
+        this.updateBoard(color, row, col);
+    }
+
+    /**
      * Called after player's move is inserted on the board.
      * Updates disks opposite of inserted disk horizontally, vertically and diagonally.
      * used in the {@link #updateBoard(DISK, int, int)} method
