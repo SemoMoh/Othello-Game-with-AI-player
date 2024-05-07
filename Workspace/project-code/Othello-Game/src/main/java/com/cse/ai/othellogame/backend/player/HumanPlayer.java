@@ -2,6 +2,11 @@ package com.cse.ai.othellogame.backend.player;
 
 
 import com.cse.ai.othellogame.backend.game.Board;
+import com.cse.ai.othellogame.backend.game.DISK;
+import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
+import javafx.application.Platform;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * A class representing a human player in the game, inheriting from {@link #Player}.
@@ -11,14 +16,20 @@ import com.cse.ai.othellogame.backend.game.Board;
  */
 public class HumanPlayer extends Player{
 
+    private GameScreen gameGUI;
+
     /**
      * Initializes a new instance of the AbstractPlayer class with the specified color and game board.
      *
-     * @param board The color assigned to the player. 'B' for black players, 'W' for white players.
+     * @param board The color assigned to the player. DISK.BLACK for black players, DISK.WHITE for white players.
      * @param color A reference to the game's board.
      */
-    public HumanPlayer(Board board, char color) {
+    public HumanPlayer(Board board, DISK color) {
         super(board, color);
+    }
+
+    public void setGameGUI(GameScreen gameGUI) {
+        this.gameGUI = gameGUI;
     }
 
     /**
@@ -36,6 +47,6 @@ public class HumanPlayer extends Player{
      */
     @Override
     public int makeMove() {
-        return 0;
+        return gameGUI.getInput();
     }
 }
