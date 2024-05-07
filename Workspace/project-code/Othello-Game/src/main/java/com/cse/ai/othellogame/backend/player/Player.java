@@ -12,6 +12,14 @@ import com.cse.ai.othellogame.backend.game.DISK;
  * </p>
  */
 public abstract class Player {
+    public DISK getColor() {
+        return color;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
     /**
      * The color assigned to the player. DISK.BLACK represents black players, and DISK.WHITE represents white players.
      */
