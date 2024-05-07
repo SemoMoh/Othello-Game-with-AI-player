@@ -1,6 +1,7 @@
 package com.cse.ai.othellogame.gui.gamescreen;
 
 import com.cse.ai.othellogame.HelloApplication;
+import com.cse.ai.othellogame.HelloController;
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
 import com.cse.ai.othellogame.backend.player.AIPlayer;
@@ -11,8 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +36,11 @@ public class GameScreen extends Pane implements Initializable {
     @FXML
     public Pane root;
 
+
+
+
+
+
     private boolean blackTurn = true;
 
     public GameScreen(Board board, String playerBlackName, String playerWhiteName,
@@ -46,6 +54,7 @@ public class GameScreen extends Pane implements Initializable {
         leftBoard = new ScoreBoard(playerWhiteName, false);
         rightBoard = new ScoreBoard(playerBlackName, true);
         boardGUI = new BoardGUI(board);
+
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -179,4 +188,12 @@ public class GameScreen extends Pane implements Initializable {
         updateWithHints(false);
         return boardGUI.getInput();
     }
+
+
+    public void restartGame(){
+        System.out.println("K30");
+        HelloController.restart();
+
+    }
+
 }

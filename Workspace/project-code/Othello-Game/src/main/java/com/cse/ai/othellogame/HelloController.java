@@ -27,4 +27,13 @@ public class HelloController {
         //GameSystem game = new GameSystem(new HumanPlayer(board, DISK.BLACK), new HumanPlayer(board, DISK.WHITE), board);
     }
 
+    public static void restart(){
+        Board board = new Board();
+
+        GameScreen g = new GameScreen(board, "H1", "H2", new HumanPlayer(board, DISK.BLACK),
+                new HumanPlayer(board, DISK.WHITE));
+        HelloApplication.scene.setRoot(g);
+        //GameSystem game = new GameSystem(new HumanPlayer(board, DISK.BLACK), new HumanPlayer(board, DISK.WHITE), board);
+
+    }
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+ <fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
          prefHeight="162.0" prefWidth="654.0" style="-fx-background-color: transparent; -fx-border-color: transparent;"
          type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <StackPane fx:id="scoreRec" alignment="CENTER_RIGHT" layoutY="24.0" prefHeight="115.0" prefWidth="575.0"
