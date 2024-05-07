@@ -3,6 +3,8 @@ package com.cse.ai.othellogame.backend.player;
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
 
+import java.awt.*;
+
 /**
  * A class representing an AI player in the game, inheriting from {@link #Player}.
  * <p>
@@ -38,7 +40,7 @@ public class AIPlayer extends Player{
      */
     @Override
     public int makeMove() {
-        return 0;
+        return algorithmEval();
     }
 
     /**
@@ -63,19 +65,48 @@ public class AIPlayer extends Player{
     /**
      * Executes the AI algorithm to determine the best move.
      * <p>
+     *     <b>Steps</b>
+     *     <ol>
+     *         <li>initialize best score and best move</li>
+     *         <li>iterates on every possible move from this board</li>
+     *         <li>recursively call Algorithm on each board updating child score and comparing to best score existing</li>
+     *         <li>if child score is higher than best score update best score and best move</li>
+     *     </ol>
      * Note:
      * This method is used internally by the AIPlayer class to implement the AI logic.
      * </p>
      *
      * @return None, for now.
      */
-    public void algorithmEval(){
-        // TODO: implement this method
+    public int algorithmEval(){
+        System.out.println(getBoard());
+        int bestScore = Integer.MIN_VALUE;
+        Point bestMove = null;
+        System.out.println("number of possible moves is : " + getBoard().getAllPossibleMoves());
+        for(Point move : getBoard().getAllPossibleMoves()){
 
-        // TODO: You can collaborate with the developer of the {@link #calculateHeuristic} method to utilize
-        //       heuristic values in your algorithm. Additionally, consider adding more data fields to the class or a
-        //       new class to assist in the decision-making process.
-
-        // TODO: Update the documentation of the method when you determine the return type.
+            //create new node
+            Board newNode;
+            try {
+                newNode = (Board) getBoard().clone();
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+            newNode.updateBoard(getColor(),move.x,move.y);
+            //recursive call
+//            int childScore = Minimax.MM(newNode,getColor(),2-1,false);
+            int childScore = Minimax.MMAB(newNode,getColor(),2-1,false,Integer.MIN_VALUE,Integer.MAX_VALUE);
+            if(childScore > bestScore) {
+                bestScore = childScore;
+                bestMove = move;
+            }
+        }
+        System.out.println("best move is : " + (bestMove.x*8+ bestMove.y));
+        return bestMove.x*8+ bestMove.y;
+    }
+    public static void main(String[] args){
+        Board board = new Board();
+        AIPlayer ai = new AIPlayer(board,DISK.BLACK,6);
+        ai.makeMove();
     }
 }
