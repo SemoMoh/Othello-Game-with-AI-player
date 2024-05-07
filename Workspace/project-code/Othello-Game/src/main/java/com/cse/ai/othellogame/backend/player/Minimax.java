@@ -61,7 +61,7 @@ public class Minimax {
                 }
                 //create new node
 //                System.out.println("node before update : **************************************************");
-                newNode.updateBoard(oplayer,move.x,move.y);
+                newNode.updateBoard(player,move.x,move.y);
 //                System.out.println("node after update : **************************************************");
 
                 //recursive call
@@ -95,7 +95,7 @@ public class Minimax {
     }
 
 
-    /* This function implements the Minimax algorithm with Alfa Beta pruning.
+    /** This function implements the Minimax algorithm with Alfa Beta pruning.
       Base Case: If the depth is 0 (reached the search limit) or the game is finished, it evaluates the current state using the evalDiscDiff function and returns the score.
       Maximizing Player:
      *       Initializes the score to the minimum possible integer value (assuming the player wants to maximize their score).
