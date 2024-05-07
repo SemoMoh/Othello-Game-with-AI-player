@@ -24,6 +24,7 @@ public class Cell extends StackPane implements Initializable {
     private static Image whiteHint;
     private ImageView displayedImage;
     private int index;
+    private DISK state;
 
     public Cell(int index) {
         this();
@@ -70,6 +71,7 @@ public class Cell extends StackPane implements Initializable {
                 this.displayedImage.setImage(whiteDisc);
                 break;
         }
+        this.state = color;
     }
 
 
@@ -85,15 +87,18 @@ public class Cell extends StackPane implements Initializable {
         }
     }
 
-    public void changeState(MouseEvent event) {
+    public boolean changeState(MouseEvent event) {
         DISK state = getState();
         if (state == DISK.HINT) {
             if (displayedImage.getImage().equals(blackHint)) {
                 setDisplayedImage(DISK.BLACK);
+                return true;
             } else if (displayedImage.getImage().equals((whiteHint))) {
                 setDisplayedImage(DISK.WHITE);
+                return true;
             }
         }
+        return false;
     }
 
     @Override

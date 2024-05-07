@@ -94,6 +94,11 @@ public class Board {
         // update the other disks on the board according to the insertion position and its color
         updateOtherDisks(color, row, col);
         // generate new hints for the next move by the opposing player
+        if(color == DISK.BLACK){
+            color = DISK.WHITE;
+        } else if (color == DISK.WHITE){
+            color = DISK.BLACK;
+        }
         generateNewHints(color);
     }
 
@@ -422,8 +427,21 @@ public class Board {
      * @return {@code true} if the Othello game has ended, {@code false} otherwise.
      */
     public boolean gameEnded() {
-        //TODO: implement this method
-        return false;
+        int black = 0;
+        int white = 0;
+        boolean ended = true;
+        for (DISK d : board){
+            if(d == DISK.HINT){
+               ended = false;
+            }
+            if(d == DISK.BLACK){
+                black++;
+            }
+            if(d == DISK.WHITE){
+                white++;
+            }
+        }
+        return ended || black == 0 && white != 0 || black != 0 && white == 0;
     }
 
     /**
@@ -481,7 +499,7 @@ public class Board {
     private int getScore(DISK color) {
         int count = 0;
         for (DISK c : board) {
-            if (c == DISK.WHITE) {
+            if (c == color) {
                 count++;
             }
         }

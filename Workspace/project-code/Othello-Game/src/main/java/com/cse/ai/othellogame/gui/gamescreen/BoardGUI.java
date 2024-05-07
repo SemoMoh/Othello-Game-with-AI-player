@@ -2,6 +2,7 @@ package com.cse.ai.othellogame.gui.gamescreen;
 
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +15,12 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.CountDownLatch;
 
 public class BoardGUI extends AnchorPane implements Initializable {
     private final Board board;
     private boolean blackTurn;
     private int clickedIndex = -1;
 
-    private final CountDownLatch latch;
 
     @FXML
     public GridPane boardPane;
@@ -31,7 +30,6 @@ public class BoardGUI extends AnchorPane implements Initializable {
     public BoardGUI(Board board) {
         this.board = board;
         this.blackTurn = true;
-        this.latch = new CountDownLatch(1);
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -43,6 +41,7 @@ public class BoardGUI extends AnchorPane implements Initializable {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        updateBoard(false);
     }
 
     public void updateBoard(boolean updateTurn) {
@@ -50,10 +49,10 @@ public class BoardGUI extends AnchorPane implements Initializable {
             Cell cell = (Cell) node;
 
             DISK state = board.getPos(cell.getIndex());
-            if (state != DISK.HINT) {
-
+            if (state != DISK.HINT && state != DISK.BLACK_HINT && state != DISK.WHITE_HINT) {
                 cell.setDisplayedImage(state);
-
+            } else{
+                cell.setDisplayedImage(DISK.EMPTY);
             }
             if (updateTurn) {
                 updateTurn();
@@ -93,10 +92,21 @@ public class BoardGUI extends AnchorPane implements Initializable {
                     // Return the node that was clicked on
                     Node clickedNode = (Node) event.getSource();
                     if (clickedNode instanceof Cell clickedCell) {
-                        if (clickedCell.getState() == DISK.HINT) {
-                            ((Cell) clickedNode).changeState(event);
+                        boolean validInput = clickedCell.changeState(event);
+                        if (validInput) {
                             clickedIndex = clickedCell.getIndex();
-                            latch.countDown(); // Signal that the click has been processed
+                            DISK d = blackTurn ? DISK.BLACK : DISK.WHITE;
+                            board.updateBoard(d, clickedIndex);
+                            System.out.println(board);
+                            blackTurn = !blackTurn;
+                            Platform.runLater(() -> {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                GameScreen.gameScreen.makeHumanMove();
+                            });
                         }
                     }
                     System.out.println("Clicked on: " + clickedNode);
@@ -117,12 +127,7 @@ public class BoardGUI extends AnchorPane implements Initializable {
     }
 
     public int getInput() {
-        try {
-            latch.await(); // Wait for the user to click on a cell with DISK.HINT
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Thread.currentThread().interrupt(); // Restore interrupted status
-        }
+
         int result = clickedIndex;
         clickedIndex = -1;
         return result;

@@ -5,6 +5,7 @@ import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.HumanPlayer;
 import com.cse.ai.othellogame.backend.player.Player;
 import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
+import javafx.application.Platform;
 
 /**
  * The game's backend.
@@ -41,7 +42,7 @@ public class GameSystem {
             ((HumanPlayer) playerWhite).setGameGUI(gameGUI);
         }
 
-        this.gameGUI = new GameScreen(board, blackName, whiteName);
+        this.gameGUI = new GameScreen(board, blackName, whiteName, playerBlack, playerWhite);
 
         if (playerBlack instanceof HumanPlayer) {
             ((HumanPlayer) playerBlack).setGameGUI(gameGUI);
@@ -51,15 +52,17 @@ public class GameSystem {
             ((HumanPlayer) playerWhite).setGameGUI(gameGUI);
         }
         HelloApplication.scene.setRoot(gameGUI);
-        //startGame();
+        Platform.runLater(() -> new Thread(() -> {
+            startGame();
+        }).start());
     }
 
     public void startGame() {
-        while (!board.gameEnded()) {
+        while (true) {
             if (blackTurn) {
                 board.updateBoard(DISK.BLACK, playerBlack.makeMove());
             } else {
-                board.updateBoard(DISK.BLACK, playerWhite.makeMove());
+                board.updateBoard(DISK.WHITE, playerWhite.makeMove());
             }
 
             blackTurn = !blackTurn;

@@ -2,12 +2,9 @@ package com.cse.ai.othellogame;
 
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
-import com.cse.ai.othellogame.backend.game.GameSystem;
-import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.HumanPlayer;
 import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -24,8 +21,10 @@ public class HelloController {
 
         Board board = new Board();
 
-
-        GameSystem game = new GameSystem(new HumanPlayer(board, DISK.BLACK), new HumanPlayer(board, DISK.WHITE), board);
+        GameScreen g = new GameScreen(board, "H1", "H2", new HumanPlayer(board, DISK.BLACK),
+                new HumanPlayer(board, DISK.WHITE));
+        HelloApplication.scene.setRoot(g);
+        //GameSystem game = new GameSystem(new HumanPlayer(board, DISK.BLACK), new HumanPlayer(board, DISK.WHITE), board);
     }
 
 }
