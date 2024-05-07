@@ -4,7 +4,6 @@ import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Minimax {
     static int nodesExplored;
@@ -94,6 +93,8 @@ public class Minimax {
 //        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
         return score;
     }
+
+
     /* This function implements the Minimax algorithm with Alfa Beta pruning.
       Base Case: If the depth is 0 (reached the search limit) or the game is finished, it evaluates the current state using the evalDiscDiff function and returns the score.
       Maximizing Player:
@@ -116,13 +117,13 @@ public class Minimax {
      * @param beta     The current maximum score for the minimizing player along the current path.
      */
 
- public static int MMAB(Board node,DISK player,int depth,boolean max,int alpha,int beta){
+    public static int MMAB(Board node,DISK player,int depth,boolean max,int alpha,int beta){
         System.out.println("Nodes Explored : " + nodesExplored);
         nodesExplored++;
         System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
         System.out.println(node);
         //if terminal reached or depth limit reached evaluate
-        if(depth == 0  node.gameEnded()){
+        if(depth == 0 || node.gameEnded()){
             //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
             return evalDiscDiff(node,player);
         }

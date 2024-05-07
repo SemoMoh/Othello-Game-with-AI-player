@@ -95,7 +95,7 @@ public class AIPlayer extends Player{
             newNode.updateBoard(getColor(),move.x,move.y);
             //recursive call
 //            int childScore = Minimax.MM(newNode,getColor(),2-1,false);
-            int childScore = Minimax.MMAB(newNode,getColor(),2-1,false,Integer.MIN_VALUE,Integer.MIN_VALUE);
+            int childScore = Minimax.MMAB(newNode,getColor(),2-1,false,Integer.MIN_VALUE,Integer.MAX_VALUE);
             if(childScore > bestScore) {
                 bestScore = childScore;
                 bestMove = move;
