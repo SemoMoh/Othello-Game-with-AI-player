@@ -54,9 +54,6 @@ public class BoardGUI extends AnchorPane implements Initializable {
             } else{
                 cell.setDisplayedImage(DISK.EMPTY);
             }
-            if (updateTurn) {
-                updateTurn();
-            }
         }
     }
 
@@ -74,9 +71,6 @@ public class BoardGUI extends AnchorPane implements Initializable {
             } else {
                 cell.setDisplayedImage(state);
             }
-        }
-        if (updateTurn) {
-            updateTurn();
         }
     }
 
@@ -98,7 +92,6 @@ public class BoardGUI extends AnchorPane implements Initializable {
                             DISK d = blackTurn ? DISK.BLACK : DISK.WHITE;
                             board.updateBoard(d, clickedIndex);
                             System.out.println(board);
-                            blackTurn = !blackTurn;
                             Platform.runLater(() -> {
                                 try {
                                     Thread.sleep(100);

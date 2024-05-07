@@ -36,7 +36,7 @@ public class GameScreen extends Pane implements Initializable {
     public Pane root;
 
 
-    private boolean blackTurn = true;
+    private Boolean blackTurn = true;
 
     public GameScreen(Board board, String playerBlackName, String playerWhiteName,
                       Player playerBlack, Player playerWhite) {
@@ -73,36 +73,50 @@ public class GameScreen extends Pane implements Initializable {
     private void makeMove() {
         if (blackTurn) {
             if (bPlayerAI) {
-                this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
-                update(true);
+/*                this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
+                update(true);*/
                 Platform.runLater(() -> {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
+                    update(true);
                     if (!board.gameEnded() && !flowEnded) {
                         makeMove();
                     }
                 });
             } else {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 updateWithHints(false);
             }
         } else {
             if (wPlayerAI) {
-                this.board.updateBoard(DISK.WHITE, playerWhite.makeMove());
-                update(true);
+ /*               this.board.updateBoard(DISK.WHITE, playerWhite.makeMove());
+                update(true);*/
                 Platform.runLater(() -> {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
+                    update(true);
                     if (!board.gameEnded() && !flowEnded) {
                         makeMove();
                     }
                 });
             } else {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 updateWithHints(false);
             }
         }
@@ -156,8 +170,11 @@ public class GameScreen extends Pane implements Initializable {
     }
 
     private void updateTurn() {
-        blackTurn = !blackTurn;
+        synchronized (blackTurn){
+            blackTurn = !blackTurn;
+        }
 
+        boardGUI.updateTurn();
         if (blackTurn) {
             rightBoard.setTurn();
             leftBoard.unsetTurn();
