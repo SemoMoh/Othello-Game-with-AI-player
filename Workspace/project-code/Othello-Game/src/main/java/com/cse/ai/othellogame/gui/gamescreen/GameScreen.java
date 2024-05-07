@@ -12,10 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,14 +29,11 @@ public class GameScreen extends Pane implements Initializable {
     private final boolean bPlayerAI;
     private final boolean wPlayerAI;
 
+    private boolean flowEnded = false;
     public static GameScreen gameScreen;
 
     @FXML
     public Pane root;
-
-
-
-
 
 
     private boolean blackTurn = true;
@@ -82,11 +77,13 @@ public class GameScreen extends Pane implements Initializable {
                 update(true);
                 Platform.runLater(() -> {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    makeMove();
+                    if (!board.gameEnded() && !flowEnded) {
+                        makeMove();
+                    }
                 });
             } else {
                 updateWithHints(false);
@@ -101,7 +98,9 @@ public class GameScreen extends Pane implements Initializable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    makeMove();
+                    if (!board.gameEnded() && !flowEnded) {
+                        makeMove();
+                    }
                 });
             } else {
                 updateWithHints(false);
@@ -133,8 +132,9 @@ public class GameScreen extends Pane implements Initializable {
         rightBoard.setScore(board.getBlackScore());
         boardGUI.updateBoard(updateTurn);
         if (updateTurn) {
-            if(board.gameEnded()){
+            if (board.gameEnded()) {
                 HelloApplication.scene.setRoot(new Label("Game ended"));
+                flowEnded = true;
                 System.out.println("Game ended");
             }
             updateTurn();
@@ -146,6 +146,11 @@ public class GameScreen extends Pane implements Initializable {
         rightBoard.setScore(board.getBlackScore());
         boardGUI.updateBoardWithHints(updateTurn);
         if (updateTurn) {
+            if (board.gameEnded()) {
+                HelloApplication.scene.setRoot(new Label("Game ended"));
+                flowEnded = true;
+                System.out.println("Game ended");
+            }
             updateTurn();
         }
     }
@@ -190,7 +195,7 @@ public class GameScreen extends Pane implements Initializable {
     }
 
 
-    public void restartGame(){
+    public void restartGame() {
         System.out.println("K30");
         HelloController.restart();
 
