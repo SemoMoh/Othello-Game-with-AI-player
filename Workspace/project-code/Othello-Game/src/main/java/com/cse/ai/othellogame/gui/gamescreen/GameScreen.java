@@ -105,7 +105,7 @@ public class GameScreen extends Pane implements Initializable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
+                    this.board.updateBoard(DISK.WHITE, playerWhite.makeMove());
                     update(true);
                     if (!board.gameEnded() && !flowEnded) {
                         makeMove();
@@ -147,9 +147,10 @@ public class GameScreen extends Pane implements Initializable {
         boardGUI.updateBoard(updateTurn);
         if (updateTurn) {
             if (board.gameEnded()) {
-                HelloApplication.scene.setRoot(new Label("Game ended"));
+                char winner = board.getWinner();
+                //HelloApplication.scene.setRoot(new Label("Game ended, Winner: " + winner));
                 flowEnded = true;
-                System.out.println("Game ended");
+                System.out.println("Game ended, Winner: " + winner);
             }
             updateTurn();
         }
@@ -161,9 +162,10 @@ public class GameScreen extends Pane implements Initializable {
         boardGUI.updateBoardWithHints(updateTurn);
         if (updateTurn) {
             if (board.gameEnded()) {
-                HelloApplication.scene.setRoot(new Label("Game ended"));
+                char winner = board.getWinner();
+                //HelloApplication.scene.setRoot(new Label("Game ended, Winner: " + winner));
                 flowEnded = true;
-                System.out.println("Game ended");
+                System.out.println("Game ended, Winner: " + winner);
             }
             updateTurn();
         }
@@ -215,7 +217,7 @@ public class GameScreen extends Pane implements Initializable {
     public void restartGame() {
         System.out.println("K30");
         HelloController.restart();
-
+        flowEnded = true;
     }
 
 }

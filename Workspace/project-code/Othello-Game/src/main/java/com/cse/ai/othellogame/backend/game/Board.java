@@ -476,7 +476,7 @@ public class Board implements Cloneable{
                 white++;
             }
         }
-        return ended || black == 0 && white != 0 || black != 0 && white == 0;
+        return ended;
     }
 
     /**

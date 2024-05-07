@@ -23,7 +23,7 @@ public class HelloController {
         Board board = new Board();
 
         GameScreen g = new GameScreen(board, "H1", "H2", new AIPlayer(board, DISK.BLACK, 0),
-                new HumanPlayer(board, DISK.WHITE));
+                new AIPlayer(board, DISK.WHITE, 2));
         HelloApplication.scene.setRoot(g);
         //GameSystem game = new GameSystem(new HumanPlayer(board, DISK.BLACK), new HumanPlayer(board, DISK.WHITE), board);
     }
