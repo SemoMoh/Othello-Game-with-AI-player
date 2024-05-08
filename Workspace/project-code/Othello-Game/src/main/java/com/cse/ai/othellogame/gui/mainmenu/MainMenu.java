@@ -32,19 +32,19 @@ public class MainMenu extends Pane implements Initializable {
     public Pane root;
 
     @FXML
-    private Button whitePlayerType;
+    public Button whitePlayerType;
 
 
     @FXML
-    private TextField blackPlayerName;
+    public TextField blackPlayerName;
     @FXML
-    private Button blackPlayerType;
+    public Button blackPlayerType;
 
     @FXML
-    private Button whiteDifficulty;
+    public Button whiteDifficulty;
 
     @FXML
-    private Button startNewGameButton;
+    public Button startNewGameButton;
 
 
 
@@ -68,16 +68,16 @@ public class MainMenu extends Pane implements Initializable {
 
 
 
-    private void changeWhitePlayerType(){}
-    private void changeBlackPlayerType(){}
+    public void changeWhitePlayerType(){}
+    public void changeBlackPlayerType(){}
 
-    private void changeWhiteDifficulty(){}
+    public void changeWhiteDifficulty(){}
 
-    private void changeBlackDifficulty(){}
+    public void changeBlackDifficulty(){}
 
 
 
-    private void startTheGame(){}
+    public void startTheGame(){}
 
 
 

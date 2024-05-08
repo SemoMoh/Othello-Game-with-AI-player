@@ -1,5 +1,6 @@
 package com.cse.ai.othellogame;
 
+import com.cse.ai.othellogame.gui.mainmenu.MainMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         HelloApplication.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        Scene scene = new Scene(new MainMenu(), 1920, 1080);
         HelloApplication.scene = scene;
         stage.setTitle("Hello!");
         stage.setScene(scene);
