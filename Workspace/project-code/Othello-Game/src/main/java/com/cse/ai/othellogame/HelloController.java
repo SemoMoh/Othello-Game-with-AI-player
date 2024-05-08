@@ -5,6 +5,7 @@ import com.cse.ai.othellogame.backend.game.DISK;
 import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.HumanPlayer;
 import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
+import com.cse.ai.othellogame.gui.mainmenu.MainMenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -23,7 +24,9 @@ public class HelloController {
         Board board = new Board();
 
         GameScreen g = new GameScreen(board, "H1", "H2", new AIPlayer(board, DISK.BLACK, 0),
-                new AIPlayer(board, DISK.WHITE, 2));
+                new AIPlayer(board, DISK.WHITE, 6));
+
+        //MainMenu g = new MainMenu();
         HelloApplication.scene.setRoot(g);
         //GameSystem game = new GameSystem(new HumanPlayer(board, DISK.BLACK), new HumanPlayer(board, DISK.WHITE), board);
     }
