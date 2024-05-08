@@ -3,6 +3,8 @@ package com.cse.ai.othellogame.gui.mainmenu;
 import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -29,6 +31,24 @@ public class MainMenu extends Pane implements Initializable {
     @FXML
     public Pane root;
 
+    @FXML
+    private Button whitePlayerType;
+
+
+    @FXML
+    private TextField blackPlayerName;
+    @FXML
+    private Button blackPlayerType;
+
+    @FXML
+    private Button whiteDifficulty;
+
+    @FXML
+    private Button startNewGameButton;
+
+
+
+
     public MainMenu(){
 
         mainMenu = this;
@@ -45,6 +65,21 @@ public class MainMenu extends Pane implements Initializable {
         }
 
     }
+
+
+
+    private void changeWhitePlayerType(){}
+    private void changeBlackPlayerType(){}
+
+    private void changeWhiteDifficulty(){}
+
+    private void changeBlackDifficulty(){}
+
+
+
+    private void startTheGame(){}
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

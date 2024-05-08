@@ -24,7 +24,7 @@
                <Font size="30.0" />
             </font>
          </Text>
-         <Button fx:id="startNewGameButton12" layoutX="32.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Human" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="blackPlayerType" layoutX="32.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeBlackPlayerType" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Human" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="Calibri Bold" size="30.0" />
             </font>
@@ -34,7 +34,7 @@
                <Image url="@../../../../../../images/board/cells/black.png" />
             </image>
          </ImageView>
-         <TextField alignment="CENTER" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="404.0" promptText="Enter Name" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-background-radius: 50; -fx-border-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-text-fill: white; -fx-font-weight: bold;">
+         <TextField fx:id="blackPlayerName" alignment="CENTER" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="404.0" promptText="Enter Name" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-background-radius: 50; -fx-border-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-text-fill: white; -fx-font-weight: bold;">
             <font>
                <Font name="Calibri" size="30.0" />
             </font>
@@ -47,7 +47,7 @@
                <Font size="30.0" />
             </font>
          </Text>
-         <Button fx:id="startNewGameButton1" layoutX="32.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="AI" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="whitePlayerType" layoutX="32.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeWhitePlayerType" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="AI" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="Calibri Bold" size="30.0" />
             </font>
@@ -57,13 +57,13 @@
                <Image url="@../../../../../../images/board/cells/white.png" />
             </image>
          </ImageView>
-         <Button fx:id="startNewGameButton11" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Diffculty: Easy" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="whiteDifficulty" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeWhiteDifficulty" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Diffculty: Easy" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="Calibri Bold" size="30.0" />
             </font>
          </Button>
       </children></Pane>
-   <Button fx:id="startNewGameButton" layoutX="698.0" layoutY="892.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="99.0" prefWidth="523.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Start New Game" textAlignment="CENTER" textFill="WHITE">
+   <Button fx:id="startNewGameButton" layoutX="698.0" layoutY="892.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#startTheGame" prefHeight="99.0" prefWidth="523.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Start New Game" textAlignment="CENTER" textFill="WHITE">
       <font>
          <Font name="Calibri Bold" size="48.0" />
       </font>
