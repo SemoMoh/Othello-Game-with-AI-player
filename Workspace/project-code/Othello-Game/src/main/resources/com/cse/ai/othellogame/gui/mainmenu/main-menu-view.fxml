@@ -13,11 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" type="Pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../../../stylesheets/mainMenuStylesheet.css" type="Pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
 <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
     <Image url="@../../../../../../images/board/reversiModelMainMenu.jpg" />
 </ImageView>
-   <Pane layoutX="251.0" layoutY="368.0" prefHeight="406.0" prefWidth="468.0" style="-fx-background-color: #1a2d0e; -fx-border-color: #60463e; -fx-border-width: 5px; -fx-background-radius: 23px; -fx-border-radius: 23px;">
+   <Pane layoutX="1200.0" layoutY="368.0" prefHeight="406.0" prefWidth="468.0" style="-fx-background-color: #1a2d0e; -fx-border-color: #60463e; -fx-border-width: 5px; -fx-background-radius: 23px; -fx-border-radius: 23px;">
       <children>
          <Text fill="WHITE" layoutX="135.0" layoutY="90.0" smooth="false" stroke="WHITE" strokeLineCap="BUTT" strokeWidth="2.0" text="Player :">
             <font>
@@ -34,13 +34,18 @@
                <Image url="@../../../../../../images/board/cells/black.png" />
             </image>
          </ImageView>
-         <TextField fx:id="blackPlayerName" alignment="CENTER" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="404.0" promptText="Enter Name" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-background-radius: 50; -fx-border-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-text-fill: white; -fx-font-weight: bold;">
+         <TextField fx:id="blackPlayerName" alignment="CENTER" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="404.0" promptText="Enter Name" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-background-radius: 50; -fx-border-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-text-fill: white; -fx-font-weight: bold;" styleClass="inputField">
             <font>
                <Font name="Calibri" size="30.0" />
             </font>
          </TextField>
+         <Button fx:id="blackDifficulty" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeBlackDifficulty" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Difficulty: Easy" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="Calibri Bold" size="30.0" />
+            </font>
+         </Button>
       </children></Pane>
-   <Pane layoutX="1200.0" layoutY="368.0" prefHeight="406.0" prefWidth="468.0" style="-fx-background-color: #1a2d0e; -fx-border-color: #60463e; -fx-border-width: 5px; -fx-background-radius: 23px; -fx-border-radius: 23px;">
+   <Pane layoutX="251.0" layoutY="368.0" prefHeight="406.0" prefWidth="468.0" style="-fx-background-color: #1a2d0e; -fx-border-color: #60463e; -fx-border-width: 5px; -fx-background-radius: 23px; -fx-border-radius: 23px;">
       <children>
          <Text fill="WHITE" layoutX="135.0" layoutY="90.0" smooth="false" stroke="WHITE" strokeLineCap="BUTT" strokeWidth="2.0" text="Player :">
             <font>
@@ -57,11 +62,16 @@
                <Image url="@../../../../../../images/board/cells/white.png" />
             </image>
          </ImageView>
-         <Button fx:id="whiteDifficulty" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeWhiteDifficulty" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Diffculty: Easy" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="whiteDifficulty" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#changeWhiteDifficulty" prefHeight="75.0" prefWidth="404.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Difficulty: Easy" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="Calibri Bold" size="30.0" />
             </font>
          </Button>
+         <TextField fx:id="whitePlayerName" alignment="CENTER" layoutX="32.0" layoutY="265.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="404.0" promptText="Enter Name" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-background-radius: 50; -fx-border-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-text-fill: white; -fx-font-weight: bold;" styleClass="inputField">
+            <font>
+               <Font name="Calibri" size="30.0" />
+            </font>
+         </TextField>
       </children></Pane>
    <Button fx:id="startNewGameButton" layoutX="698.0" layoutY="892.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#startTheGame" prefHeight="99.0" prefWidth="523.0" style="-fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%); -fx-border-radius: 50; -fx-background-radius: 50; -fx-border-color: white; -fx-border-width: 3; -fx-stroke: white; -fx-stroke-width: 10;" text="Start New Game" textAlignment="CENTER" textFill="WHITE">
       <font>

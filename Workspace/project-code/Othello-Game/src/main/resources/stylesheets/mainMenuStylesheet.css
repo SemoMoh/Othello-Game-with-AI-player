@@ -1,0 +1,10 @@
+.inputField {
+    -fx-background-color: linear-gradient(to right, #1c2d0d 5%, #294930 100%);
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-border-color: white;
+    -fx-border-width: 3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 30px; /* Add this line for font size */
+}
