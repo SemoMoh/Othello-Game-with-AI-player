@@ -41,10 +41,14 @@ public class Minimax {
         }
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
-//        if((max && !hasAnyMoves(node,player)) || (!max && !hasAnyMoves(node,oplayer))){
-//            System.out.println("Forfeit State Reached !");
-//            return MM(node,player,depth-1,!max);
-//        }
+        if(node.getAllPossibleMoves().isEmpty()){
+            System.out.println("Forfeit State Reached !");
+            if(max)
+                node.forfeitTurn(player);
+            else
+                node.forfeitTurn(oplayer);
+            return MM(node,player,depth-1,!max);
+        }
         int score;
         if(max){
             //maximizing
@@ -129,10 +133,14 @@ public class Minimax {
         }
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
-//        if((max && !minimax.hasAnyMoves(node,player))  (!max && !minimax.hasAnyMoves(node,oplayer))){
-//            //System.out.println("Forfeit State Reached !");
-//            return MMAB(node,player,depth-1,!max,alpha,beta);
-//        }
+        if(node.getAllPossibleMoves().isEmpty()){
+            System.out.println("Forfeit State Reached !");
+            if(max)
+                node.forfeitTurn(player);
+            else
+                node.forfeitTurn(oplayer);
+            return MMAB(node,player,depth-1,!max,alpha,beta);
+        }
         int score;
         if(max){
             //maximizing
