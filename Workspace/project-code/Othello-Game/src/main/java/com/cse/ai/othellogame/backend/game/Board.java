@@ -69,6 +69,14 @@ public class Board implements Cloneable{
         }
         return possibleMoves;
     }
+    /**
+     * update board with hints for the opposite player
+     * called only when board has no moves for the current player
+     */
+    public void forfeitTurn(DISK player){
+        DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
+        generateNewHints(oplayer);
+    }
 
     /**
      * Constructs a new game board with default dimensions and initializes its black and white disks,
