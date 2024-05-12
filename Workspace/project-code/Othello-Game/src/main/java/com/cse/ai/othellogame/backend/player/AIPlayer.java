@@ -80,7 +80,7 @@ public class AIPlayer extends Player{
      */
     public int algorithmEval(){
         System.out.println(getBoard());
-        int bestScore = Integer.MIN_VALUE;
+        double bestScore = Integer.MIN_VALUE;
         Point bestMove = null;
         System.out.println("number of possible moves is : " + getBoard().getAllPossibleMoves().size());
         for(Point move : getBoard().getAllPossibleMoves()){
@@ -94,7 +94,7 @@ public class AIPlayer extends Player{
             newNode.updateBoard(getColor(),move.x,move.y);
             //recursive call
 //            int childScore = Minimax.MM(newNode,getColor(),difficulty-1,false);
-            int childScore = Minimax.MMAB(newNode,getColor(),difficulty-1,false,Integer.MIN_VALUE,Integer.MAX_VALUE);
+            double childScore = Minimax.MMAB(newNode,getColor(),difficulty-1,false,Integer.MIN_VALUE,Integer.MAX_VALUE);
             if(childScore > bestScore) {
                 bestScore = childScore;
                 bestMove = move;
@@ -105,7 +105,8 @@ public class AIPlayer extends Player{
     }
     public static void main(String[] args){
         Board board = new Board();
-        AIPlayer ai = new AIPlayer(board,DISK.BLACK,6);
+        AIPlayer ai = new AIPlayer(board,DISK.BLACK,2);
         ai.makeMove();
+        System.out.println("done");
     }
 }

@@ -27,7 +27,7 @@ public class Minimax {
      */
 
     //returns minimax value for a given node (without A/B pruning)
-    public static int MM(Board node, DISK player, int depth, boolean max){
+    public static double MM(Board node, DISK player, int depth, boolean max){
         nodesExplored++;
         System.out.println("Nodes Explored : " + nodesExplored);
 
@@ -37,7 +37,8 @@ public class Minimax {
         if(depth == 0 || node.gameEnded()){
 //            heuristic calculation
             System.out.println("value of heuristic is : " + evalDiscDiff(node,player)+"***************************************************************");
-            return evalDiscDiff(node,player);
+//            return evalDiscDiff(node,player);
+            return Heuristic.calculateHeuristic(node.getBoard2D(),player);
         }
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
@@ -49,7 +50,7 @@ public class Minimax {
                 node.forfeitTurn(oplayer);
             return MM(node,player,depth-1,!max);
         }
-        int score;
+        double score;
         if(max){
             //maximizing
             score = Integer.MIN_VALUE;
@@ -69,7 +70,7 @@ public class Minimax {
 //                System.out.println("node after update : **************************************************");
 
                 //recursive call
-                int childScore = MM(newNode,player,depth-1,false);
+                double childScore = MM(newNode,player,depth-1,false);
                 if(childScore > score) score = childScore;
             }
         }
@@ -90,7 +91,7 @@ public class Minimax {
                 newNode.updateBoard(oplayer,move.x,move.y);
 //                System.out.println("node after update : **************************************************");
                 //recursive call
-                int childScore = MM(newNode,player,depth-1,true);
+                double childScore = MM(newNode,player,depth-1,true);
                 if(childScore < score) score = childScore;
             }
         }
@@ -121,7 +122,7 @@ public class Minimax {
      * @param beta     The current maximum score for the minimizing player along the current path.
      */
 
-    public static int MMAB(Board node,DISK player,int depth,boolean max,int alpha,int beta){
+    public static double MMAB(Board node,DISK player,int depth,boolean max,double alpha,double beta){
         System.out.println("Nodes Explored : " + nodesExplored);
         nodesExplored++;
         System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
@@ -129,7 +130,8 @@ public class Minimax {
         //if terminal reached or depth limit reached evaluate
         if(depth == 0 || node.gameEnded()){
             //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
-            return evalDiscDiff(node,player);
+//            return evalDiscDiff(node,player);
+            return Heuristic.calculateHeuristic(node.getBoard2D(),player);
         }
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
@@ -141,7 +143,7 @@ public class Minimax {
                 node.forfeitTurn(oplayer);
             return MMAB(node,player,depth-1,!max,alpha,beta);
         }
-        int score;
+        double score;
         if(max){
             //maximizing
             score = Integer.MIN_VALUE;
@@ -156,7 +158,7 @@ public class Minimax {
                 //create new node
                 newNode.updateBoard(player,move.x, move.y);
                 //recursive call
-                int childScore = MMAB(newNode,player,depth-1,false,alpha,beta);
+                double childScore = MMAB(newNode,player,depth-1,false,alpha,beta);
                 if(childScore > score) score = childScore;
                 //update alpha
                 if(score > alpha) alpha = score;
@@ -179,7 +181,7 @@ public class Minimax {
                 //create new node
                 newNode.updateBoard(oplayer, move.x, move.y);
                 //recursive call
-                int childScore = MMAB(newNode,player,depth-1,true,alpha,beta);
+                double childScore = MMAB(newNode,player,depth-1,true,alpha,beta);
                 if(childScore < score) score = childScore;
                 //update beta
                 if(score < beta) beta = score;

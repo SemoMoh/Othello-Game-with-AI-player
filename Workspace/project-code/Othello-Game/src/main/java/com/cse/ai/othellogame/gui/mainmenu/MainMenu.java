@@ -180,7 +180,7 @@ public class MainMenu extends Pane implements Initializable {
             case "Difficulty: Medium":
                 return 2;
             case "Difficulty: Hard":
-                return 100;
+                return 6;
             default:
                 throw new IllegalArgumentException("Invalid difficulty level: " + buttonText+1);
         }
