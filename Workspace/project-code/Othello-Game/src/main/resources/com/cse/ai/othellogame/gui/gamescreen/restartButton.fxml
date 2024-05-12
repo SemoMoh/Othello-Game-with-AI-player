@@ -9,7 +9,7 @@
          xmlns:fx="http://javafx.com/fxml/1">
     <ImageView  fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" >
         <image>
-            <Image url="@../../../../../../images/board/restart.png"/>
+            <Image url="@../../../../../../images/restart.png"/>
         </image>
     </ImageView>
 </fx:root>

@@ -23,6 +23,10 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    public static void endGame(){
+        stage.close();
+    }
+
     public static void main(String[] args) {
         System.setProperty("prism.allowhidpi", "false");
         launch();

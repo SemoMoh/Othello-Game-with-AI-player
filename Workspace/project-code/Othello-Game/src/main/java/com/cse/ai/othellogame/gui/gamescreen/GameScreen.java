@@ -1,5 +1,6 @@
 package com.cse.ai.othellogame.gui.gamescreen;
 
+import com.cse.ai.othellogame.HelloApplication;
 import com.cse.ai.othellogame.HelloController;
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
@@ -128,7 +129,7 @@ public class GameScreen extends Pane implements Initializable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    
+
                     if (!board.gameEnded() && !flowEnded) {
                         // The game is not ended but there are no hints for the current player
                         if (board.noHints()) {
@@ -254,13 +255,14 @@ public class GameScreen extends Pane implements Initializable {
 
 
     public void restartGame() {
-        System.out.println("K30");
         MainMenu.restartTheGame();
         flowEnded = true;
     }
 
     public void closeGame() {
         // TODO:
+        flowEnded = true;
+        HelloApplication.endGame();
     }
 
 }
