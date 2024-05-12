@@ -656,4 +656,14 @@ public class Board implements Cloneable{
         return sb.toString();
     }
 
+    public boolean noHints() {
+        for(DISK cell : this.board){
+            if(cell == DISK.HINT){
+                return false;
+            }
+        }
+        // update turn?
+
+        return true;
+    }
 }

@@ -163,9 +163,8 @@ public class MainMenu extends Pane implements Initializable {
     }
 
 
-    public void RestartTheGame(){
-
-        this.startTheGame();
+    public static void restartTheGame(){
+        mainMenu.startTheGame();
     }
 
 
