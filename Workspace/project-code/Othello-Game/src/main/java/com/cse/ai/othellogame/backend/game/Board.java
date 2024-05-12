@@ -35,6 +35,8 @@ import java.util.stream.IntStream;
 public class Board implements Cloneable{
     private DISK[] board;
 
+    int PreviousTurnWithNoHint;
+
     private boolean areThereAnyHints;
 
     /**
@@ -470,21 +472,17 @@ public class Board implements Cloneable{
      * @return {@code true} if the Othello game has ended, {@code false} otherwise.
      */
     public boolean gameEnded() {
-        int black = 0;
-        int white = 0;
         boolean ended = true;
-        for (DISK d : board){
-            if(d == DISK.HINT){
-               ended = false;
-            }
-            if(d == DISK.BLACK){
-                black++;
-            }
-            if(d == DISK.WHITE){
-                white++;
-            }
-        }
-        return ended;
+
+        ended = noHints();
+
+        if (ended == true) PreviousTurnWithNoHint+=1;
+        else PreviousTurnWithNoHint =0 ;
+
+        if (PreviousTurnWithNoHint == 2)
+        {return true;}
+
+        return false;
     }
 
     /**
