@@ -2,7 +2,7 @@ package com.cse.ai.othellogame.gui.gamescreen;
 
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
-import javafx.application.Platform;
+import com.cse.ai.othellogame.backend.game.GameSystem;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +18,6 @@ import java.util.ResourceBundle;
 
 public class BoardGUI extends AnchorPane implements Initializable {
     private final Board board;
-    private boolean blackTurn;
     private int clickedIndex = -1;
 
 
@@ -26,10 +25,10 @@ public class BoardGUI extends AnchorPane implements Initializable {
     public GridPane boardPane;
     @FXML
     public AnchorPane root;
+    private GameSystem gameSystem;
 
     public BoardGUI(Board board) {
         this.board = board;
-        this.blackTurn = true;
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -63,7 +62,7 @@ public class BoardGUI extends AnchorPane implements Initializable {
 
             DISK state = board.getPos(cell.getIndex());
             if (state == DISK.HINT) {
-                if (blackTurn) {
+                if (gameSystem.isBlackTurn()){
                     cell.setDisplayedImage(DISK.BLACK_HINT);
                 } else {
                     cell.setDisplayedImage(DISK.WHITE_HINT);
@@ -89,12 +88,12 @@ public class BoardGUI extends AnchorPane implements Initializable {
                         boolean validInput = clickedCell.changeState(event);
                         if (validInput) {
                             clickedIndex = clickedCell.getIndex();
-                            DISK d = blackTurn ? DISK.BLACK : DISK.WHITE;
-                            board.updateBoard(d, clickedIndex);
+                            DISK d = gameSystem.isBlackTurn() ? DISK.BLACK : DISK.WHITE;
                             //System.out.println(board);
-                            Platform.runLater(() -> {
+                            /*Platform.runLater(() -> {
                                 GameScreen.gameScreen.makeHumanMove();
-                            });
+                            });*/
+                            gameSystem.setHumanInput(clickedIndex);
                         }
                     }
                     System.out.println("Clicked on: " + clickedNode);
@@ -110,14 +109,16 @@ public class BoardGUI extends AnchorPane implements Initializable {
         return this;
     }
 
-    public void updateTurn() {
-        blackTurn = !blackTurn;
-    }
+
 
     public int getInput() {
 
         int result = clickedIndex;
         clickedIndex = -1;
         return result;
+    }
+
+    public void setGameSystem(GameSystem gameSystem) {
+        this.gameSystem = gameSystem;
     }
 }
