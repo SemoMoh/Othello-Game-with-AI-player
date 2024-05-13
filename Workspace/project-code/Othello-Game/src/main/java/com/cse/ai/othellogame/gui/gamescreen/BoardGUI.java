@@ -93,11 +93,6 @@ public class BoardGUI extends AnchorPane implements Initializable {
                             board.updateBoard(d, clickedIndex);
                             System.out.println(board);
                             Platform.runLater(() -> {
-                                try {
-                                    Thread.sleep(10);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
                                 GameScreen.gameScreen.makeHumanMove();
                             });
                         }

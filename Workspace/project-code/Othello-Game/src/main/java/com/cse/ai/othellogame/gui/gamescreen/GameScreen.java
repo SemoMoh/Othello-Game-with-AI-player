@@ -1,7 +1,6 @@
 package com.cse.ai.othellogame.gui.gamescreen;
 
 import com.cse.ai.othellogame.HelloApplication;
-import com.cse.ai.othellogame.HelloController;
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
 import com.cse.ai.othellogame.backend.player.AIPlayer;
@@ -30,11 +29,11 @@ public class GameScreen extends Pane implements Initializable {
     private final boolean wPlayerAI;
 
     private boolean flowEnded = false;
+    private boolean gameEnded = false;
     public static GameScreen gameScreen;
 
     @FXML
     public Pane root;
-
 
     private Boolean blackTurn = true;
 
@@ -67,6 +66,7 @@ public class GameScreen extends Pane implements Initializable {
 
         // make the first move
         update(false);
+
         makeMove();
     }
 
@@ -74,110 +74,97 @@ public class GameScreen extends Pane implements Initializable {
         if (blackTurn) {
             if (bPlayerAI) {
                 Platform.runLater(() -> {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (!board.gameEnded() && !flowEnded) {
+                    update(false);
+                    delay(1);
+                    if (!gameEnded && !flowEnded) {
                         // The game is not ended but there are no hints for the current player
                         if (board.noHints()) {
                             // show there are no hints for the current player, and the turn will change to the next player
                             System.out.println("No hints for the current player");
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            delay(1);
+                            board.generateNewHints(DISK.WHITE);
                             update(true);
-                        } else{
+                        } else {
                             this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
                             update(true);
+                            delay(0.1F);
                         }
                         makeMove();
+                    } else {
+                        System.out.println("Game ended, Winner: " + board.getWinner());
                     }
                 });
             } else {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (!board.gameEnded() && !flowEnded) {
+                delay(1);
+                if (!gameEnded && !flowEnded) {
                     // The game is not ended but there are no hints for the current player
                     if (board.noHints()) {
                         // show there are no hints for the current player, and the turn will change to the next player
                         System.out.println("No hints for the current player");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        delay(1);
+                        board.generateNewHints(DISK.WHITE);
                         update(true);
-                    }else{
+                        delay(0.1F);
+                    } else {
                         updateWithHints(false);
                     }
-                    // makeMove();
                 }
             }
         } else {
             if (wPlayerAI) {
                 Platform.runLater(() -> {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    delay(1);
 
-                    if (!board.gameEnded() && !flowEnded) {
+                    if (!gameEnded && !flowEnded) {
                         // The game is not ended but there are no hints for the current player
                         if (board.noHints()) {
                             // show there are no hints for the current player, and the turn will change to the next player
                             System.out.println("No hints for the current player");
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            delay(1);
+                            board.generateNewHints(DISK.BLACK);
                             update(true);
-                        } else{
+                        } else {
                             this.board.updateBoard(DISK.WHITE, playerWhite.makeMove());
                             update(true);
                         }
                         makeMove();
+                    } else {
+                        System.out.println("Game ended, Winner: " + board.getWinner());
                     }
                 });
             } else {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                delay(1);
 
-                if (!board.gameEnded() && !flowEnded) {
+                if (!gameEnded && !flowEnded) {
                     // The game is not ended but there are no hints for the current player
                     if (board.noHints()) {
                         // show there are no hints for the current player, and the turn will change to the next player
                         System.out.println("No hints for the current player");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        delay(1);
+                        board.generateNewHints(DISK.BLACK);
                         update(true);
-                    } else{
+                    } else {
                         updateWithHints(false);
                     }
-                    // makeMove();
                 }
             }
         }
 
     }
 
+    private static void delay(float timeSec) {
+        for (int i = 0; i < 10 * timeSec; i++) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void makeHumanMove() {
         update(true);
+        delay(0.1F);
         makeMove();
     }
 
@@ -187,7 +174,8 @@ public class GameScreen extends Pane implements Initializable {
         rightBoard.setScore(board.getBlackScore());
         boardGUI.updateBoard(updateTurn);
         if (updateTurn) {
-            if (board.gameEnded()) {
+            gameEnded = board.gameEnded();
+            if (gameEnded) {
                 char winner = board.getWinner();
                 //HelloApplication.scene.setRoot(new Label("Game ended, Winner: " + winner));
                 flowEnded = true;
@@ -195,6 +183,7 @@ public class GameScreen extends Pane implements Initializable {
             }
             updateTurn();
         }
+        delay(0.1F);
     }
 
     public void updateWithHints(boolean updateTurn) {
@@ -260,7 +249,6 @@ public class GameScreen extends Pane implements Initializable {
     }
 
     public void closeGame() {
-        // TODO:
         flowEnded = true;
         HelloApplication.endGame();
     }

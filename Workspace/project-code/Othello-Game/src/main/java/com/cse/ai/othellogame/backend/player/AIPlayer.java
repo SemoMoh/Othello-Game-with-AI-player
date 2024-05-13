@@ -79,10 +79,10 @@ public class AIPlayer extends Player{
      * @return None, for now.
      */
     public int algorithmEval(){
-        System.out.println(getBoard());
+        //System.out.println(getBoard());
         double bestScore = Integer.MIN_VALUE;
         Point bestMove = null;
-        System.out.println("number of possible moves is : " + getBoard().getAllPossibleMoves().size());
+        //System.out.println("number of possible moves is : " + getBoard().getAllPossibleMoves().size());
         for(Point move : getBoard().getAllPossibleMoves()){
             //create new node
             Board newNode;
@@ -100,13 +100,13 @@ public class AIPlayer extends Player{
                 bestMove = move;
             }
         }
-        System.out.println("best move is : " + (bestMove.x*8+ bestMove.y));
+        //System.out.println("best move is : " + (bestMove.x*8+ bestMove.y));
         return bestMove.x*8+ bestMove.y;
     }
     public static void main(String[] args){
         Board board = new Board();
         AIPlayer ai = new AIPlayer(board,DISK.BLACK,2);
         ai.makeMove();
-        System.out.println("done");
+        //System.out.println("done");
     }
 }

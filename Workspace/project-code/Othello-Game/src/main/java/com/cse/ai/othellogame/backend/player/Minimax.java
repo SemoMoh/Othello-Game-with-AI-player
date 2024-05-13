@@ -29,21 +29,21 @@ public class Minimax {
     //returns minimax value for a given node (without A/B pruning)
     public static double MM(Board node, DISK player, int depth, boolean max){
         nodesExplored++;
-        System.out.println("Nodes Explored : " + nodesExplored);
+        //System.out.println("Nodes Explored : " + nodesExplored);
 
-        System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
-        System.out.println(node);
+        //System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
+        //System.out.println(node);
         //if terminal reached or depth limit reached evaluate
         if(depth == 0 || node.gameEnded()){
 //            heuristic calculation
-            System.out.println("value of heuristic is : " + evalDiscDiff(node,player)+"***************************************************************");
+            //System.out.println("value of heuristic is : " + evalDiscDiff(node,player)+"***************************************************************");
 //            return evalDiscDiff(node,player);
             return Heuristic.calculateHeuristic(node.getBoard2D(),player);
         }
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
         if(node.getAllPossibleMoves().isEmpty()){
-            System.out.println("Forfeit State Reached !");
+            //System.out.println("Forfeit State Reached !");
             if(max)
                 node.forfeitTurn(player);
             else
@@ -54,7 +54,7 @@ public class Minimax {
         if(max){
             //maximizing
             score = Integer.MIN_VALUE;
-//            System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
+//            //System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
             for(Point move : node.getAllPossibleMoves())
             { //my turn
                 Board newNode = new Board();
@@ -65,9 +65,9 @@ public class Minimax {
                     e.printStackTrace();
                 }
                 //create new node
-//                System.out.println("node before update : **************************************************");
+//                //System.out.println("node before update : **************************************************");
                 newNode.updateBoard(player,move.x,move.y);
-//                System.out.println("node after update : **************************************************");
+//                //System.out.println("node after update : **************************************************");
 
                 //recursive call
                 double childScore = MM(newNode,player,depth-1,false);
@@ -78,10 +78,10 @@ public class Minimax {
             //minimizing
 
             score = Integer.MAX_VALUE;
-//            System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
+//            //System.out.println("number of possible moves is : " + newNode.getAllPossibleMoves());
             for(Point move : node.getAllPossibleMoves()){ //opponent turn
                 //create new node
-//                System.out.println("node before update : **************************************************");
+//                //System.out.println("node before update : **************************************************");
                 Board newNode = new Board();
                 try{
                     newNode = (Board) node.clone();
@@ -89,13 +89,13 @@ public class Minimax {
                     e.printStackTrace();
                 }
                 newNode.updateBoard(oplayer,move.x,move.y);
-//                System.out.println("node after update : **************************************************");
+//                //System.out.println("node after update : **************************************************");
                 //recursive call
                 double childScore = MM(newNode,player,depth-1,true);
                 if(childScore < score) score = childScore;
             }
         }
-//        System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
+//        //System.out.println("the score is: "+score+"at node "+AIPlayer.nodesExplored);
         return score;
     }
 
@@ -123,10 +123,10 @@ public class Minimax {
      */
 
     public static double MMAB(Board node,DISK player,int depth,boolean max,double alpha,double beta){
-        System.out.println("Nodes Explored : " + nodesExplored);
+        //System.out.println("Nodes Explored : " + nodesExplored);
         nodesExplored++;
-        System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
-        System.out.println(node);
+        //System.out.println("at depth "+ depth+" the board is: ////////////////////////////");
+        //System.out.println(node);
         //if terminal reached or depth limit reached evaluate
         if(depth == 0 || node.gameEnded()){
             //BoardPrinter bpe = new BoardPrinter(node,"Depth : " + depth);
@@ -136,7 +136,7 @@ public class Minimax {
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         //if no moves available then forfeit turn
         if(node.getAllPossibleMoves().isEmpty()){
-            System.out.println("Forfeit State Reached !");
+            //System.out.println("Forfeit State Reached !");
             if(max)
                 node.forfeitTurn(player);
             else
@@ -163,7 +163,7 @@ public class Minimax {
                 //update alpha
                 if(score > alpha) alpha = score;
                 if(beta <= alpha) {
-                    System.out.println("---------------------------------------cut off----------------------------------------------");
+                    //System.out.println("---------------------------------------cut off----------------------------------------------");
                     break;
                 } //Beta Cutoff
             }
@@ -186,13 +186,13 @@ public class Minimax {
                 //update beta
                 if(score < beta) beta = score;
                 if(beta <= alpha) {
-                    System.out.println("alpha: "+ alpha+"beta: "+ beta);
-                    System.out.println("---------------------------------------cut off----------------------------------------------");
+                    //System.out.println("alpha: "+ alpha+"beta: "+ beta);
+                    //System.out.println("---------------------------------------cut off----------------------------------------------");
                     break;
                 } //Alpha Cutoff
             }
         }
-        System.out.println("the score is: "+score+"\tat node "+nodesExplored);
+        //System.out.println("the score is: "+score+"\tat node "+nodesExplored);
         return score;
     }
 
@@ -201,7 +201,7 @@ public class Minimax {
 
         int mySC = board.getScore(player);
         int opSC = board.getScore(oplayer);
-//        System.out.println("the value of node heuristic is "+ 100 * (mySC - opSC) / (mySC + opSC)+"**************************");
+//        //System.out.println("the value of node heuristic is "+ 100 * (mySC - opSC) / (mySC + opSC)+"**************************");
 
         return 100 * (mySC - opSC) / (mySC + opSC);
     }

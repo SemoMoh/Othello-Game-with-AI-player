@@ -1,6 +1,5 @@
 package com.cse.ai.othellogame.backend.game;
 
-import java.util.ArrayList;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,11 +31,12 @@ import java.util.stream.IntStream;
  * For the rules of the Othello game, see:
  * <a href="https://othelloacademy.weebly.com/rules.html">Othello Rules</a>
  */
-public class Board implements Cloneable{
+public class Board implements Cloneable {
     private DISK[] board;
 
     int PreviousTurnWithNoHint;
 
+    private boolean previousTurnWithNoHint = false;
     private boolean areThereAnyHints;
 
     /**
@@ -45,37 +45,39 @@ public class Board implements Cloneable{
     @Override
     public Object clone() throws CloneNotSupportedException {
         Object newBoard = new Board();
-        for(int row = 0; row < 8; row++){
-            for(int col = 0; col < 8; col++) {
-                ((Board)newBoard).board[row*8+col] = board[row*8+col];
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                ((Board) newBoard).board[row * 8 + col] = board[row * 8 + col];
             }
         }
         return newBoard;
     }
+
     /**
      * gets List of positions of possible moves
      * <p>
-     *     iterates on board to find positions with Disk.Hint value
+     * iterates on board to find positions with Disk.Hint value
      * </p>
      */
 
     public ArrayList<Point> getAllPossibleMoves() {
         ArrayList<Point> possibleMoves = new ArrayList<>();
 //        DISK [] board = node.getBoard();
-        for(int row = 0; row < 8; row++){
-            for(int col = 0; col < 8; col++) {
-                if (board[row*8 + col] == DISK.HINT) {
-                    possibleMoves.add(new Point(row,col));
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (board[row * 8 + col] == DISK.HINT) {
+                    possibleMoves.add(new Point(row, col));
                 }
             }
         }
         return possibleMoves;
     }
+
     /**
      * update board with hints for the opposite player
      * called only when board has no moves for the current player
      */
-    public void forfeitTurn(DISK player){
+    public void forfeitTurn(DISK player) {
         DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
         generateNewHints(oplayer);
     }
@@ -83,7 +85,7 @@ public class Board implements Cloneable{
     /**
      * Constructs a new game board with default dimensions and initializes its black and white disks,
      * also it shows the hint values for the first move of the game for the black.
-     * areThereAnyHints's value is set false. 
+     * areThereAnyHints's value is set false.
      */
     public Board() {
         board = new DISK[64];
@@ -127,11 +129,11 @@ public class Board implements Cloneable{
     public void updateBoard(DISK color, int row, int col) {
         //TODO: implement this method
         // valid position check
-        if(outOfBounds(row, col) || board[row * 8 + col]!= DISK.HINT)
+        if (outOfBounds(row, col) || board[row * 8 + col] != DISK.HINT)
             return;
         // delete all old DISK.HINT characters from the board
-        for(int i = 0; i < board.length; i++){
-            if(board[i] == DISK.HINT)
+        for (int i = 0; i < board.length; i++) {
+            if (board[i] == DISK.HINT)
                 board[i] = DISK.EMPTY;
         }
         // place the new disk at its position, representing the player's move
@@ -139,9 +141,9 @@ public class Board implements Cloneable{
         // update the other disks on the board according to the insertion position and its color
         updateOtherDisks(color, row, col);
         // generate new hints for the next move by the opposing player
-        if(color == DISK.BLACK){
+        if (color == DISK.BLACK) {
             color = DISK.WHITE;
-        } else if (color == DISK.WHITE){
+        } else if (color == DISK.WHITE) {
             color = DISK.BLACK;
         }
         generateNewHints(color);
@@ -180,37 +182,37 @@ public class Board implements Cloneable{
      * used in the {@link #updateBoard(DISK, int, int)} method
      *
      * @param player The player who played this turn (DISK.BLACK or DISK.WHITE).
-     * @param row   The row index of the inserted position (0-based) (range: [0, 7]).
-     * @param col   The column index of the inserted position (0-based) (range: [0, 7]).
+     * @param row    The row index of the inserted position (0-based) (range: [0, 7]).
+     * @param col    The column index of the inserted position (0-based) (range: [0, 7]).
      */
-    private void updateOtherDisks(DISK player, int row, int col){
+    private void updateOtherDisks(DISK player, int row, int col) {
         // Initial variables
         ArrayList<Integer> flipped = new ArrayList<Integer>(); // stores disks position to be flipped
         ArrayList<Integer> temp_flipped = new ArrayList<Integer>(); // temp to be used in each loop
-        DISK opponent= (player == DISK.BLACK) ?  (DISK.WHITE) : (DISK.BLACK); // define opponent's color
+        DISK opponent = (player == DISK.BLACK) ? (DISK.WHITE) : (DISK.BLACK); // define opponent's color
 
         // Search Horizontally
         // Search left for opponent disks
         int adjacentDisk_LEFT = col - 1;
-        while(!outOfBounds(row,adjacentDisk_LEFT) && board[8*row + adjacentDisk_LEFT] == opponent) {
-            temp_flipped.add(8*row + adjacentDisk_LEFT);
+        while (!outOfBounds(row, adjacentDisk_LEFT) && board[8 * row + adjacentDisk_LEFT] == opponent) {
+            temp_flipped.add(8 * row + adjacentDisk_LEFT);
             adjacentDisk_LEFT--;
         }
         // if adjacentDisk_LEFT stopped at player disk -> flip
         // else -> drop temp_flipped
-        if(!outOfBounds(row, adjacentDisk_LEFT) && board[8*row + adjacentDisk_LEFT] == player) {
+        if (!outOfBounds(row, adjacentDisk_LEFT) && board[8 * row + adjacentDisk_LEFT] == player) {
             flipped.addAll(temp_flipped);
         }
 
         // Search right for opponent disks
         temp_flipped.clear();
         int adjacentDisk_RIGHT = col + 1;
-        while(!outOfBounds(row,adjacentDisk_RIGHT) && board[8*row + adjacentDisk_RIGHT] == opponent) {
-            temp_flipped.add(8*row + adjacentDisk_RIGHT);
+        while (!outOfBounds(row, adjacentDisk_RIGHT) && board[8 * row + adjacentDisk_RIGHT] == opponent) {
+            temp_flipped.add(8 * row + adjacentDisk_RIGHT);
             adjacentDisk_RIGHT++;
         }
         // Check if adjacentDisk_RIGHT stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(row, adjacentDisk_RIGHT) && board[8*row + adjacentDisk_RIGHT] == player){
+        if (!outOfBounds(row, adjacentDisk_RIGHT) && board[8 * row + adjacentDisk_RIGHT] == player) {
             flipped.addAll(temp_flipped);
         }
 
@@ -218,24 +220,24 @@ public class Board implements Cloneable{
         // Search upwards for opponent
         temp_flipped.clear();
         int adjacentDisk_UP = row - 1;
-        while(!outOfBounds(adjacentDisk_UP, col) && board[8*adjacentDisk_UP + col] == opponent) {
-            temp_flipped.add(8*adjacentDisk_UP + col);
+        while (!outOfBounds(adjacentDisk_UP, col) && board[8 * adjacentDisk_UP + col] == opponent) {
+            temp_flipped.add(8 * adjacentDisk_UP + col);
             adjacentDisk_UP--;
         }
         // Check if adjacentDisk_UP stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(adjacentDisk_UP, col) && board[8*adjacentDisk_UP + col] == player) {
+        if (!outOfBounds(adjacentDisk_UP, col) && board[8 * adjacentDisk_UP + col] == player) {
             flipped.addAll(temp_flipped);
         }
 
         // Search downwards for opponent
         temp_flipped.clear();
         int adjacentDisk_DOWN = row + 1;
-        while(!outOfBounds(adjacentDisk_DOWN, col) && board[8*adjacentDisk_DOWN + col] == opponent) {
-            temp_flipped.add(8*adjacentDisk_DOWN + col);
+        while (!outOfBounds(adjacentDisk_DOWN, col) && board[8 * adjacentDisk_DOWN + col] == opponent) {
+            temp_flipped.add(8 * adjacentDisk_DOWN + col);
             adjacentDisk_DOWN++;
         }
         // Check if adjacentDisk_DOWN stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(adjacentDisk_DOWN, col) && board[8*adjacentDisk_DOWN + col] == player) {
+        if (!outOfBounds(adjacentDisk_DOWN, col) && board[8 * adjacentDisk_DOWN + col] == player) {
             flipped.addAll(temp_flipped);
         }
 
@@ -244,27 +246,27 @@ public class Board implements Cloneable{
         temp_flipped.clear();
         int adjacentDisk_UP_LEFT = row - 1;
         adjacentDisk_LEFT = col - 1;
-        while(!outOfBounds(adjacentDisk_UP_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_UP_LEFT + adjacentDisk_LEFT] == opponent) {
-            temp_flipped.add(8*adjacentDisk_UP_LEFT + adjacentDisk_LEFT);
+        while (!outOfBounds(adjacentDisk_UP_LEFT, adjacentDisk_LEFT) && board[8 * adjacentDisk_UP_LEFT + adjacentDisk_LEFT] == opponent) {
+            temp_flipped.add(8 * adjacentDisk_UP_LEFT + adjacentDisk_LEFT);
             adjacentDisk_UP_LEFT--;
             adjacentDisk_LEFT--;
         }
         // Check if adjacentDisk_UP_LEFT stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(adjacentDisk_UP_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_UP_LEFT + adjacentDisk_LEFT] == player){
-           flipped.addAll(temp_flipped);
+        if (!outOfBounds(adjacentDisk_UP_LEFT, adjacentDisk_LEFT) && board[8 * adjacentDisk_UP_LEFT + adjacentDisk_LEFT] == player) {
+            flipped.addAll(temp_flipped);
         }
 
         // Search upwards and right for opponent
         temp_flipped.clear();
         int adjacentDisk_UP_RIGHT = row - 1;
         adjacentDisk_RIGHT = col + 1;
-        while(!outOfBounds(adjacentDisk_UP_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT] == opponent) {
-            temp_flipped.add(8*adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT);
+        while (!outOfBounds(adjacentDisk_UP_RIGHT, adjacentDisk_RIGHT) && board[8 * adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT] == opponent) {
+            temp_flipped.add(8 * adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT);
             adjacentDisk_UP_RIGHT--;
             adjacentDisk_RIGHT++;
         }
         // Check if adjacentDisk_UP_RIGHT stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(adjacentDisk_UP_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT] == player){
+        if (!outOfBounds(adjacentDisk_UP_RIGHT, adjacentDisk_RIGHT) && board[8 * adjacentDisk_UP_RIGHT + adjacentDisk_RIGHT] == player) {
             flipped.addAll(temp_flipped);
         }
 
@@ -272,13 +274,13 @@ public class Board implements Cloneable{
         temp_flipped.clear();
         int adjacentDisk_DOWN_LEFT = row + 1;
         adjacentDisk_LEFT = col - 1;
-        while(!outOfBounds(adjacentDisk_DOWN_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT] == opponent) {
-            temp_flipped.add(8*adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT);
+        while (!outOfBounds(adjacentDisk_DOWN_LEFT, adjacentDisk_LEFT) && board[8 * adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT] == opponent) {
+            temp_flipped.add(8 * adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT);
             adjacentDisk_DOWN_LEFT++;
             adjacentDisk_LEFT--;
         }
         // Check if adjacentDisk_DOWN_LEFT stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(adjacentDisk_DOWN_LEFT, adjacentDisk_LEFT) && board[8*adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT] == player){
+        if (!outOfBounds(adjacentDisk_DOWN_LEFT, adjacentDisk_LEFT) && board[8 * adjacentDisk_DOWN_LEFT + adjacentDisk_LEFT] == player) {
             flipped.addAll(temp_flipped);
         }
 
@@ -286,18 +288,18 @@ public class Board implements Cloneable{
         temp_flipped.clear();
         int adjacentDisk_DOWN_RIGHT = row + 1;
         adjacentDisk_RIGHT = col + 1;
-        while(!outOfBounds(adjacentDisk_DOWN_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT] == opponent) {
-            temp_flipped.add(8*adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT);
+        while (!outOfBounds(adjacentDisk_DOWN_RIGHT, adjacentDisk_RIGHT) && board[8 * adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT] == opponent) {
+            temp_flipped.add(8 * adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT);
             adjacentDisk_DOWN_RIGHT++;
             adjacentDisk_RIGHT++;
         }
         // Check if adjacentDisk_DOWN_RIGHT stopped at player disk -> flip, else -> drop flipped
-        if(!outOfBounds(adjacentDisk_DOWN_RIGHT, adjacentDisk_RIGHT) && board[8*adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT] == player){
+        if (!outOfBounds(adjacentDisk_DOWN_RIGHT, adjacentDisk_RIGHT) && board[8 * adjacentDisk_DOWN_RIGHT + adjacentDisk_RIGHT] == player) {
             flipped.addAll(temp_flipped);
         }
 
         // Flip disks
-        for(int i = 0; i < flipped.size(); i++){
+        for (int i = 0; i < flipped.size(); i++) {
             board[flipped.get(i)] = player;
         }
     }
@@ -310,9 +312,9 @@ public class Board implements Cloneable{
      * @param colorToPlay the next players color (DISK.BLACK or DISK.WHITE)
      */
     public void generateNewHints(DISK colorToPlay) {
-        for(int row = 0; row < 8; row++){
-            for(int col = 0; col < 8; col++) {
-                if (board[row*8 + col] == DISK.EMPTY) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (board[row * 8 + col] == DISK.EMPTY) {
                     if (isValid(row, col, colorToPlay)) {
                         board[row * 8 + col] = DISK.HINT;
                         setAreThereAnyHints(true);
@@ -324,12 +326,13 @@ public class Board implements Cloneable{
 
     /**
      * Checks if the given row and column indices are out of bounds of an 8x8 board.
+     *
      * @param r The row index.
      * @param c The column index.
      * @return true if the indices are out of bounds, false otherwise.
      */
-    private boolean outOfBounds(int r, int c){
-        if(r < 0 || r >= 8 || c < 0 || c >= 8)
+    private boolean outOfBounds(int r, int c) {
+        if (r < 0 || r >= 8 || c < 0 || c >= 8)
             return true;
         return false;
     }
@@ -337,15 +340,16 @@ public class Board implements Cloneable{
     /**
      * Checks if a move in a specified direction (dx, dy) from a given position (r, c)
      * can be translated into the current player's color.
-     * @param r The starting row index.
-     * @param c The starting column index.
-     * @param dx The change in row index for each step.
-     * @param dy The change in column index for each step.
+     *
+     * @param r           The starting row index.
+     * @param c           The starting column index.
+     * @param dx          The change in row index for each step.
+     * @param dy          The change in column index for each step.
      * @param colorToPlay The color of the current player.
      * @return true if the move can be translated into the current player's color, false otherwise.
      * @throws ArrayIndexOutOfBoundsException if the move results in an out-of-bounds access.
      */
-    private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException{
+    private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException {
         try {
             while (!outOfBounds(r, c)) {
                 r += dx;
@@ -356,60 +360,60 @@ public class Board implements Cloneable{
                     return true;
             }
             return false;
-        }
-        catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             return false;
         }
     }
 
     /**
      * Checks if a move at the specified row and column indices is valid for the current player.
-     * @param row The row index.
-     * @param col The column index.
+     *
+     * @param row         The row index.
+     * @param col         The column index.
      * @param colorToPlay The color of the current player.
      * @return true if the move is valid for the current player, false otherwise.
      */
-    private boolean isValid(int row, int col, DISK colorToPlay){
+    private boolean isValid(int row, int col, DISK colorToPlay) {
         DISK opponentToPlay = (colorToPlay == DISK.WHITE) ? DISK.BLACK : DISK.WHITE;
         boolean result;
-        if(!outOfBounds((row-1),(col-1)) && (board[(row-1)*8 + (col-1)] == opponentToPlay)){
-            result = translate(row,col,-1,-1,colorToPlay);
-            if(result)
+        if (!outOfBounds((row - 1), (col - 1)) && (board[(row - 1) * 8 + (col - 1)] == opponentToPlay)) {
+            result = translate(row, col, -1, -1, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row-1),(col)) && (board[(row-1)*8 + (col)] == opponentToPlay)){
-            result =  translate(row,col,-1,0,colorToPlay);
-            if(result)
+        if (!outOfBounds((row - 1), (col)) && (board[(row - 1) * 8 + (col)] == opponentToPlay)) {
+            result = translate(row, col, -1, 0, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row-1),(col+1)) && (board[(row-1)*8 + (col+1)] == opponentToPlay)){
-            result =  translate(row,col,-1,1,colorToPlay);
-            if(result)
+        if (!outOfBounds((row - 1), (col + 1)) && (board[(row - 1) * 8 + (col + 1)] == opponentToPlay)) {
+            result = translate(row, col, -1, 1, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row),(col-1)) && (board[(row)*8 + (col-1)] == opponentToPlay)){
-            result = translate(row,col,0,-1,colorToPlay);
-            if(result)
+        if (!outOfBounds((row), (col - 1)) && (board[(row) * 8 + (col - 1)] == opponentToPlay)) {
+            result = translate(row, col, 0, -1, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row),(col+1)) && (board[(row)*8 + (col+1)] == opponentToPlay)){
-            result = translate(row,col,0,1,colorToPlay);
-            if(result)
+        if (!outOfBounds((row), (col + 1)) && (board[(row) * 8 + (col + 1)] == opponentToPlay)) {
+            result = translate(row, col, 0, 1, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row+1),(col-1)) && (board[(row+1)*8 + (col-1)] == opponentToPlay)){
-            result = translate(row,col,1,-1,colorToPlay);
-            if(result)
+        if (!outOfBounds((row + 1), (col - 1)) && (board[(row + 1) * 8 + (col - 1)] == opponentToPlay)) {
+            result = translate(row, col, 1, -1, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row+1),(col)) && (board[(row+1)*8 + (col)] == opponentToPlay)){
-            result = translate(row,col,1,0,colorToPlay);
-            if(result)
+        if (!outOfBounds((row + 1), (col)) && (board[(row + 1) * 8 + (col)] == opponentToPlay)) {
+            result = translate(row, col, 1, 0, colorToPlay);
+            if (result)
                 return result;
         }
-        if(!outOfBounds((row+1),(col+1)) && (board[(row+1)*8 + (col+1)] == opponentToPlay)){
-            result = translate(row,col,1,1,colorToPlay);
-            if(result)
+        if (!outOfBounds((row + 1), (col + 1)) && (board[(row + 1) * 8 + (col + 1)] == opponentToPlay)) {
+            result = translate(row, col, 1, 1, colorToPlay);
+            if (result)
                 return result;
         }
         return false;
@@ -421,10 +425,10 @@ public class Board implements Cloneable{
      *
      * @return void
      */
-    public void removeAllHints(){
-        for(int row = 0; row < 8; row++){
-            for(int col = 0; col < 8; col++) {
-                if (board[row*8 + col] == DISK.HINT) {
+    public void removeAllHints() {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (board[row * 8 + col] == DISK.HINT) {
                     board[row * 8 + col] = DISK.EMPTY;
                 }
             }
@@ -445,13 +449,13 @@ public class Board implements Cloneable{
     /**
      * This method changes the current value of the flag to the desired value.
      *
-     * @param  areThereAnyHints the desired value for the flag
-     * @return  void
+     * @param areThereAnyHints the desired value for the flag
+     * @return void
      */
     public void setAreThereAnyHints(boolean areThereAnyHints) {
         this.areThereAnyHints = areThereAnyHints;
     }
-    
+
     /**
      * Checks if the Othello game has ended.
      * <p>
@@ -472,16 +476,21 @@ public class Board implements Cloneable{
      * @return {@code true} if the Othello game has ended, {@code false} otherwise.
      */
     public boolean gameEnded() {
-        boolean ended = true;
+        boolean hints = true;
+        hints = !noHints();
 
-        ended = noHints();
+        if (previousTurnWithNoHint) {
+            if (hints) {
+                previousTurnWithNoHint = false;
+                return false;
+            } else {
+                return true;
+            }
+        }
 
-        if (ended == true) PreviousTurnWithNoHint+=1;
-        else PreviousTurnWithNoHint =0 ;
-
-        if (PreviousTurnWithNoHint == 2)
-        {return true;}
-
+        if (!hints) {
+            previousTurnWithNoHint = true;
+        }
         return false;
     }
 
@@ -655,13 +664,11 @@ public class Board implements Cloneable{
     }
 
     public boolean noHints() {
-        for(DISK cell : this.board){
-            if(cell == DISK.HINT){
+        for (DISK cell : this.board) {
+            if (cell == DISK.HINT) {
                 return false;
             }
         }
-        // update turn?
-
         return true;
     }
 }
