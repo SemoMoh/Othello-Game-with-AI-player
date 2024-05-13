@@ -173,16 +173,12 @@ public class MainMenu extends Pane implements Initializable {
     }
 
     private int getDifficultyLevel(String buttonText) {
-        switch (buttonText) {
-            case "Difficulty: Easy":
-                return 1;
-            case "Difficulty: Medium":
-                return 2;
-            case "Difficulty: Hard":
-                return 6;
-            default:
-                throw new IllegalArgumentException("Invalid difficulty level: " + buttonText+1);
-        }
+        return switch (buttonText) {
+            case "Difficulty: Easy" -> 1;
+            case "Difficulty: Medium" -> 2;
+            case "Difficulty: Hard" -> 8;
+            default -> throw new IllegalArgumentException("Invalid difficulty level: " + buttonText + 1);
+        };
     }
 
 
