@@ -141,7 +141,7 @@ public class MainMenu extends Pane implements Initializable {
         String blackName;
         if (isAIPlayer(blackPlayerType)) {
             blackPlayer = new AIPlayer(board , DISK.BLACK , getDifficultyLevel(blackDifficulty.getText()));
-            blackName = "Nigga AI";
+            blackName = "Batman";
         } else {
             blackPlayer  = new HumanPlayer(board , DISK.BLACK );
             blackName = getBlackPlayerName();
@@ -150,7 +150,7 @@ public class MainMenu extends Pane implements Initializable {
         String whiteName;
         if (isAIPlayer(whitePlayerType)) {
             whitePlayer = new AIPlayer(board , DISK.WHITE , getDifficultyLevel(whiteDifficulty.getText()));
-            whiteName = " Charlie AI";
+            whiteName = "Snow White";
         } else {
             whitePlayer = new HumanPlayer(board , DISK.WHITE );
             whiteName=getWhitePlayerName();
