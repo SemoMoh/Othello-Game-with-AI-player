@@ -106,10 +106,14 @@ public class GameSystem {
         // The game is not ended but there are no hints for the current player
         System.out.println("No hints for the current player");
         this.gameScreen.showNoHints();
+        // Update turn
+        this.blackTurn = !this.blackTurn;
+
         // As now moves happened, the board is not updated, so we have to update the hints
         // for the next turn manually
-        DISK nextColorTurn = colorTurn == DISK.BLACK ? DISK.WHITE : DISK.BLACK;
+        DISK nextColorTurn = this.blackTurn ? DISK.BLACK : DISK.WHITE;
         board.generateNewHints(nextColorTurn);
+
         // update the gui to the new turn
         this.gameScreen.update(true);
 
