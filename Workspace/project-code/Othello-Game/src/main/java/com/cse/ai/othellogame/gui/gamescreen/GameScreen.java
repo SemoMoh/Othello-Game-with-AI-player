@@ -3,6 +3,7 @@ package com.cse.ai.othellogame.gui.gamescreen;
 import com.cse.ai.othellogame.HelloApplication;
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
+import com.cse.ai.othellogame.backend.game.GameSystem;
 import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.Player;
 import com.cse.ai.othellogame.gui.mainmenu.MainMenu;
@@ -32,6 +33,8 @@ public class GameScreen extends Pane implements Initializable {
     private boolean gameEnded = false;
     public static GameScreen gameScreen;
 
+    public GameSystem gameSystem;
+
     @FXML
     public Pane root;
 
@@ -47,8 +50,12 @@ public class GameScreen extends Pane implements Initializable {
 
         leftBoard = new ScoreBoard(playerWhiteName, false);
         rightBoard = new ScoreBoard(playerBlackName, true);
-        boardGUI = new BoardGUI(board);
 
+        this.gameSystem = new GameSystem(board, playerWhite, playerBlack, this);
+
+
+        boardGUI = new BoardGUI(board);
+        boardGUI.setGameSystem(gameSystem);
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -67,9 +74,11 @@ public class GameScreen extends Pane implements Initializable {
         // make the first move
         update(false);
 
-        makeMove();
+        //makeMove();
+        gameSystem.startTimeLine();
     }
 
+    //TODO: delete
     private void makeMove() {
         if (blackTurn) {
             if (bPlayerAI) {
@@ -164,7 +173,7 @@ public class GameScreen extends Pane implements Initializable {
     public void makeHumanMove() {
         update(true);
         delay(0.1F);
-        makeMove();
+        //makeMove();
     }
 
 
@@ -172,7 +181,10 @@ public class GameScreen extends Pane implements Initializable {
         leftBoard.setScore(board.getWhiteScore());
         rightBoard.setScore(board.getBlackScore());
         boardGUI.updateBoard(updateTurn);
-        if (updateTurn) {
+        if(updateTurn) {
+            updateTurn();
+        }
+        /*if (updateTurn) {
             gameEnded = board.gameEnded();
             if (gameEnded) {
                 char winner = board.getWinner();
@@ -182,14 +194,17 @@ public class GameScreen extends Pane implements Initializable {
             }
             updateTurn();
         }
-        delay(0.1F);
+        delay(0.1F);*/
     }
 
     public void updateWithHints(boolean updateTurn) {
         leftBoard.setScore(board.getWhiteScore());
         rightBoard.setScore(board.getBlackScore());
         boardGUI.updateBoardWithHints(updateTurn);
-        if (updateTurn) {
+        if(updateTurn) {
+            updateTurn();
+        }
+        /*if (updateTurn) {
             if (board.gameEnded()) {
                 char winner = board.getWinner();
                 //HelloApplication.scene.setRoot(new Label("Game ended, Winner: " + winner));
@@ -197,15 +212,11 @@ public class GameScreen extends Pane implements Initializable {
                 System.out.println("Game ended, Winner: " + winner);
             }
             updateTurn();
-        }
+        }*/
     }
 
     private void updateTurn() {
-
-        blackTurn = !blackTurn;
-
-        boardGUI.updateTurn();
-        if (blackTurn) {
+        if (this.gameSystem.isBlackTurn()) {
             rightBoard.setTurn();
             leftBoard.unsetTurn();
         } else {
@@ -244,12 +255,22 @@ public class GameScreen extends Pane implements Initializable {
 
     public void restartGame() {
         MainMenu.restartTheGame();
+        this.gameSystem.stopTimeLine();
+        this.gameSystem = null;
         flowEnded = true;
     }
 
     public void closeGame() {
         flowEnded = true;
         HelloApplication.endGame();
+        this.gameSystem.stopTimeLine();
+        this.gameSystem = null;
     }
 
+    // Show the user that the current player doesn't have any possible moves, so the
+    // turn will change to the next player
+    public void showNoHints() {
+        // TODO
+        System.out.println("No hints for the current player");
+    }
 }
