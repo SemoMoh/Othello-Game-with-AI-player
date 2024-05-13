@@ -75,13 +75,13 @@ public class GameScreen extends Pane implements Initializable {
             if (bPlayerAI) {
                 Platform.runLater(() -> {
                     update(false);
-                    delay(1);
+                    delay(0.5F);
                     if (!gameEnded && !flowEnded) {
                         // The game is not ended but there are no hints for the current player
                         if (board.noHints()) {
                             // show there are no hints for the current player, and the turn will change to the next player
                             System.out.println("No hints for the current player");
-                            delay(1);
+                            delay(0.5F);
                             board.generateNewHints(DISK.WHITE);
                             update(true);
                         } else {
@@ -95,16 +95,16 @@ public class GameScreen extends Pane implements Initializable {
                     }
                 });
             } else {
-                delay(1);
                 if (!gameEnded && !flowEnded) {
                     // The game is not ended but there are no hints for the current player
                     if (board.noHints()) {
                         // show there are no hints for the current player, and the turn will change to the next player
                         System.out.println("No hints for the current player");
-                        delay(1);
+                        delay(0.5F);
                         board.generateNewHints(DISK.WHITE);
                         update(true);
                         delay(0.1F);
+                        makeMove();
                     } else {
                         updateWithHints(false);
                     }
@@ -113,14 +113,14 @@ public class GameScreen extends Pane implements Initializable {
         } else {
             if (wPlayerAI) {
                 Platform.runLater(() -> {
-                    delay(1);
+                    delay(0.5F);
 
                     if (!gameEnded && !flowEnded) {
                         // The game is not ended but there are no hints for the current player
                         if (board.noHints()) {
                             // show there are no hints for the current player, and the turn will change to the next player
                             System.out.println("No hints for the current player");
-                            delay(1);
+                            delay(0.5F);
                             board.generateNewHints(DISK.BLACK);
                             update(true);
                         } else {
@@ -133,16 +133,15 @@ public class GameScreen extends Pane implements Initializable {
                     }
                 });
             } else {
-                delay(1);
-
                 if (!gameEnded && !flowEnded) {
                     // The game is not ended but there are no hints for the current player
                     if (board.noHints()) {
                         // show there are no hints for the current player, and the turn will change to the next player
                         System.out.println("No hints for the current player");
-                        delay(1);
+                        delay(0.5F);
                         board.generateNewHints(DISK.BLACK);
                         update(true);
+                        makeMove();
                     } else {
                         updateWithHints(false);
                     }

@@ -91,7 +91,7 @@ public class BoardGUI extends AnchorPane implements Initializable {
                             clickedIndex = clickedCell.getIndex();
                             DISK d = blackTurn ? DISK.BLACK : DISK.WHITE;
                             board.updateBoard(d, clickedIndex);
-                            System.out.println(board);
+                            //System.out.println(board);
                             Platform.runLater(() -> {
                                 GameScreen.gameScreen.makeHumanMove();
                             });
