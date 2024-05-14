@@ -2,9 +2,6 @@ package com.cse.ai.othellogame.backend.game;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -32,23 +29,41 @@ import java.util.stream.IntStream;
  * <a href="https://othelloacademy.weebly.com/rules.html">Othello Rules</a>
  */
 public class Board implements Cloneable {
-    private DISK[] board;
-
-    int PreviousTurnWithNoHint;
+    private final DISK[] board;
 
     private boolean previousTurnWithNoHint = false;
     private boolean areThereAnyHints;
 
     /**
-     * Constructs a new game board with currrent board state
+     * Constructs a new game board with default dimensions and initializes its black and white disks,
+     * also it shows the hint values for the first move of the game for the black.
+     * areThereAnyHint's value is set false.
+     */
+    public Board() {
+        board = new DISK[64];
+        // Init all with empty --> DISK.EMPTY
+        IntStream.range(0, board.length).forEach(i -> board[i] = DISK.EMPTY);
+        // put the starting position of black and white --> DISK.BLACK and DISK.WHITE
+        setPos(DISK.WHITE, 3, 3);
+        setPos(DISK.BLACK, 3, 4);
+        setPos(DISK.BLACK, 4, 3);
+        setPos(DISK.WHITE, 4, 4);
+        // put the initial hints for the black --> DISK.HINT
+        setPos(DISK.HINT, 2, 3);
+        setPos(DISK.HINT, 3, 2);
+        setPos(DISK.HINT, 4, 5);
+        setPos(DISK.HINT, 5, 4);
+        this.areThereAnyHints = false;
+    }
+
+    /**
+     * Constructs a new game board with current board state
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-        Object newBoard = new Board();
+        Board newBoard = new Board();
         for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                ((Board) newBoard).board[row * 8 + col] = board[row * 8 + col];
-            }
+            System.arraycopy(board, row * 8, newBoard.board, row * 8, 8);
         }
         return newBoard;
     }
@@ -74,34 +89,12 @@ public class Board implements Cloneable {
     }
 
     /**
-     * update board with hints for the opposite player
-     * called only when board has no moves for the current player
+     * update the board with hints for the opposite player
+     * called only when the board has no moves for the current player
      */
     public void forfeitTurn(DISK player) {
-        DISK oplayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
-        generateNewHints(oplayer);
-    }
-
-    /**
-     * Constructs a new game board with default dimensions and initializes its black and white disks,
-     * also it shows the hint values for the first move of the game for the black.
-     * areThereAnyHints's value is set false.
-     */
-    public Board() {
-        board = new DISK[64];
-        // Init all with empty --> DISK.EMPTY
-        IntStream.range(0, board.length).forEach(i -> board[i] = DISK.EMPTY);
-        // put the starting position of black and white --> DISK.BLACK and DISK.WHITE
-        setPos(DISK.WHITE, 3, 3);
-        setPos(DISK.BLACK, 3, 4);
-        setPos(DISK.BLACK, 4, 3);
-        setPos(DISK.WHITE, 4, 4);
-        // put the initial hints for the black --> DISK.HINT
-        setPos(DISK.HINT, 2, 3);
-        setPos(DISK.HINT, 3, 2);
-        setPos(DISK.HINT, 4, 5);
-        setPos(DISK.HINT, 5, 4);
-        this.areThereAnyHints = false;
+        DISK oPlayer = (player == DISK.BLACK) ? DISK.WHITE : DISK.BLACK;
+        generateNewHints(oPlayer);
     }
 
     /**
@@ -179,7 +172,7 @@ public class Board implements Cloneable {
     /**
      * Called after player's move is inserted on the board.
      * Updates disks opposite of inserted disk horizontally, vertically and diagonally.
-     * used in the {@link #updateBoard(DISK, int, int)} method
+     * Used in the {@link #updateBoard(DISK, int, int)} method
      *
      * @param player The player who played this turn (DISK.BLACK or DISK.WHITE).
      * @param row    The row index of the inserted position (0-based) (range: [0, 7]).
@@ -187,8 +180,8 @@ public class Board implements Cloneable {
      */
     private void updateOtherDisks(DISK player, int row, int col) {
         // Initial variables
-        ArrayList<Integer> flipped = new ArrayList<Integer>(); // stores disks position to be flipped
-        ArrayList<Integer> temp_flipped = new ArrayList<Integer>(); // temp to be used in each loop
+        ArrayList<Integer> flipped = new ArrayList<>(); // stores disks position to be flipped
+        ArrayList<Integer> temp_flipped = new ArrayList<>(); // temp to be used in each loop
         DISK opponent = (player == DISK.BLACK) ? (DISK.WHITE) : (DISK.BLACK); // define opponent's color
 
         // Search Horizontally
@@ -299,15 +292,15 @@ public class Board implements Cloneable {
         }
 
         // Flip disks
-        for (int i = 0; i < flipped.size(); i++) {
-            board[flipped.get(i)] = player;
+        for (Integer integer : flipped) {
+            board[integer] = player;
         }
     }
 
 
     /**
      * Generates new hints(if there) for the next move by analyzing the current state of the board, and sets the flag true.
-     * used in the {@link #updateBoard(DISK, int, int)} method.
+     * Used in the {@link #updateBoard(DISK, int, int)} method.
      *
      * @param colorToPlay the next players color (DISK.BLACK or DISK.WHITE)
      */
@@ -332,9 +325,7 @@ public class Board implements Cloneable {
      * @return true if the indices are out of bounds, false otherwise.
      */
     private boolean outOfBounds(int r, int c) {
-        if (r < 0 || r >= 8 || c < 0 || c >= 8)
-            return true;
-        return false;
+        return r < 0 || r >= 8 || c < 0 || c >= 8;
     }
 
     /**
@@ -347,7 +338,7 @@ public class Board implements Cloneable {
      * @param dy          The change in column index for each step.
      * @param colorToPlay The color of the current player.
      * @return true if the move can be translated into the current player's color, false otherwise.
-     * @throws ArrayIndexOutOfBoundsException if the move results in an out-of-bounds access.
+     * @throws ArrayIndexOutOfBoundsException if the move results in out-of-bounds access.
      */
     private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException {
         try {
@@ -379,42 +370,41 @@ public class Board implements Cloneable {
         if (!outOfBounds((row - 1), (col - 1)) && (board[(row - 1) * 8 + (col - 1)] == opponentToPlay)) {
             result = translate(row, col, -1, -1, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row - 1), (col)) && (board[(row - 1) * 8 + (col)] == opponentToPlay)) {
             result = translate(row, col, -1, 0, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row - 1), (col + 1)) && (board[(row - 1) * 8 + (col + 1)] == opponentToPlay)) {
             result = translate(row, col, -1, 1, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row), (col - 1)) && (board[(row) * 8 + (col - 1)] == opponentToPlay)) {
             result = translate(row, col, 0, -1, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row), (col + 1)) && (board[(row) * 8 + (col + 1)] == opponentToPlay)) {
             result = translate(row, col, 0, 1, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row + 1), (col - 1)) && (board[(row + 1) * 8 + (col - 1)] == opponentToPlay)) {
             result = translate(row, col, 1, -1, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row + 1), (col)) && (board[(row + 1) * 8 + (col)] == opponentToPlay)) {
             result = translate(row, col, 1, 0, colorToPlay);
             if (result)
-                return result;
+                return true;
         }
         if (!outOfBounds((row + 1), (col + 1)) && (board[(row + 1) * 8 + (col + 1)] == opponentToPlay)) {
             result = translate(row, col, 1, 1, colorToPlay);
-            if (result)
-                return result;
+            return result;
         }
         return false;
     }
@@ -422,8 +412,6 @@ public class Board implements Cloneable {
     /**
      * This method removes all the hints for the previous player, and it must be called before
      * changing the turn.
-     *
-     * @return void
      */
     public void removeAllHints() {
         for (int row = 0; row < 8; row++) {
@@ -450,7 +438,6 @@ public class Board implements Cloneable {
      * This method changes the current value of the flag to the desired value.
      *
      * @param areThereAnyHints the desired value for the flag
-     * @return void
      */
     public void setAreThereAnyHints(boolean areThereAnyHints) {
         this.areThereAnyHints = areThereAnyHints;
@@ -476,21 +463,27 @@ public class Board implements Cloneable {
      * @return {@code true} if the Othello game has ended, {@code false} otherwise.
      */
     public boolean gameEnded() {
-        boolean hints = true;
-        hints = !noHints();
+        // Determine if hints (valid moves) are available on the current board
+        boolean hints = !noHints();
 
+        // If the previous turn had no available hints
         if (previousTurnWithNoHint) {
             if (hints) {
+                // If hints are available on the current board, the game continues
                 previousTurnWithNoHint = false;
                 return false;
             } else {
+                // If no hints are available on the current board, the game ends
                 return true;
             }
         }
 
         if (!hints) {
+            // If there are no hints on the current board, mark the previous turn as having no hint
             previousTurnWithNoHint = true;
         }
+
+        // The game continues as there are still available moves
         return false;
     }
 
@@ -622,29 +615,6 @@ public class Board implements Cloneable {
         return board2D;
     }
 
-    /**
-     * Gets the list representation of the 1D board.
-     *
-     * @return the list representing the board
-     */
-    public List<DISK> getBoardList() {
-        return IntStream.range(0, board.length)
-                .mapToObj(i -> board[i])
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Gets the 2D list representation of the 2D board.
-     *
-     * @return the 2D list representing the board
-     */
-    public List<List<DISK>> getBoardList2D() {
-        DISK[][] board2D = this.getBoard2D();
-        return Arrays.stream(board2D).map(chars -> IntStream.range(0, chars.length)
-                        .mapToObj(j -> chars[j])
-                        .collect(Collectors.toList()))
-                .collect(Collectors.toList());
-    }
 
     /**
      * Returns a string representation of the 2D board.
@@ -663,12 +633,27 @@ public class Board implements Cloneable {
         return sb.toString();
     }
 
+    /**
+     * Checks if there are no hints (valid moves) available on the Othello game board.
+     * <p>
+     * This method iterates through all cells on the game board to determine if any of them contain a hint,
+     * indicating a valid move for the current player.
+     * </p>
+     * <p>
+     * If no hints are found on the board, meaning no valid moves are available, the method returns {@code true};
+     * otherwise, it returns {@code false}.
+     * </p>
+     *
+     * @return {@code true} if there are no hints (valid moves) available on the game board, {@code false} otherwise.
+     */
     public boolean noHints() {
         for (DISK cell : this.board) {
+            // If a cell contains a hint (valid move), return false indicating hints are available
             if (cell == DISK.HINT) {
                 return false;
             }
         }
+        // Return true if no hints (valid moves) are found on the board
         return true;
     }
 }

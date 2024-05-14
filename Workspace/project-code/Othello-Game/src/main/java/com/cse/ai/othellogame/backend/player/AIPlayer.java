@@ -21,7 +21,7 @@ public class AIPlayer extends Player{
      *
      * @param board      A reference to the game's board.
      * @param color      The color assigned to the player. DISK.BLACK for black players, DISK.WHITE for white players.
-     * @param difficulty The difficulty level of the AI player. Ranges from 0 to 2, with 2 being the hardest.
+     * @param difficulty The difficulty level of the AI player. Ranges from zero to two, with 2 being the hardest.
      */
     public AIPlayer(Board board, DISK color, int difficulty) {
         super(board, color);
@@ -43,24 +43,6 @@ public class AIPlayer extends Player{
         return algorithmEval();
     }
 
-    /**
-     * Calculates the heuristic value for the current board state.
-     * <p>
-     * Note:
-     * This method is used internally by the AIPlayer class to evaluate board positions.
-     * </p>
-     *
-     * @return None, for now.
-     */
-    public void calculateHeuristic(){
-        // TODO: implement this method
-
-        // TODO: You can add more data fields to the class to save your values, or you can
-        //       return the heuristic value of each position. Organize your work with the developer of the {@link #algorithmEval}
-        //       method.
-
-        // TODO: Update the documentation of the method when you determine the return type.
-    }
 
     /**
      * Executes the AI algorithm to determine the best move.
@@ -84,7 +66,7 @@ public class AIPlayer extends Player{
         Point bestMove = null;
         //System.out.println("number of possible moves is : " + getBoard().getAllPossibleMoves().size());
         for(Point move : getBoard().getAllPossibleMoves()){
-            //create new node
+            //create a new node
             Board newNode;
             try {
                 newNode = (Board) getBoard().clone();
@@ -101,6 +83,7 @@ public class AIPlayer extends Player{
             }
         }
         //System.out.println("best move is : " + (bestMove.x*8+ bestMove.y));
+        assert bestMove != null;
         return bestMove.x*8+ bestMove.y;
     }
     public static void main(String[] args){

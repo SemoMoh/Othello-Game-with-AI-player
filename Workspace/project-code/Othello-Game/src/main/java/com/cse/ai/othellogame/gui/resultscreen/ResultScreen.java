@@ -1,6 +1,7 @@
 package com.cse.ai.othellogame.gui.resultscreen;
 
 import com.cse.ai.othellogame.backend.game.Board;
+import com.cse.ai.othellogame.gui.gamescreen.BoardGUI;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -12,10 +13,10 @@ import java.util.ResourceBundle;
 
 public class ResultScreen extends Pane implements Initializable {
     private final Board board;
-
-    public ResultScreen(Board board, String playerBlackName, String playerWhiteName) {
+    private final BoardGUI boardGUI;
+    public ResultScreen(Board board, String playerBlackName, String playerWhiteName, BoardGUI boardGUI) {
         this.board = board;
-
+        this.boardGUI = boardGUI;
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(

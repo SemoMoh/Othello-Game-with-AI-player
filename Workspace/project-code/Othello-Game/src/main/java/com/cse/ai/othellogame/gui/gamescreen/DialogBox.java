@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Represents a custom dialog box in the game screen.
+ */
 public class DialogBox extends VBox implements Initializable {
     private final GameScreen gameScreen;
     private final String titleStr;
@@ -25,6 +28,12 @@ public class DialogBox extends VBox implements Initializable {
     @FXML
     public Button cancelButton;
 
+    /**
+     * Constructs a new dialog box.
+     *
+     * @param title      The title of the dialog box.
+     * @param gameScreen The game screen associated with the dialog box.
+     */
     public DialogBox(String title, GameScreen gameScreen){
         this.titleStr = title;
         this.gameScreen = gameScreen;
@@ -46,39 +55,33 @@ public class DialogBox extends VBox implements Initializable {
         title.setText(this.titleStr);
 
         // hover effect
-        confirmButton.setOnMouseEntered(e -> {
-            confirmButton.setStyle(
-                    "-fx-background-color:  #B00000;" +
-                            "-fx-background-radius: 12px;"
-            );
-        });
+        // for `confirm button`
+        confirmButton.setOnMouseEntered(e -> confirmButton.setStyle(
+                "-fx-background-color:  #B00000;" +
+                        "-fx-background-radius: 12px;"
+        ));
 
-        confirmButton.setOnMouseExited(e -> {
-            confirmButton.setStyle(
-                    "-fx-background-color:  #860000;" +
-                            "-fx-background-radius: 12px;"
-            );
-        });
+        confirmButton.setOnMouseExited(e -> confirmButton.setStyle(
+                "-fx-background-color:  #860000;" +
+                        "-fx-background-radius: 12px;"
+        ));
 
-        cancelButton.setOnMouseEntered(e -> {
-            cancelButton.setStyle(
-                    "-fx-background-color:   #212121;" +
-                            "-fx-background-radius: 12px;" +
-                            "-fx-border-color: white;" +
-                            "-fx-border-width: 3px;" +
-                            "-fx-border-radius: 12px;"
-            );
-        });
+        // for `cancel button`
+        cancelButton.setOnMouseEntered(e -> cancelButton.setStyle(
+                "-fx-background-color:   #212121;" +
+                        "-fx-background-radius: 12px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 12px;"
+        ));
 
-        cancelButton.setOnMouseExited(e -> {
-            cancelButton.setStyle(
-                    "-fx-background-color:   #0C0C0C;" +
-                            "-fx-background-radius: 12px;" +
-                            "-fx-border-color: white;" +
-                            "-fx-border-width: 3px;" +
-                            "-fx-border-radius: 12px;"
-            );
-        });
+        cancelButton.setOnMouseExited(e -> cancelButton.setStyle(
+                "-fx-background-color:   #0C0C0C;" +
+                        "-fx-background-radius: 12px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 12px;"
+        ));
     }
 
     @Override
@@ -86,9 +89,16 @@ public class DialogBox extends VBox implements Initializable {
         return super.getStyleableNode();
     }
 
+    /**
+     * Handles the action when the `confirm button` is pressed, and return to the game screen the response.
+     */
     public void confirmPressed(){
         gameScreen.setDialogBoxResponse(true, titleStr);
     }
+
+    /**
+     * Handles the action when the `cancel button` is pressed, and return to the game screen the response.
+     */
     public void cancelPressed(){
         gameScreen.setDialogBoxResponse(false, titleStr);
     }
