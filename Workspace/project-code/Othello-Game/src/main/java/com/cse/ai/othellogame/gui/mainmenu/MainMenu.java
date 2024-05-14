@@ -11,21 +11,13 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import com.cse.ai.othellogame.HelloApplication;
-import com.cse.ai.othellogame.HelloController;
+import com.cse.ai.othellogame.MainGUI;
 import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.DISK;
 import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.Player;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-
 
 
 public class MainMenu extends Pane implements Initializable {
@@ -157,7 +149,7 @@ public class MainMenu extends Pane implements Initializable {
         }
 
         GameScreen g = new GameScreen(board,blackName,whiteName,blackPlayer,whitePlayer);
-        HelloApplication.scene.setRoot(g);
+        MainGUI.scene.setRoot(g);
 
 
     }

@@ -9,6 +9,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,15 +20,20 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Cell extends StackPane implements Initializable {
-    @FXML
-    StackPane root;
     private static Image blackDisc;
     private static Image whiteDisc;
     private static Image blackHint;
     private static Image whiteHint;
+    @FXML
+    StackPane root;
+    private MediaPlayer mediaPlayer = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/sound effects/cell sound.mp3")).toString()
+            )
+    );
+
     private ImageView displayedImage;
     private int index;
-    private DISK state;
 
     public Cell(int index) {
         this();
@@ -54,6 +63,8 @@ public class Cell extends StackPane implements Initializable {
 
 
     public void setDisplayedImage(DISK color) {
+        removeMarkLastPlayed();
+
         switch (color) {
             case EMPTY:
                 this.displayedImage.setImage(null);
@@ -71,7 +82,6 @@ public class Cell extends StackPane implements Initializable {
                 this.displayedImage.setImage(whiteDisc);
                 break;
         }
-        this.state = color;
     }
 
 
@@ -90,6 +100,9 @@ public class Cell extends StackPane implements Initializable {
     public boolean changeState(MouseEvent event) {
         DISK state = getState();
         if (state == DISK.HINT) {
+            // play sound
+            playSound();
+
             if (displayedImage.getImage().equals(blackHint)) {
                 setDisplayedImage(DISK.BLACK);
                 return true;
@@ -97,9 +110,39 @@ public class Cell extends StackPane implements Initializable {
                 setDisplayedImage(DISK.WHITE);
                 return true;
             }
+            markLastPlayed();
         }
+
         return false;
     }
+
+    public void playSound() {
+        mediaPlayer.setVolume(0.2);
+        mediaPlayer.stop();
+        mediaPlayer.play();
+    }
+
+    public void markLastPlayed() {
+        // Create horizontal line for the cross
+        Line horizontalLine = new Line(0, 10, 0, -10);
+        horizontalLine.setStroke(Color.ORANGERED); // Set the color of the line
+        horizontalLine.setStrokeWidth(2); // Set the width of the line
+
+        // Create vertical line for the cross
+        Line verticalLine = new Line(-10, 0, 10, 0);
+        verticalLine.setStroke(Color.ORANGERED); // Set the color of the line
+        verticalLine.setStrokeWidth(2); // Set the width of the line
+
+        // Add the lines to the StackPane
+        getChildren().addAll(horizontalLine, verticalLine);
+    }
+
+
+    private void removeMarkLastPlayed() {
+        // Find and remove the lines representing the cross
+        getChildren().removeIf(node -> node instanceof Line);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,6 +157,23 @@ public class Cell extends StackPane implements Initializable {
         // Set preserveRatio to false to prevent image distortion
         displayedImage.setPreserveRatio(false);
 
+
+        // hover effect
+        root.setOnMouseEntered(event -> {
+            if (getState() == DISK.HINT || getState() == DISK.BLACK_HINT || getState() == DISK.WHITE_HINT) {
+                root.setStyle("-fx-background-color:  #009b4b; -fx-border-color:  transparent; " +
+                        "-fx-border-radius: 5; -fx-background-radius: 5");
+            } else {
+                root.setStyle("-fx-background-color:  #01b356; -fx-border-color:  transparent; " +
+                        "-fx-border-radius: 5; -fx-background-radius: 5");
+            }
+        });
+        root.setOnMouseExited(event -> {
+            root.setStyle("-fx-background-color:  #01b356; -fx-border-color:  transparent; " +
+                    "-fx-border-radius: 5; -fx-background-radius: 5");
+        });
+
+
         // Set StackPane's preferred dimensions and alignment
         root.setPrefSize(71.63, 71.63);
         StackPane.setAlignment(displayedImage, javafx.geometry.Pos.CENTER);
@@ -124,12 +184,12 @@ public class Cell extends StackPane implements Initializable {
         return this;
     }
 
-    public void setIndex(int x) {
-        index = x;
-    }
-
     public int getIndex() {
         return index;
+    }
+
+    public void setIndex(int x) {
+        index = x;
     }
 
     @Override

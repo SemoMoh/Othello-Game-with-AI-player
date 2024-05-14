@@ -1,52 +1,55 @@
 package com.cse.ai.othellogame.gui.gamescreen;
 
-import com.cse.ai.othellogame.HelloApplication;
+import com.cse.ai.othellogame.MainGUI;
 import com.cse.ai.othellogame.backend.game.Board;
-import com.cse.ai.othellogame.backend.game.DISK;
 import com.cse.ai.othellogame.backend.game.GameSystem;
-import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.Player;
 import com.cse.ai.othellogame.gui.mainmenu.MainMenu;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GameScreen extends Pane implements Initializable {
+    public static GameScreen gameScreen;
     private final ScoreBoard leftBoard;
     private final ScoreBoard rightBoard;
     private final BoardGUI boardGUI;
     private final Board board;
-    private final Player playerWhite;
-    private final Player playerBlack;
-
-    private final boolean bPlayerAI;
-    private final boolean wPlayerAI;
-
-    private boolean flowEnded = false;
-    private boolean gameEnded = false;
-    public static GameScreen gameScreen;
-
     public GameSystem gameSystem;
 
     @FXML
     public Pane root;
+    @FXML
+    public Button restartButton;
+    @FXML
+    public Button closeButton;
+    @FXML
+    public Button mainMenuButton;
 
-    private Boolean blackTurn = true;
+    private boolean noHintsState;
+
 
     public GameScreen(Board board, String playerBlackName, String playerWhiteName,
                       Player playerBlack, Player playerWhite) {
         gameScreen = this;
 
         this.board = board;
-        this.playerWhite = playerWhite;
-        this.playerBlack = playerBlack;
+
 
         leftBoard = new ScoreBoard(playerWhiteName, false);
         rightBoard = new ScoreBoard(playerBlackName, true);
@@ -54,8 +57,7 @@ public class GameScreen extends Pane implements Initializable {
         this.gameSystem = new GameSystem(board, playerWhite, playerBlack, this);
 
 
-        boardGUI = new BoardGUI(board);
-        boardGUI.setGameSystem(gameSystem);
+        boardGUI = new BoardGUI(board, gameSystem);
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -68,8 +70,6 @@ public class GameScreen extends Pane implements Initializable {
             throw new RuntimeException(exception);
         }
 
-        this.bPlayerAI = playerBlack instanceof AIPlayer;
-        this.wPlayerAI = playerWhite instanceof AIPlayer;
 
         // make the first move
         update(false);
@@ -78,141 +78,23 @@ public class GameScreen extends Pane implements Initializable {
         gameSystem.startTimeLine();
     }
 
-    //TODO: delete
-    private void makeMove() {
-        if (blackTurn) {
-            if (bPlayerAI) {
-                Platform.runLater(() -> {
-                    update(false);
-                    delay(0.5F);
-                    if (!gameEnded && !flowEnded) {
-                        // The game is not ended but there are no hints for the current player
-                        if (board.noHints()) {
-                            // show there are no hints for the current player, and the turn will change to the next player
-                            System.out.println("No hints for the current player");
-                            delay(0.5F);
-                            board.generateNewHints(DISK.WHITE);
-                            update(true);
-                        } else {
-                            this.board.updateBoard(DISK.BLACK, playerBlack.makeMove());
-                            update(true);
-                            delay(0.1F);
-                        }
-                        makeMove();
-                    } else {
-                        System.out.println("Game ended, Winner: " + board.getWinner());
-                    }
-                });
-            } else {
-                if (!gameEnded && !flowEnded) {
-                    // The game is not ended but there are no hints for the current player
-                    if (board.noHints()) {
-                        // show there are no hints for the current player, and the turn will change to the next player
-                        System.out.println("No hints for the current player");
-                        delay(0.5F);
-                        board.generateNewHints(DISK.WHITE);
-                        update(true);
-                        delay(0.1F);
-                        makeMove();
-                    } else {
-                        updateWithHints(false);
-                    }
-                }
-            }
-        } else {
-            if (wPlayerAI) {
-                Platform.runLater(() -> {
-                    delay(0.5F);
-
-                    if (!gameEnded && !flowEnded) {
-                        // The game is not ended but there are no hints for the current player
-                        if (board.noHints()) {
-                            // show there are no hints for the current player, and the turn will change to the next player
-                            System.out.println("No hints for the current player");
-                            delay(0.5F);
-                            board.generateNewHints(DISK.BLACK);
-                            update(true);
-                        } else {
-                            this.board.updateBoard(DISK.WHITE, playerWhite.makeMove());
-                            update(true);
-                        }
-                        makeMove();
-                    } else {
-                        System.out.println("Game ended, Winner: " + board.getWinner());
-                    }
-                });
-            } else {
-                if (!gameEnded && !flowEnded) {
-                    // The game is not ended but there are no hints for the current player
-                    if (board.noHints()) {
-                        // show there are no hints for the current player, and the turn will change to the next player
-                        System.out.println("No hints for the current player");
-                        delay(0.5F);
-                        board.generateNewHints(DISK.BLACK);
-                        update(true);
-                        makeMove();
-                    } else {
-                        updateWithHints(false);
-                    }
-                }
-            }
-        }
-
-    }
-
-    private static void delay(float timeSec) {
-        for (int i = 0; i < 10 * timeSec; i++) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void makeHumanMove() {
-        update(true);
-        delay(0.1F);
-        //makeMove();
-    }
-
 
     public void update(boolean updateTurn) {
         leftBoard.setScore(board.getWhiteScore());
         rightBoard.setScore(board.getBlackScore());
-        boardGUI.updateBoard(updateTurn);
-        if(updateTurn) {
+        boardGUI.updateBoard();
+        if (updateTurn) {
             updateTurn();
         }
-        /*if (updateTurn) {
-            gameEnded = board.gameEnded();
-            if (gameEnded) {
-                char winner = board.getWinner();
-                //HelloApplication.scene.setRoot(new Label("Game ended, Winner: " + winner));
-                flowEnded = true;
-                System.out.println("Game ended, Winner: " + winner);
-            }
-            updateTurn();
-        }
-        delay(0.1F);*/
     }
 
     public void updateWithHints(boolean updateTurn) {
         leftBoard.setScore(board.getWhiteScore());
         rightBoard.setScore(board.getBlackScore());
-        boardGUI.updateBoardWithHints(updateTurn);
-        if(updateTurn) {
+        boardGUI.updateBoardWithHints();
+        if (updateTurn) {
             updateTurn();
         }
-        /*if (updateTurn) {
-            if (board.gameEnded()) {
-                char winner = board.getWinner();
-                //HelloApplication.scene.setRoot(new Label("Game ended, Winner: " + winner));
-                flowEnded = true;
-                System.out.println("Game ended, Winner: " + winner);
-            }
-            updateTurn();
-        }*/
     }
 
     private void updateTurn() {
@@ -236,11 +118,43 @@ public class GameScreen extends Pane implements Initializable {
         this.boardGUI.setLayoutX(640);
         this.boardGUI.setLayoutY(344);
 
-
         root.getChildren().addAll(leftBoard, rightBoard, boardGUI);
 
-    }
+        // hover effect for the buttons
+        restartButton.setOnMouseEntered(e -> {
+            restartButton.setStyle(
+                    "-fx-background-color:  rgba(0, 0, 0);" +
+                            "-fx-background-radius: 4px");
+        });
+        restartButton.setOnMouseExited(e -> {
+            restartButton.setStyle(
+                    "-fx-background-color:  rgba(0, 0, 0, 0.8);" +
+                            "-fx-background-radius: 4px");
+        });
 
+        mainMenuButton.setOnMouseEntered(e -> {
+            mainMenuButton.setStyle(
+                    "-fx-background-color:  rgba(0, 0, 0);" +
+                            "-fx-background-radius: 4px");
+        });
+        mainMenuButton.setOnMouseExited(e -> {
+            mainMenuButton.setStyle(
+                    "-fx-background-color:  rgba(0, 0, 0, 0.8);" +
+                            "-fx-background-radius: 4px");
+        });
+
+        closeButton.setOnMouseEntered(e -> {
+            closeButton.setStyle(
+                    "-fx-background-color:   rgba(180, 0, 0);" +
+                            "-fx-background-radius: 4px");
+        });
+        closeButton.setOnMouseExited(e -> {
+            closeButton.setStyle(
+                    "-fx-background-color:   rgba(180, 0, 0, 0.8);" +
+                            "-fx-background-radius: 4px");
+        });
+
+    }
 
     @Override
     public Node getStyleableNode() {
@@ -254,23 +168,99 @@ public class GameScreen extends Pane implements Initializable {
 
 
     public void restartGame() {
-        MainMenu.restartTheGame();
-        this.gameSystem.stopTimeLine();
-        this.gameSystem = null;
-        flowEnded = true;
+        // show dialog and wait for a response
+        dialogBox("Restart Game");
     }
 
     public void closeGame() {
-        flowEnded = true;
-        HelloApplication.endGame();
+        // Show the dialog and wait for a response
+        dialogBox("Close Game");
+    }
+
+    public void mainMenu() {
+        // Show the dialog and wait for a response
+        dialogBox("Main Menu");
+    }
+
+    private void dialogBox(String title) {
+        // stop the gameSystem until we get the response
+        this.gameSystem.stopTimeLine();
+
+        // show dialog
+        DialogBox dialogBox = new DialogBox(title, this);
+        dialogBox.setLayoutX(465);
+        dialogBox.setLayoutY(234);
+        root.getChildren().add(dialogBox);
+
+        // wait for the response
+    }
+
+    public void setDialogBoxResponse(boolean response, String title) {
+        // remove the dialog box
+        root.getChildren().remove(root.getChildren().size() - 1);
+
+        if (!response) {
+            // Cancel button pressed so we need to resume the game
+            this.gameSystem.startTimeLine();
+            return;
+        }
+
+        // Confirm button pressed
         this.gameSystem.stopTimeLine();
         this.gameSystem = null;
+
+        // know witch button was pressed to take the right action
+        switch (title) {
+            case "Restart Game":
+                MainMenu.restartTheGame();
+                break;
+            case "Close Game":
+                MainGUI.endGame();
+                break;
+            case "Main Menu":
+                MainGUI.mainMenu();
+                break;
+        }
     }
+
 
     // Show the user that the current player doesn't have any possible moves, so the
     // turn will change to the next player
     public void showNoHints() {
-        // TODO
-        System.out.println("No hints for the current player");
+        // Create a stack pane to hold the frame and text
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.CENTER);
+
+        // Create a rectangle for the frame
+        Rectangle frame = new Rectangle(540, 302);
+        frame.setFill(Color.rgb(13, 13, 13, 0.74));
+        frame.setArcWidth(42);
+        frame.setArcHeight(42);
+        frame.setEffect(new DropShadow(5, Color.BLACK)); // Add shadow effect
+
+        // Create text for the message
+        Text message = new Text("No possible move for this turn");
+        message.setFont(Font.font("Inter", FontWeight.findByWeight(500), 42));
+        message.setFill(Color.WHITE);
+        message.setWrappingWidth(516);
+        message.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        message.setEffect(new DropShadow(5, Color.BLACK)); // Add shadow effect
+
+        // Add the rectangle and text to the stack pane
+        stackPane.getChildren().addAll(frame, message);
+
+        stackPane.setLayoutX(688);
+        stackPane.setLayoutY(442);
+        // Add the stack pane to the root pane
+        root.getChildren().add(stackPane);
+
+        this.noHintsState = true;
+    }
+
+    public void removeNoHints() {
+        if (noHintsState) {
+            root.getChildren().remove(root.getChildren().size() - 1);
+            this.noHintsState = false;
+        }
     }
 }

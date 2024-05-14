@@ -27,8 +27,9 @@ public class BoardGUI extends AnchorPane implements Initializable {
     public AnchorPane root;
     private GameSystem gameSystem;
 
-    public BoardGUI(Board board) {
+    public BoardGUI(Board board, GameSystem gameSystem) {
         this.board = board;
+        this.gameSystem = gameSystem;
 
         //load fxml file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -40,23 +41,34 @@ public class BoardGUI extends AnchorPane implements Initializable {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        updateBoard(false);
+        updateBoard();
     }
 
-    public void updateBoard(boolean updateTurn) {
+    public void updateBoard() {
         for (Node node : boardPane.getChildren()) {
             Cell cell = (Cell) node;
+            int index = cell.getIndex();
 
-            DISK state = board.getPos(cell.getIndex());
+            if(board.getPos(index) != cell.getState()) {
+                cell.playSound();
+            }
+
+            DISK state = board.getPos(index);
             if (state != DISK.HINT && state != DISK.BLACK_HINT && state != DISK.WHITE_HINT) {
                 cell.setDisplayedImage(state);
             } else{
                 cell.setDisplayedImage(DISK.EMPTY);
             }
+
+
+            if(index == gameSystem.getLastPlayedIndex() && gameSystem.getLastPlayedIndex() != -1){
+                cell.markLastPlayed();
+            }
+
         }
     }
 
-    public void updateBoardWithHints(boolean updateTurn) {
+    public void updateBoardWithHints() {
         for (Node node : boardPane.getChildren()) {
             Cell cell = (Cell) node;
 
@@ -69,6 +81,9 @@ public class BoardGUI extends AnchorPane implements Initializable {
                 }
             } else {
                 cell.setDisplayedImage(state);
+            }
+            if(cell.getIndex() == gameSystem.getLastPlayedIndex() && gameSystem.getLastPlayedIndex() != -1){
+                cell.markLastPlayed();
             }
         }
     }
@@ -89,10 +104,6 @@ public class BoardGUI extends AnchorPane implements Initializable {
                         if (validInput) {
                             clickedIndex = clickedCell.getIndex();
                             DISK d = gameSystem.isBlackTurn() ? DISK.BLACK : DISK.WHITE;
-                            //System.out.println(board);
-                            /*Platform.runLater(() -> {
-                                GameScreen.gameScreen.makeHumanMove();
-                            });*/
                             gameSystem.setHumanInput(clickedIndex);
                         }
                     }
@@ -100,7 +111,7 @@ public class BoardGUI extends AnchorPane implements Initializable {
                 }
             });
         }
-        updateBoard(false);
+        updateBoard();
     }
 
 
@@ -118,7 +129,4 @@ public class BoardGUI extends AnchorPane implements Initializable {
         return result;
     }
 
-    public void setGameSystem(GameSystem gameSystem) {
-        this.gameSystem = gameSystem;
-    }
 }

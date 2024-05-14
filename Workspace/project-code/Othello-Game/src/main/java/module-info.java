@@ -3,6 +3,7 @@ module com.cse.ai.othellogame {
     requires javafx.fxml;
     requires java.desktop;
     requires org.girod.javafx.svgimage;
+    requires javafx.media;
 
 
     opens com.cse.ai.othellogame to javafx.fxml;

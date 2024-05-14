@@ -14,10 +14,9 @@ public class GameSystem {
     private final Board board;
     private final Player playerWhite;
     private final Player playerBlack;
+    private final GameScreen gameScreen;
     private boolean blackTurn;
     private boolean gameEnded;
-    private final GameScreen gameScreen;
-
     // used to keep track of the last-played index
     private int lastPlayedIndex;
     private boolean humanPlayed;
@@ -36,7 +35,7 @@ public class GameSystem {
         this.hintsShown = false;
 
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 makeMove();
@@ -65,6 +64,8 @@ public class GameSystem {
             this.timeline.stop();
             return;
         }
+
+        gameScreen.removeNoHints();
 
         if (board.noHints()) {
             skipToNextPlayer(colorTurn, turnPlayer);
@@ -113,24 +114,6 @@ public class GameSystem {
         // for the next turn manually
         DISK nextColorTurn = this.blackTurn ? DISK.BLACK : DISK.WHITE;
         board.generateNewHints(nextColorTurn);
-
-        // update the gui to the new turn
-        this.gameScreen.update(true);
-
-        // if the player was human?? TODO
-        if (turnPlayer instanceof HumanPlayer) {
-            // TODO
-        }
-    }
-
-    private static void delay(double timeSec) {
-        for (int i = 0; i < 10 * timeSec; i++) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void setHumanInput(int index) {
@@ -146,5 +129,9 @@ public class GameSystem {
 
     private void changeTimeLineSpeed(double rateMultiplier) {
         timeline.setRate(rateMultiplier);
+    }
+
+    public int getLastPlayedIndex() {
+        return lastPlayedIndex;
     }
 }

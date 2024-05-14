@@ -56,6 +56,13 @@
             <artifactId>fxsvgimage</artifactId>
             <version>1.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>22</version>
+        </dependency>
+
 
 
     </dependencies>
@@ -80,7 +87,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.cse.ai.othellogame/com.cse.ai.othellogame.HelloApplication</mainClass>
+                            <mainClass>com.cse.ai.othellogame/com.cse.ai.othellogame.MainGUI</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
