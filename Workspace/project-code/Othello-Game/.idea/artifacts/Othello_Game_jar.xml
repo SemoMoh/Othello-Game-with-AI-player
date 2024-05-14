@@ -21,8 +21,8 @@
       <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:17.0.6" />
       <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:17.0.6" />
       <element id="library" level="project" name="Maven: com.github.hervegirod:fxsvgimage:1.1" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-media:22" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-media:win:22" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-media:win:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-media:17.0.2" />
     </root>
   </artifact>
 </component>

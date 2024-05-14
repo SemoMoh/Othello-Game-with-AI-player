@@ -18,7 +18,7 @@ public class ResultScreen extends Pane implements Initializable {
     private final Board board;
     private final BoardGUI boardGUI;
 
-    public ResultScreen(Board board, String playerBlackName, String playerWhiteName, BoardGUI boardGUI, Player playerBlack, Player playerWhite) {
+    public ResultScreen(Board board, String playerBlackName, String playerWhiteName, BoardGUI boardGUI) {
         this.board = board;
         this.boardGUI = boardGUI;
 

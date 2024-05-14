@@ -60,8 +60,9 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
-            <version>22</version>
+            <version>17.0.10</version>
         </dependency>
+
 
 
 
@@ -87,7 +88,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.cse.ai.othellogame/com.cse.ai.othellogame.MainGUI</mainClass>
+                            <mainClass>com.cse.ai.othellogame/com.cse.ai.othellogame.App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

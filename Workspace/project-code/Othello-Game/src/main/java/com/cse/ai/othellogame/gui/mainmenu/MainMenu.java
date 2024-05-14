@@ -121,7 +121,7 @@ public class MainMenu extends Pane implements Initializable {
 
 
     public void startTheGame(){
-        System.out.println("K30");
+        //System.out.println("K30");
 
         //HelloController.restart();
 
