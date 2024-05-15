@@ -45,7 +45,6 @@ public abstract class Player {
      * Abstract method representing the player's move selection process.
      *
      * @return The position chosen by the player for their move. (Range: [o,63])
-     * @Note Position = row * 8 + column
      */
     public abstract int makeMove();
 }

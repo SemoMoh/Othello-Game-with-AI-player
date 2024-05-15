@@ -66,7 +66,7 @@ public class GameSystem {
         this.hintsShown = false;
 
         // Initialize the timeline for the game flow.
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.6), event -> makeMove()));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.4), event -> makeMove()));
         // Set the cycle count to INDEFINITE so that the timeline keeps running until the game ends.
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
@@ -95,7 +95,7 @@ public class GameSystem {
      *   <li>Handling moves for both human and AI players.</li>
      *   <li>Updating the game board and the game screen accordingly after the move is made.</li>
      * </ul>
-     * </p>
+     *
      */
     public void makeMove() {
         // Check if the game has ended

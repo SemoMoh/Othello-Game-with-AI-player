@@ -113,7 +113,7 @@ public class Board implements Cloneable {
      *   <li>Update the other disks on the board according to the insertion position and its color.</li>
      *   <li>Generate new hints for the next move by the opposing player.</li>
      * </ol>
-     * </p>
+     *
      *
      * @param color The player who played this turn (DISK.BLACK or DISK.WHITE).
      * @param row   The row index of the inserted position (0-based) (range: [0, 7]).
@@ -158,7 +158,7 @@ public class Board implements Cloneable {
      *   <li>Update the other disks on the board according to the insertion position and its color.</li>
      *   <li>Generate new hints for the next move by the opposing player.</li>
      * </ol>
-     * </p>
+     *
      *
      * @param color The player who played this turn (DISK.BLACK or DISK.WHITE).
      * @param pos   The index of the inserted position (0-based) (range: [0, 63]).
@@ -454,7 +454,7 @@ public class Board implements Cloneable {
      *   <li>No more valid moves are available for either player.</li>
      *   <li>The entire board is filled with discs, and no further moves can be made.</li>
      * </ul>
-     * </p>
+     *
      * <p>
      * If the game has ended, this method returns {@code true}; otherwise, it returns {@code false}.
      * <br>

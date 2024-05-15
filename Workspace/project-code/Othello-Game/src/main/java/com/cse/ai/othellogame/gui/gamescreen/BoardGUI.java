@@ -69,7 +69,8 @@ public class BoardGUI extends AnchorPane implements Initializable {
             int index = cell.getIndex();
 
             // Play sound if disk is flipped or placed
-            if (board.getPos(index) != cell.getState()) {
+            if (board.getPos(index) != cell.getState()
+                    && (board.getPos(index) == DISK.BLACK || board.getPos(index) == DISK.WHITE)) {
                 cell.playSound();
             }
 
@@ -77,7 +78,7 @@ public class BoardGUI extends AnchorPane implements Initializable {
             DISK state = board.getPos(index);
             if (state != DISK.HINT && state != DISK.BLACK_HINT && state != DISK.WHITE_HINT) {
                 cell.setDisplayedImage(state);
-            } else if(withHints) {
+            } else if (withHints) {
                 // Set the displayed image of the cell to the corresponding hint color
                 if (gameSystem.isBlackPlayerTurn()) {
                     cell.setDisplayedImage(DISK.BLACK_HINT);

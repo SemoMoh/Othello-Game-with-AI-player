@@ -6,7 +6,7 @@ import com.cse.ai.othellogame.backend.game.DISK;
 import java.awt.*;
 
 /**
- * A class representing an AI player in the game, inheriting from {@link #Player}.
+ * A class representing an AI player in the game.
  * <p>
  * This class implements an AI player capable of making moves based on a specified difficulty level.
  */
@@ -36,7 +36,6 @@ public class AIPlayer extends Player{
      * </p>
      *
      * @return An integer representing the position chosen by the AI player. (Range: [0, 63])
-     * @Note Position = row * 8 + column
      */
     @Override
     public int makeMove() {
@@ -56,7 +55,7 @@ public class AIPlayer extends Player{
      *     </ol>
      * Note:
      * This method is used internally by the AIPlayer class to implement the AI logic.
-     * </p>
+     *
      *
      * @return None, for now.
      */

@@ -7,7 +7,7 @@ import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
 
 
 /**
- * A class representing a human player in the game, inheriting from {@link #Player}.
+ * A class representing a human player in the game.
  * <p>
  * This class allows a human player to interact with the game by selecting moves through user input.
  * </p>
@@ -33,10 +33,9 @@ public class HumanPlayer extends Player{
      *   <li>TODO: figure out how it will take the inputs</li>
      *   <li>Hints are shown to the user by the GUI directly so no need to do that here.</li>
      * </ul>
-     * </p>
+     *
      *
      * @return The position chosen by the player for their move. (Range: [o,63])
-     * @Note Position = row * 8 + column
      */
     @Override
     public int makeMove() {

@@ -249,8 +249,8 @@ public class GameScreen extends Pane implements Initializable {
 
     /**
      * Shows a message to the user that the current player doesn't have any possible moves.
-     *
-     * @note: The {@link #gameSystem} will remove the message and change the turn to the next player after 0.6 second.
+     * <br>
+     * The {@link #gameSystem} will remove the message and change the turn to the next player after 0.6 second.
      */
     public void showNoHints() {
         // Create a stack pane to hold the frame and text
