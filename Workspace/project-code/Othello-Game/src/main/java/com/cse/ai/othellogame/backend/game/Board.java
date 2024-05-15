@@ -319,6 +319,7 @@ public class Board implements Cloneable {
 
     /**
      * Checks if the given row and column indices are out of bounds of an 8x8 board.
+     * Used in the {@link #translate(int, int, int, int, DISK)} and {@link #isValid(int, int, DISK)} methods.
      *
      * @param r The row index.
      * @param c The column index.
@@ -331,6 +332,7 @@ public class Board implements Cloneable {
     /**
      * Checks if a move in a specified direction (dx, dy) from a given position (r, c)
      * can be translated into the current player's color.
+     * Used in the {@link #isValid(int, int, DISK)} method.
      *
      * @param r           The starting row index.
      * @param c           The starting column index.
@@ -340,7 +342,6 @@ public class Board implements Cloneable {
      * @return true if the move can be translated into the current player's color, false otherwise.
      * @throws ArrayIndexOutOfBoundsException if the move results in out-of-bounds access.
      */
-
     private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException {
         try {
             while (!outOfBounds(r+dx, c+dy)) {
@@ -359,6 +360,7 @@ public class Board implements Cloneable {
 
     /**
      * Checks if a move at the specified row and column indices is valid for the current player.
+     * Used in the {@link #generateNewHints(DISK)} method.
      *
      * @param row         The row index.
      * @param col         The column index.
@@ -437,6 +439,7 @@ public class Board implements Cloneable {
 
     /**
      * This method changes the current value of the flag to the desired value.
+     * Used in the {@link #removeAllHints()} and {@link #generateNewHints(DISK)} methods.
      *
      * @param areThereAnyHints the desired value for the flag
      */
