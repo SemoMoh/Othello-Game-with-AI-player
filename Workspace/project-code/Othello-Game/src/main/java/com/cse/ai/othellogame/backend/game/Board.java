@@ -340,6 +340,8 @@ public class Board implements Cloneable {
      * @return true if the move can be translated into the current player's color, false otherwise.
      * @throws ArrayIndexOutOfBoundsException if the move results in out-of-bounds access.
      */
+
+    // toz fe eslam we karim we omar el tahhan
     private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException {
         try {
             while (!outOfBounds(r+dx, c+dy)) {
