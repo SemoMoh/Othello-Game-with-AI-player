@@ -467,6 +467,13 @@ public class Board implements Cloneable {
      * @return {@code true} if the Othello game has ended, {@code false} otherwise.
      */
     public boolean gameEnded() {
+        // If board is full or either player had no disks on the board, then the game ends
+        int whiteScore = getWhiteScore();
+        int blackScore = getBlackScore();
+        if (whiteScore + blackScore == 64 || whiteScore == 0 || blackScore == 0) {
+            return true;
+        }
+
         // Determine if hints (valid moves) are available on the current board
         boolean hints = !noHints();
 
