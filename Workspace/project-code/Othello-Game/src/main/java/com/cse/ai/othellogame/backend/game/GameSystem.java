@@ -11,10 +11,6 @@ import javafx.util.Duration;
 /**
  * Manages the core logic of the Othello game, including player turns,
  * making moves, and handling game-ending conditions.
- * // TODO: add image of the game flow
- * <p>
- * <img src="path/to/your/image.png" alt="Flow of the game" width="500" height="300">
- * </p>
  */
 public class GameSystem {
     /**
