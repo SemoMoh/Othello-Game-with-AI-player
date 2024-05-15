@@ -342,7 +342,7 @@ public class Board implements Cloneable {
      */
     private boolean translate(int r, int c, int dx, int dy, DISK colorToPlay) throws ArrayIndexOutOfBoundsException {
         try {
-            while (!outOfBounds(r, c)) {
+            while (!outOfBounds(r+dx, c+dy)) {
                 r += dx;
                 c += dy;
                 if (board[r * 8 + c] == DISK.EMPTY || board[r * 8 + c] == DISK.HINT)
