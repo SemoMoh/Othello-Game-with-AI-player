@@ -60,6 +60,7 @@ Note: If the device where the program will be setup has Windows 10 version or on
 - [Mahmoud Abdelraouf Mahmoud](https://github.com/Mahmoud-Abdelraouf)
 - [Abdelrahman Elsayed Mohamed](https://github.com/d3cypherd)
 - [Omar Muhammad Mahmoud Al-Tahan](https://github.com/UmarTahanix)
+- [Eslam Mohamed Marzouk](https://github.com/SemoMoh)
 
 ## License
 
