@@ -65,6 +65,7 @@ Note: If the device where the program will be setup has Windows 10 version or on
 - [Omar Muhammad Mahmoud Al-Tahan](https://github.com/UmarTahanix)
 - [Eslam Mohamed Marzouk](https://github.com/SemoMoh)
 - [Sarah Sherif Mohamed](https://github.com/Sarrah-Sherif)
+- [Tasneem Salama Abd-Elhamid](https://github.com/tasneem-elhady)
 
 ## License
 
