@@ -11,10 +11,6 @@ import javafx.util.Duration;
 /**
  * Manages the core logic of the Othello game, including player turns,
  * making moves, and handling game-ending conditions.
- * // TODO: add image of the game flow
- * <p>
- * <img src="path/to/your/image.png" alt="Flow of the game" width="500" height="300">
- * </p>
  */
 public class GameSystem {
     /**
@@ -66,7 +62,7 @@ public class GameSystem {
         this.hintsShown = false;
 
         // Initialize the timeline for the game flow.
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.4), event -> makeMove()));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.45), event -> makeMove()));
         // Set the cycle count to INDEFINITE so that the timeline keeps running until the game ends.
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
@@ -111,8 +107,12 @@ public class GameSystem {
         // Check if no hints are available for the current player
         if (board.noHints()) {
             skipToNextPlayer();
+            // speed down the timer so the user can see the message
+            changeTimeLineSpeed(0.6);
             return;
         }
+        // Reset the timeline speed
+        changeTimeLineSpeed(1);
 
         // Determine the player whose turn it is
         Player turnPlayer = blackTurn ? playerBlack : playerWhite;

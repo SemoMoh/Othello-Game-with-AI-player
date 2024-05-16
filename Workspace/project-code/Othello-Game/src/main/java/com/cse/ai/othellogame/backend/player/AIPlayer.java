@@ -21,7 +21,7 @@ public class AIPlayer extends Player{
      *
      * @param board      A reference to the game's board.
      * @param color      The color assigned to the player. DISK.BLACK for black players, DISK.WHITE for white players.
-     * @param difficulty The difficulty level of the AI player. Ranges from zero to two, with 2 being the hardest.
+     * @param difficulty The difficulty level of the AI player. easy -> 1, medium -> 2, hard -> 8.
      */
     public AIPlayer(Board board, DISK color, int difficulty) {
         super(board, color);
@@ -57,13 +57,11 @@ public class AIPlayer extends Player{
      * This method is used internally by the AIPlayer class to implement the AI logic.
      *
      *
-     * @return None, for now.
+     * @return An integer representing the best position. (Range: [0, 63])
      */
     public int algorithmEval(){
-        //System.out.println(getBoard());
         double bestScore = Integer.MIN_VALUE;
         Point bestMove = null;
-        //System.out.println("number of possible moves is : " + getBoard().getAllPossibleMoves().size());
         for(Point move : getBoard().getAllPossibleMoves()){
             //create a new node
             Board newNode;
@@ -74,7 +72,7 @@ public class AIPlayer extends Player{
             }
             newNode.updateBoard(getColor(),move.x,move.y);
             //recursive call
-//            int childScore = Minimax.MM(newNode,getColor(),difficulty-1,false);
+            //int childScore = Minimax.MM(newNode,getColor(),difficulty-1,false);
             double childScore = Minimax.MMAB(newNode,getColor(),difficulty-1,false,Integer.MIN_VALUE,Integer.MAX_VALUE);
             if(childScore > bestScore) {
                 bestScore = childScore;
@@ -84,11 +82,5 @@ public class AIPlayer extends Player{
         //System.out.println("best move is : " + (bestMove.x*8+ bestMove.y));
         assert bestMove != null;
         return bestMove.x*8+ bestMove.y;
-    }
-    public static void main(String[] args){
-        Board board = new Board();
-        AIPlayer ai = new AIPlayer(board,DISK.BLACK,2);
-        ai.makeMove();
-        //System.out.println("done");
     }
 }
