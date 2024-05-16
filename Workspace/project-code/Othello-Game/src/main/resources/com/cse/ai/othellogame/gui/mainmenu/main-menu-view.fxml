@@ -118,4 +118,13 @@
          </InnerShadow>
       </effect>
    </Text>
+   <Button fx:id="closeButton" layoutX="1864.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeGame" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: rgba(180, 0, 0, 0.8); -fx-background-radius: 4px;">
+      <graphic>
+         <ImageView fitHeight="34.68" fitWidth="34.68" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../../../images/close%20button.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </Button>
 </fx:root>

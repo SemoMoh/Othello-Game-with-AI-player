@@ -218,6 +218,17 @@ public class MainMenu extends Pane implements Initializable {
     }
 
 
+    /**
+     * Closes the game application.
+     *  TODO:It shows a dialog box to confirm the close.
+     */
+    public void closeGame() {
+        // Show the dialog and wait for a response
+        MainGUI.endGame();
+    }
+
+
+
     // Initialization method
 
     /**
