@@ -11,4 +11,5 @@ module com.cse.ai.othellogame {
     exports com.cse.ai.othellogame;
     exports com.cse.ai.othellogame.gui.mainmenu to javafx.fxml;
     opens com.cse.ai.othellogame.gui.mainmenu to javafx.fxml;
+    opens com.cse.ai.othellogame.gui.resultscreen to javafx.fxml;
 }

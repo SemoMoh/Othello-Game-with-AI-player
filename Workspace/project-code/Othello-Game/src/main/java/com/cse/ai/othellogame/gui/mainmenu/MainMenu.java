@@ -1,3 +1,15 @@
+/**
+        * The MainMenu class represents the main menu screen of the Othello game.
+        * It allows players to configure game settings such as player types (Human or AI),
+        * player names, and AI difficulty levels before starting a new game.
+        *
+        * This class extends the JavaFX Pane class and implements the Initializable interface
+ * to initialize the GUI components defined in the corresponding FXML file.
+         *
+         * The MainMenu class contains methods to handle user interactions, such as toggling
+ * player types between Human and AI, changing AI difficulty levels, retrieving player
+         * names, and starting a new game with the selected settings.
+         */
 package com.cse.ai.othellogame.gui.mainmenu;
 
 import com.cse.ai.othellogame.backend.player.HumanPlayer;
@@ -50,7 +62,10 @@ public class MainMenu extends Pane implements Initializable {
 
 
 
-
+    /**
+     * Constructs the main menu screen by loading the corresponding FXML file.
+     * Initializes GUI components and event handlers defined in the FXML file.
+     */
     public MainMenu(){
 
         mainMenu = this;
@@ -69,13 +84,18 @@ public class MainMenu extends Pane implements Initializable {
     }
 
 
-
+    /**
+     * Toggles the player type between AI and Human for the white player.
+     */
     public void changeWhitePlayerType(){
         if (whitePlayerType.getText().equals( "AI"))
             whitePlayerType.setText("Human");
         else
             whitePlayerType.setText("AI");
     }
+    /**
+     * Toggles the player type between AI and Human for the black player.
+     */
     public void changeBlackPlayerType(){
         if (blackPlayerType.getText().equals( "AI"))
             blackPlayerType.setText("Human");
@@ -83,6 +103,9 @@ public class MainMenu extends Pane implements Initializable {
             blackPlayerType.setText("AI");
     }
 
+    /**
+     * Changes the AI difficulty level for the white player.
+     */
     public void changeWhiteDifficulty(){
         if (whiteDifficulty.getText().equals("Difficulty: Easy"))
             whiteDifficulty.setText("Difficulty: Medium");
@@ -93,6 +116,9 @@ public class MainMenu extends Pane implements Initializable {
             whiteDifficulty.setText("Difficulty: Easy");
     }
 
+    /**
+     * Changes the AI difficulty level for the black player.
+     */
     public void changeBlackDifficulty(){
         if (blackDifficulty.getText().equals("Difficulty: Easy"))
             blackDifficulty.setText("Difficulty: Medium");
@@ -104,22 +130,31 @@ public class MainMenu extends Pane implements Initializable {
     }
 
 
+    /**
+     * Retrieves the name of the black player.
+     */
 
     public String getBlackPlayerName() {
         if (!blackPlayerName.getText().equals("")) {
             return blackPlayerName.getText();
         }
-        return "Snoop Dog";
+        return "Black Player";
     }
+
+    /**
+     * Retrieves the name of the white player.
+     */
 
     public String getWhitePlayerName() {
         if (!whitePlayerName.getText().equals("")) {
             return whitePlayerName.getText();
         }
-        return "Taylor Swift";
+        return "White Player";
     }
 
-
+    /**
+     * Starts a new game with the selected settings.
+     */
     public void startTheGame(){
         //System.out.println("K30");
 
@@ -154,16 +189,25 @@ public class MainMenu extends Pane implements Initializable {
 
     }
 
-
+    /**
+     * Restarts the game with the same settings
+     */
     public static void restartTheGame(){
         mainMenu.startTheGame();
     }
+    // Helper methods
 
+    /**
+     * Determines if the player type is AI based on the button text.
+     */
 
     private boolean isAIPlayer(Button playerTypeButton) {
         return playerTypeButton.getText().equals("AI");
     }
 
+    /**
+     * Retrieves the difficulty level based on the button text.
+     */
     private int getDifficultyLevel(String buttonText) {
         return switch (buttonText) {
             case "Difficulty: Easy" -> 1;
@@ -174,7 +218,11 @@ public class MainMenu extends Pane implements Initializable {
     }
 
 
+    // Initialization method
 
+    /**
+     * Initializes the main menu GUI components and binds their properties.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //root.getChildren().add(this);

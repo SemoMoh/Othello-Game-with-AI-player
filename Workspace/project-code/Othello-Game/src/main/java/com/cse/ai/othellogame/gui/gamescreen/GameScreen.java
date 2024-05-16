@@ -5,6 +5,7 @@ import com.cse.ai.othellogame.backend.game.Board;
 import com.cse.ai.othellogame.backend.game.GameSystem;
 import com.cse.ai.othellogame.backend.player.Player;
 import com.cse.ai.othellogame.gui.mainmenu.MainMenu;
+import com.cse.ai.othellogame.gui.resultscreen.ResultScreen;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -298,7 +299,7 @@ public class GameScreen extends Pane implements Initializable {
      */
     public void gameEnded() {
         // TODO:
-        // ResultScreen resultScreen = new ResultScreen(board, playerBlackName, playerWhiteName, boardGUI);
-        // MainGUI.scene.setRoot(resultScreen);
+         ResultScreen resultScreen = new ResultScreen(board, playerBlackName, playerWhiteName, boardGUI);
+         MainGUI.scene.setRoot(resultScreen);
     }
 }
