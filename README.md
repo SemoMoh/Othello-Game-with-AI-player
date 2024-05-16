@@ -40,6 +40,8 @@ This project is an implementation of the classic board game Othello (also known 
     java OthelloGame
     ```
 
+Note: If the device where the program will be setup has Windows 10 version or one of the the older Windows versions, please make sure that the display size of the device is at 100% from the settings of the device.
+
 ## How to Play
 
 - The game starts with an empty 8x8 board with two black and two white pieces arranged in the center.
