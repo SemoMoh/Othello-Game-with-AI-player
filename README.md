@@ -1,6 +1,8 @@
 # Othello Game with AI Player
 
-![Othello ](https://github.com/SemoMoh/Othello-Game-with-AI-player/assets/131382032/b5bd249b-4df4-4ec1-ae05-5522516990e3)
+<div align="center">
+    <img src="https://github.com/SemoMoh/Othello-Game-with-AI-player/assets/131382032/b5bd249b-4df4-4ec1-ae05-5522516990e3" alt="Othello GIF">
+</div>
 
 
 ## Overview
