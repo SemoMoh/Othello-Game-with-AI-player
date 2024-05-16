@@ -3,11 +3,13 @@ package com.cse.ai.othellogame;
 import com.cse.ai.othellogame.gui.mainmenu.MainMenu;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class MainGUI extends Application {
@@ -37,6 +39,12 @@ public class MainGUI extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        stage.setTitle("Othello Game");
+        // Load icon
+        stage.getIcons().add(new Image(
+                Objects.requireNonNull(MainGUI.class.getResourceAsStream("/images/app-icon.png"))
+        ));
+
         MainGUI.stage = stage;
         MainGUI.scene = new Scene(new MainMenu(), 1920, 1080);
 
@@ -53,7 +61,6 @@ public class MainGUI extends Application {
 
         // set the scene and show the stage
         stage.setScene(scene);
-        stage.setTitle("Hello!");
         stage.show();
     }
 }
