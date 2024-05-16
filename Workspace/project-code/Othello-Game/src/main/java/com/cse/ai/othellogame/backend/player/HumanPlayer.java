@@ -23,8 +23,7 @@ public class HumanPlayer extends Player{
     public HumanPlayer(Board board, DISK color) {
         super(board, color);
     }
-
-
+    
     /**
      * Obtain a move from the human player via user input and return the position they choose.
      * <p>
