@@ -115,6 +115,59 @@ public class ResultScreen extends Pane implements Initializable {
 
         // Display winner or tie message
         displayWinner();
+
+
+        exitButton.setOnMouseEntered(e -> exitButton.setStyle(
+                "-fx-background-color:  #673232FF;" +
+                        "-fx-background-radius: 16px;"
+                        + "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 16px;"
+        ));
+
+        exitButton.setOnMouseExited(e -> exitButton.setStyle(
+                "-fx-background-color:    #8E3030;" +
+                        "-fx-background-radius: 16px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 16px;"
+        ));
+
+        // for `cancel button`
+        mainMenuButton.setOnMouseEntered(e -> mainMenuButton.setStyle(
+                "-fx-background-color:  #294930  ;" +
+                        "-fx-background-radius: 16px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 16px;"
+        ));
+
+        mainMenuButton.setOnMouseExited(e -> mainMenuButton.setStyle(
+                "-fx-background-color:   #3C6539;" +
+                        "-fx-background-radius: 16px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 16px;"
+        ));
+
+
+        restartButton.setOnMouseEntered(e -> restartButton.setStyle(
+                "-fx-background-color:   #294930;" +
+                        "-fx-background-radius: 16px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 16px;"
+        ));
+
+        restartButton.setOnMouseExited(e -> restartButton.setStyle(
+                "-fx-background-color:  #3C6539;" +
+                        "-fx-background-radius: 16px;" +
+                        "-fx-border-color: white;" +
+                        "-fx-border-width: 3px;" +
+                        "-fx-border-radius: 16px;"
+        ));
+
+
     }
 
     /**

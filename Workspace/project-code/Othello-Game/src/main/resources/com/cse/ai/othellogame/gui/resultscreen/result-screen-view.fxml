@@ -66,7 +66,7 @@
             </Label>
          </children>
       </VBox>
-      <HBox layoutX="1003.0" layoutY="653.0" onMouseClicked="#mainMenu" prefHeight="88.0" prefWidth="338.0" style="-fx-background-color: #3C6539; -fx-background-radius: 16; -fx-border-radius: 16; -fx-border-width: 3; -fx-border-color: ffffff;" styleClass="greenButton" stylesheets="@../../../../../stylesheets/results.css">
+      <HBox fx:id="mainMenuButton" layoutX="1003.0" layoutY="653.0" onMouseClicked="#mainMenu" prefHeight="88.0" prefWidth="338.0" style="-fx-background-color: #3C6539; -fx-background-radius: 16; -fx-border-radius: 16; -fx-border-width: 3; -fx-border-color: ffffff;" styleClass="greenButton">
          <children>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="88.0" style="-fx-background-color: #000000; -fx-background-radius: 16;">
                <children>
@@ -132,7 +132,7 @@
             </StackPane>
          </children>
       </HBox>
-      <HBox fx:id="mainMenuButton" alignment="CENTER" layoutY="369.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="1920.0" spacing="500.0" styleClass="greenButton">
+      <HBox alignment="CENTER" layoutY="369.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="1920.0" spacing="500.0" styleClass="greenButton">
          <children>
             <HBox prefHeight="200.0" prefWidth="522.0">
                <children>
