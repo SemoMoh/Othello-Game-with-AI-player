@@ -1,0 +1,7 @@
+module:com.cse.ai.othellogame
+com.cse.ai.othellogame
+com.cse.ai.othellogame.backend.game
+com.cse.ai.othellogame.backend.player
+com.cse.ai.othellogame.gui.gamescreen
+com.cse.ai.othellogame.gui.mainmenu
+com.cse.ai.othellogame.gui.resultscreen
