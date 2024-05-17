@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -23,6 +25,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -33,6 +36,20 @@ public class GameScreen extends Pane implements Initializable {
     private final ScoreBoard rightBoard;
     private final BoardGUI boardGUI;
     private final Board board;
+    private final String playerBlackName;
+    private final String playerWhiteName;
+    // Load the sound effect for the click
+    private final MediaPlayer clickSound = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/sound effects/click-buttons-sounds.mp3")).toString()
+            )
+    );
+    // Load the sound effect for the notify
+    private final MediaPlayer notifySound = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/sound effects/system-error-notice-132470.mp3")).toString()
+            )
+    );
     public GameSystem gameSystem;
     @FXML
     public Pane root;
@@ -42,10 +59,7 @@ public class GameScreen extends Pane implements Initializable {
     public Button closeButton;
     @FXML
     public Button mainMenuButton;
-    private final String playerBlackName;
-    private final String playerWhiteName;
     private boolean noHintsState;
-
 
     /**
      * Constructs a GameScreen object.
@@ -170,6 +184,11 @@ public class GameScreen extends Pane implements Initializable {
      * It shows a dialog box to confirm the restart.
      */
     public void restartGame() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         // show dialog and wait for a response
         dialogBox("Restart Game");
     }
@@ -179,6 +198,11 @@ public class GameScreen extends Pane implements Initializable {
      * It shows a dialog box to confirm the close.
      */
     public void closeGame() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         // Show the dialog and wait for a response
         dialogBox("Close Game");
     }
@@ -188,6 +212,11 @@ public class GameScreen extends Pane implements Initializable {
      * It shows a dialog box to confirm the action.
      */
     public void mainMenu() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         // Show the dialog and wait for a response
         dialogBox("Main Menu");
     }
@@ -217,6 +246,11 @@ public class GameScreen extends Pane implements Initializable {
      * @param title    The title of the dialog box, to determine what action to do.
      */
     public void setDialogBoxResponse(boolean response, String title) {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         // remove the dialog box
         root.getChildren().remove(root.getChildren().size() - 1);
 
@@ -254,6 +288,11 @@ public class GameScreen extends Pane implements Initializable {
      * The {@link #gameSystem} will remove the message and change the turn to the next player after 0.6 second.
      */
     public void showNoHints() {
+        // add click sound
+        notifySound.setVolume(0.6);
+        notifySound.stop();
+        notifySound.play();
+
         // Create a stack pane to hold the frame and text
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.CENTER);
@@ -298,8 +337,12 @@ public class GameScreen extends Pane implements Initializable {
      * Show the result screen after the game is ended.
      */
     public void gameEnded() {
-        // TODO:
-         ResultScreen resultScreen = new ResultScreen(board, playerBlackName, playerWhiteName, boardGUI);
-         MainGUI.scene.setRoot(resultScreen);
+        // add click sound
+        notifySound.setVolume(0.6);
+        notifySound.stop();
+        notifySound.play();
+
+        ResultScreen resultScreen = new ResultScreen(board, playerBlackName, playerWhiteName, boardGUI);
+        MainGUI.scene.setRoot(resultScreen);
     }
 }

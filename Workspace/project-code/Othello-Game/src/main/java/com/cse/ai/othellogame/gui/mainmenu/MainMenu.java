@@ -7,6 +7,7 @@ import com.cse.ai.othellogame.backend.game.DISK;
 import com.cse.ai.othellogame.backend.player.AIPlayer;
 import com.cse.ai.othellogame.backend.player.HumanPlayer;
 import com.cse.ai.othellogame.backend.player.Player;
+import com.cse.ai.othellogame.gui.gamescreen.Cell;
 import com.cse.ai.othellogame.gui.gamescreen.GameScreen;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -15,9 +16,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -33,7 +41,27 @@ import java.util.ResourceBundle;
  * names, and starting a new game with the selected settings.
  */
 public class MainMenu extends Pane implements Initializable {
+    private final static MediaPlayer mediaPlayer = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/videos/othello-3d-model.mp4")).toString()
+            )
+    );
 
+    // Load the sound effect for the click
+    private final MediaPlayer clickSound = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/sound effects/click-buttons-sounds.mp3")).toString()
+            )
+    );
+
+    // Load the sound effect for the background music
+    private final MediaPlayer backgroundSound = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/sound effects/electric-guitar-rythym-music-mp3-25311.mp3")).toString()
+            )
+    );
+
+    private final static MediaView mediaView = new MediaView(mediaPlayer);
 
     public static MainMenu mainMenu;
 
@@ -93,6 +121,11 @@ public class MainMenu extends Pane implements Initializable {
      * Toggles the player type between AI and Human for the white player.
      */
     public void changeWhitePlayerType() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         if (whitePlayerType.getText().equals("AI"))
             whitePlayerType.setText("Human");
         else
@@ -103,6 +136,11 @@ public class MainMenu extends Pane implements Initializable {
      * Toggles the player type between AI and Human for the black player.
      */
     public void changeBlackPlayerType() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         if (blackPlayerType.getText().equals("AI"))
             blackPlayerType.setText("Human");
         else
@@ -113,6 +151,11 @@ public class MainMenu extends Pane implements Initializable {
      * Changes the AI difficulty level for the white player.
      */
     public void changeWhiteDifficulty() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         if (whiteDifficulty.getText().equals("Difficulty: Easy"))
             whiteDifficulty.setText("Difficulty: Medium");
         else if (whiteDifficulty.getText().equals("Difficulty: Medium")) {
@@ -125,6 +168,11 @@ public class MainMenu extends Pane implements Initializable {
      * Changes the AI difficulty level for the black player.
      */
     public void changeBlackDifficulty() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         if (blackDifficulty.getText().equals("Difficulty: Easy"))
             blackDifficulty.setText("Difficulty: Medium");
         else if (blackDifficulty.getText().equals("Difficulty: Medium")) {
@@ -159,6 +207,14 @@ public class MainMenu extends Pane implements Initializable {
      * Starts a new game with the selected settings.
      */
     public void startTheGame() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
+        // stop the background music
+        backgroundSound.stop();
+
         //System.out.println("K30");
 
         //HelloController.restart();
@@ -219,6 +275,10 @@ public class MainMenu extends Pane implements Initializable {
      *  TODO:It shows a dialog box to confirm the close.
      */
     public void closeGame() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
         // Show the dialog and wait for a response
         MainGUI.endGame();
     }
@@ -234,5 +294,27 @@ public class MainMenu extends Pane implements Initializable {
         whitePlayerName.visibleProperty().bind(Bindings.createBooleanBinding(() -> whitePlayerType.getText().equals("Human"), whitePlayerType.textProperty()));
         whiteDifficulty.visibleProperty().bind(Bindings.createBooleanBinding(() -> whitePlayerType.getText().equals("AI"), whitePlayerType.textProperty()));
         blackDifficulty.visibleProperty().bind(Bindings.createBooleanBinding(() -> blackPlayerType.getText().equals("AI"), blackPlayerType.textProperty()));
+
+        // Add the 3d model video
+        mediaView.setFitWidth(1920);
+        mediaView.setFitHeight(1080);
+        // Set preserveRatio to false to fill the entire space without preserving aspect ratio
+        mediaView.setPreserveRatio(false);
+        // Set MediaPlayer to play the video in a loop
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        // Play the video
+        mediaPlayer.play();
+        root.getChildren().add(1, mediaView);
+
+        // To darken the video.
+        // Create a dark rectangle to overlay on top of the video
+        Rectangle darkOverlay = new Rectangle(0, 0, 1920, 1080);
+        darkOverlay.setFill(Color.rgb(0, 0, 0, 0.1));
+        root.getChildren().add(2, darkOverlay);
+
+        // Add the background music
+        backgroundSound.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundSound.setVolume(0.3);
+        backgroundSound.play();
     }
 }

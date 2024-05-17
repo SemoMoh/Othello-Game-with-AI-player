@@ -11,10 +11,13 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -51,6 +54,13 @@ public class ResultScreen extends Pane implements Initializable {
     private final BoardGUI boardGUI;
     private final String playerBlackName;
     private final String playerWhiteName;
+
+    // Load the sound effect for the click
+    private final MediaPlayer clickSound = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(ResultScreen.class.getResource("/sound effects/click-buttons-sounds.mp3")).toString()
+            )
+    );
 
     /**
      * Constructs the ResultScreen with the provided game board, player names,
@@ -174,6 +184,11 @@ public class ResultScreen extends Pane implements Initializable {
      * Closes the game application.
      */
     public void closeApp() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         MainGUI.endGame();
     }
 
@@ -181,6 +196,11 @@ public class ResultScreen extends Pane implements Initializable {
      * Returns to the main menu.
      */
     public void mainMenu() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         MainGUI.mainMenu();
     }
 
@@ -188,6 +208,11 @@ public class ResultScreen extends Pane implements Initializable {
      * Restarts the game.
      */
     public void restartGame() {
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         MainMenu.restartTheGame();
     }
 

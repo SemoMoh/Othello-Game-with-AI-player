@@ -7,9 +7,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -18,6 +21,12 @@ import java.util.ResourceBundle;
 public class DialogBox extends VBox implements Initializable {
     private final GameScreen gameScreen;
     private final String titleStr;
+    // Load the sound effect for the click
+    private final MediaPlayer clickSound = new MediaPlayer(
+            new Media(
+                    Objects.requireNonNull(Cell.class.getResource("/sound effects/click-buttons-sounds.mp3")).toString()
+            )
+    );
 
     @FXML
     public Label title;
@@ -93,6 +102,11 @@ public class DialogBox extends VBox implements Initializable {
      * Handles the action when the `confirm button` is pressed, and return to the game screen the response.
      */
     public void confirmPressed(){
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         gameScreen.setDialogBoxResponse(true, titleStr);
     }
 
@@ -100,6 +114,11 @@ public class DialogBox extends VBox implements Initializable {
      * Handles the action when the `cancel button` is pressed, and return to the game screen the response.
      */
     public void cancelPressed(){
+        // add click sound
+        clickSound.setVolume(0.6);
+        clickSound.stop();
+        clickSound.play();
+
         gameScreen.setDialogBoxResponse(false, titleStr);
     }
 }
