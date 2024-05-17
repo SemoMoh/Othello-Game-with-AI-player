@@ -1,6 +1,9 @@
 # Othello Game with AI Player
 
-![Othello Game](https://github.com/SemoMoh/Othello-Game-with-AI-player/assets/90259729/18050616-bce6-4cbd-8881-1d6be94a2fe9)
+<div align="center">
+    <img src="https://github.com/SemoMoh/Othello-Game-with-AI-player/assets/131382032/b5bd249b-4df4-4ec1-ae05-5522516990e3" alt="Othello GIF">
+</div>
+
 
 ## Overview
 
@@ -61,6 +64,8 @@ Note: If the device where the program will be setup has Windows 10 version or on
 - [Abdelrahman Elsayed Mohamed](https://github.com/d3cypherd)
 - [Omar Muhammad Mahmoud Al-Tahan](https://github.com/UmarTahanix)
 - [Eslam Mohamed Marzouk](https://github.com/SemoMoh)
+- [Sarah Sherif Mohamed](https://github.com/Sarrah-Sherif)
+- [Tasneem Salama Abd-Elhamid](https://github.com/tasneem-elhady)
 
 ## License
 
