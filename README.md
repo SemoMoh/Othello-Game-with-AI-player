@@ -9,6 +9,10 @@
 
 This project is an implementation of the classic board game Othello (also known as Reversi) with an AI player. Othello is a two-player strategy game where the players take turns placing their colored discs on an 8x8 board with the goal of having the majority of discs of their color when the game ends.
 
+[JavaDocs](https://semomoh.github.io/Othello-Game-with-AI-player/com.cse.ai.othellogame/module-summary.html) <br>
+[Game Demo](https://www.youtube.com/watch?v=IXwt6i9gb7w&lc=Ugxq-iJzZZxt094c0q54AaABAg) <br>
+[Download Game](https://drive.google.com/drive/u/1/folders/1cmy4UNAc_ssc8r2DEd2ZSSEjbg6zXx_c) <br>
+
 ## Features
 
 - Play against the computer AI.
