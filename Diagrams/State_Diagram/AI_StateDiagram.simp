@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<sim-project version="14.30" multi-file="no" uid="simpea00fd46db374be68dbeaabc9bd0f773" creation-date="05/17/2024 12:01:00">
+  <meta>
+    <name>AI_StateDiagram</name>
+    <authors>Mahmoud Abdelraouf Mahmoud</authors>
+    <description />
+  </meta>
+  <counters models="1">
+    <entity-names>
+      <counter>
+        <item-type type-id="initial-state" type="Initial State" />
+        <value>1</value>
+      </counter>
+      <counter>
+        <item-type type-id="final-state" type="Final State" />
+        <value>1</value>
+      </counter>
+      <counter>
+        <item-type type-id="state" type="State" />
+        <value>7</value>
+      </counter>
+    </entity-names>
+    <entity-ids>
+      <counter>
+        <item-type type-id="initial-state" type="Initial State" />
+        <value>2</value>
+      </counter>
+      <counter>
+        <item-type type-id="final-state" type="Final State" />
+        <value>2</value>
+      </counter>
+      <counter>
+        <item-type type-id="state" type="State" />
+        <value>8</value>
+      </counter>
+      <counter>
+        <item-type type-id="universal-connector" type="Universal Connector" />
+        <value>14</value>
+      </counter>
+      <counter>
+        <item-type type-id="general-transition" type="Transition" />
+        <value>30</value>
+      </counter>
+      <counter>
+        <item-type type-id="trigger" type="Trigger" />
+        <value>26</value>
+      </counter>
+    </entity-ids>
+    <diagrams>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlStateMachineDiagram</type>
+        <value>1</value>
+      </counter>
+    </diagrams>
+    <fields />
+  </counters>
+  <alias-groups />
+  <management uid="md-5c5308aedd85462da03decb7f5333323" name="" task-id-sequence="0">
+    <working-schedule uid="ws-afe7385b92ba462eaea9bf445b377874" hours="8" monday="8" tuesday="8" wednesday="8" thursday="8" friday="8" saturday="0" sunday="0" />
+    <persons>
+      <person id="">
+        <first-name>Mahmoud Abdelraouf</first-name>
+        <last-name>Mahmoud</last-name>
+        <role />
+        <e-mail />
+        <phone-number />
+        <description />
+        <color>#00000000</color>
+        <working-schedule uid="ws-3c9fb79b4dfc4a0aaad2dec453249fb5" hours="8" monday="8" tuesday="8" wednesday="8" thursday="8" friday="8" saturday="0" sunday="0" />
+      </person>
+      <person id="">
+        <first-name>Mahmoud Abdelraouf</first-name>
+        <last-name>Mahmoud</last-name>
+        <role />
+        <e-mail />
+        <phone-number />
+        <description />
+        <color>#00000000</color>
+      </person>
+    </persons>
+    <teams />
+    <sprints />
+    <projects />
+    <modules />
+    <tasks />
+    <to-dos />
+  </management>
+  <glossary id="glsr-993ca1c5948a4c938f4d2769745fd96e" name="" order-index="-1" />
+  <types default="UML">
+    <type-sets>
+      <type-set file="UmlTypes.xml" />
+    </type-sets>
+    <custom-types>
+      <parameters />
+      <types />
+    </custom-types>
+  </types>
+  <items>
+    <item id="10ef1d60957b4553a94298128a35def0" cid="ELEM020" type="trigger" name="ds" creator="" creation-date="05/17/2024 12:39:48" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="9575b3fbb2234592bae59a54e5db2020" cid="ELEM004" type="trigger" name="Start The Game" creator="" creation-date="05/17/2024 12:06:25" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="223e5484478c42b3996542c30ac597c2" cid="ELEM021" type="trigger" name="Black forfeits turn" creator="" creation-date="05/17/2024 12:39:59" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="5eda57d3ec804cba9b95443408f08677" cid="ELEM009" type="trigger" name="White make a move" creator="" creation-date="05/17/2024 12:10:48" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="1f74f06601ad4f86a56a492ae56e3586" cid="ELEM007" type="trigger" name="Black make a move" creator="" creation-date="05/17/2024 12:09:09" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="6ed64cb2fe19442dbc1666f475e501b0" cid="ELEM017" type="trigger" name="White makes an invalid move" creator="" creation-date="05/17/2024 12:16:21" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="11b58cbdeac84782b11f1bc6939503cf" cid="ELEM019" type="trigger" name="White makes a valid move" creator="" creation-date="05/17/2024 12:16:47" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="5b84dd450c07476cb0bac389298b9167" cid="ELEM022" type="trigger" name="Black makes a move" creator="" creation-date="05/17/2024 14:06:14" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="54a98cabb36e45c7ac7ce700b1d30fa2" cid="ELEM025" type="trigger" name="Game ends" creator="" creation-date="05/17/2024 14:10:34" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="7d3d430fbccc4f7eb7ec208edce3b7ee" cid="ELEM012" type="trigger" creator="" creation-date="05/17/2024 12:13:10" visibility="undefined">
+      <trigger />
+    </item>
+    <item id="0dee7897540e4c118f1d2e0b2cf724dc" cid="ELEM015" type="trigger" name="Black make another move" creator="" creation-date="05/17/2024 12:15:04" visibility="undefined">
+      <trigger />
+    </item>
+  </items>
+  <models>
+    <model id="p96812aaa93224ca89da27356cfcc2da5_662993289" name="Model1" namespace="" order-index="1">
+      <meta>
+        <authors>
+          <author> </author>
+        </authors>
+        <description />
+        <creation-date>05/17/2024 12:01:14</creation-date>
+        <change-date>01/01/0001 00:00:00</change-date>
+        <revision-count>0</revision-count>
+        <version />
+      </meta>
+      <abstract-items />
+      <sub-models />
+      <diagram type="uml-statechart" id="p80a1859cfc544131b81fa69878544623_167407271" name="StateMachineDiagram1" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-88,-293" zoom="0.7">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>05/17/2024 12:01:14</creation-date>
+          <change-date>05/17/2024 14:59:00</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="60d2f25ff0264e0094720199137eb85b" cid="ST002" type="state" name="BlackMove" creator="" creation-date="05/17/2024 12:02:56" visibility="undefined">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+          <item id="c1519ba290fa4ca69d0d81c88fca28fe" cid="ELEM018" type="general-transition" creator="" creation-date="05/17/2024 12:16:36" from="7f6eefd417814e98a4b44571ef250425" to="4bd5ae7fcd084643acff2504b4dd7d9c" visibility="package">
+            <transition kind="internal">
+              <trigger ref="11b58cbdeac84782b11f1bc6939503cf" />
+            </transition>
+          </item>
+          <item id="c1ac1474ae8c4f60a5cb3416478ecc6a" cid="ELEM014" type="general-transition" creator="" creation-date="05/17/2024 12:14:36" from="4bd5ae7fcd084643acff2504b4dd7d9c" to="60d2f25ff0264e0094720199137eb85b" visibility="package">
+            <transition behaviorExpression="White makes a move" kind="internal">
+              <trigger ref="0dee7897540e4c118f1d2e0b2cf724dc" />
+            </transition>
+          </item>
+          <item id="3e3ff1f8cd6a49ce90d540abd4f87527" cid="ELEM029" type="general-transition" creator="" creation-date="05/17/2024 14:55:04" from="0ab4d8de0e3444c19627bbcd7e88e6fb" to="179bf4edbdef4592ae5ef3c8cfa1b023" visibility="package">
+            <transition kind="internal" />
+          </item>
+          <item id="4bd5ae7fcd084643acff2504b4dd7d9c" cid="ST003" type="state" name="WhiteMove" creator="" creation-date="05/17/2024 12:04:52" visibility="undefined">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+          <item id="ff9df140bb674e85baf7832ee45616fd" cid="ELEM023" type="general-transition" creator="" creation-date="05/17/2024 14:05:44" from="179bf4edbdef4592ae5ef3c8cfa1b023" to="60d2f25ff0264e0094720199137eb85b" visibility="package">
+            <transition kind="internal">
+              <trigger ref="5b84dd450c07476cb0bac389298b9167" />
+            </transition>
+          </item>
+          <item id="921820deac384307b06039251a0045c7" cid="ELEM008" type="general-transition" creator="" creation-date="05/17/2024 12:10:17" from="60d2f25ff0264e0094720199137eb85b" to="4bd5ae7fcd084643acff2504b4dd7d9c" visibility="package">
+            <transition behaviorExpression="Black forfeits turn" kind="internal">
+              <trigger ref="5eda57d3ec804cba9b95443408f08677" />
+            </transition>
+          </item>
+          <item id="ffb03dc61d174522971b55431add628b" cid="ELEM016" type="general-transition" creator="" creation-date="05/17/2024 12:16:11" from="60d2f25ff0264e0094720199137eb85b" to="7f6eefd417814e98a4b44571ef250425" visibility="package">
+            <transition kind="internal">
+              <trigger ref="6ed64cb2fe19442dbc1666f475e501b0" />
+            </transition>
+          </item>
+          <item id="263824c338d74d48b40430439e4c264e" cid="ELEM026" type="general-transition" creator="" creation-date="05/17/2024 14:10:49" from="60d2f25ff0264e0094720199137eb85b" to="3258ffc8ff5c4245bf90836a92259c9a" visibility="package">
+            <transition kind="internal">
+              <trigger ref="54a98cabb36e45c7ac7ce700b1d30fa2" />
+            </transition>
+          </item>
+          <item id="7f6eefd417814e98a4b44571ef250425" cid="ST005" type="state" name="InvalidMove" creator="" creation-date="05/17/2024 12:16:02" visibility="undefined">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+          <item id="0ab4d8de0e3444c19627bbcd7e88e6fb" cid="IS001" type="initial-state" creator="" creation-date="05/17/2024 12:01:19" visibility="undefined" />
+          <item id="06ba97cce651422d8f1b951c83731164" cid="ELEM024" type="general-transition" creator="" creation-date="05/17/2024 14:10:27" from="4bd5ae7fcd084643acff2504b4dd7d9c" to="3258ffc8ff5c4245bf90836a92259c9a" visibility="package">
+            <transition kind="internal">
+              <trigger ref="54a98cabb36e45c7ac7ce700b1d30fa2" />
+            </transition>
+          </item>
+          <item id="3258ffc8ff5c4245bf90836a92259c9a" cid="ST006" type="state" name="GameEnd" creator="" creation-date="05/17/2024 12:50:37" visibility="undefined">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+          <item id="179bf4edbdef4592ae5ef3c8cfa1b023" cid="ST001" type="state" name="EmptyBoard" creator="" creation-date="05/17/2024 12:02:29" visibility="undefined">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+          <item id="a02c568b410649899a7c889fb3b3d1a0" cid="ST007" type="state" name="State7" creator="" creation-date="05/17/2024 14:59:00">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+          <item id="e504cf56c0a84b40950bbaf39fa24086" cid="ELEM027" type="general-transition" creator="" creation-date="05/17/2024 14:54:25" from="3258ffc8ff5c4245bf90836a92259c9a" to="15ca400185d14ce68ff46a396594ca72" visibility="package">
+            <transition kind="internal" />
+          </item>
+          <item id="15ca400185d14ce68ff46a396594ca72" cid="FS001" type="final-state" creator="" creation-date="05/17/2024 12:01:53" visibility="undefined">
+            <state composite="false" orthogonal="false" simple="false" submachine-state="false">
+              <state-invariant />
+              <actions />
+            </state>
+          </item>
+        </abstract-items>
+        <layer id="eeded201ae714e87b98ef0887e002669" name="Default" visible="true" enabled="true" locked="false">
+          <item id="0ab4d8de0e3444c19627bbcd7e88e6fb" iid="2d212181bc3c45bdb9a186e8ca161d52" creation-date="05/17/2024 12:01:19" order-index="0" type="entity">
+            <layout name-position="0,10.000004" name-anchor="bottom" auto-anchor="true" label-attached="false" ax="401.5" ay="-187.5" awidth="25" aheight="25" x="401.5" y="-187.5" width="25" height="25" />
+          </item>
+          <item id="15ca400185d14ce68ff46a396594ca72" iid="c810436209754edb804f78eed3e81406" creation-date="05/17/2024 12:01:53" order-index="1" type="entity">
+            <layout name-position="0,10" name-anchor="bottom" auto-anchor="true" label-attached="false" ax="891.5" ay="-187.5" awidth="25" aheight="25" x="891.5" y="-187.5" width="25" height="25" expanded="891.5,-187.5,25,25" collapsed="0,0,0,0" />
+          </item>
+          <item id="179bf4edbdef4592ae5ef3c8cfa1b023" iid="404d8f780dae4bc2acb5ee76cde2d0c6" creation-date="05/17/2024 12:02:29" order-index="2" type="entity">
+            <layout ax="364" ay="-78.5" awidth="100" aheight="50" x="364" y="-78.5" width="100" height="50" expanded="365,-50.5,100,50" collapsed="0,0,0,0" />
+          </item>
+          <item id="60d2f25ff0264e0094720199137eb85b" iid="c35341f4d54c4ae7bc9c9d0657add919" creation-date="05/17/2024 12:02:56" order-index="3" type="entity">
+            <layout ax="365" ay="80.5" awidth="100" aheight="50" x="365" y="80.5" width="100" height="50" expanded="365,80.5,100,50" collapsed="0,0,0,0" />
+          </item>
+          <item id="4bd5ae7fcd084643acff2504b4dd7d9c" iid="74de8c22f0934eff9e5c1519bac69557" creation-date="05/17/2024 12:04:52" order-index="4" type="entity">
+            <layout ax="854" ay="78.5" awidth="100" aheight="50" x="854" y="78.5" width="100" height="50" expanded="854,78.5,100,50" collapsed="0,0,0,0" />
+          </item>
+          <item id="921820deac384307b06039251a0045c7" iid="6be71ff2a2fe426c9b4fb1f9242abad1" creation-date="05/17/2024 12:10:17" order-index="7" type="relation">
+            <layout line-style="perpendicular" start-auto-side="false" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="465" y1="105" x2="854" y2="104" start-border-pos="0.3725" end-border-pos="0.8725000023841858" start-local-pos="25.5" end-local-pos="25.5" name-position="-138,41" name-width="127">
+              <points>
+                <point x="465" y="105" />
+                <point x="854" y="104" />
+              </points>
+            </layout>
+            <relation from="60d2f25ff0264e0094720199137eb85b" from-iid="c35341f4d54c4ae7bc9c9d0657add919" to="4bd5ae7fcd084643acff2504b4dd7d9c" to-iid="74de8c22f0934eff9e5c1519bac69557" />
+          </item>
+          <item id="7f6eefd417814e98a4b44571ef250425" iid="b761a378e2344ebca5965779cfcab86d" creation-date="05/17/2024 12:16:02" order-index="9" type="entity">
+            <layout ax="608" ay="351.5" awidth="100" aheight="50" x="608" y="351.5" width="100" height="50" expanded="608,351.5,100,50" collapsed="0,0,0,0" />
+          </item>
+          <item id="ffb03dc61d174522971b55431add628b" iid="890da2ea72fd4d2cbf3a4f20685e550e" creation-date="05/17/2024 12:16:11" order-index="10" type="relation">
+            <layout line-style="perpendicular" start-auto-side="false" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="365" y1="106" x2="608" y2="376" start-border-pos="0.8725000023841858" end-border-pos="0.8774999976158142" start-local-pos="25.5" end-local-pos="24.5" name-position="25,-291" name-width="117">
+              <points>
+                <point x="365" y="106" />
+                <point x="279" y="106" />
+                <point x="277" y="369" />
+                <point x="608" y="376" />
+              </points>
+            </layout>
+            <relation from="60d2f25ff0264e0094720199137eb85b" from-iid="c35341f4d54c4ae7bc9c9d0657add919" to="7f6eefd417814e98a4b44571ef250425" to-iid="b761a378e2344ebca5965779cfcab86d" />
+          </item>
+          <item id="c1519ba290fa4ca69d0d81c88fca28fe" iid="479db81da856479b999d6bd81f2762f2" creation-date="05/17/2024 12:16:36" order-index="11" type="relation">
+            <layout line-style="perpendicular" start-auto-side="false" end-auto-side="false" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="708" y1="376" x2="954" y2="116" start-border-pos="0.3725000023841858" end-border-pos="0.4375" start-local-pos="24.5" end-local-pos="37.5" name-position="-282,36" name-width="113">
+              <points>
+                <point x="708" y="376" />
+                <point x="954" y="116" />
+              </points>
+            </layout>
+            <relation from="7f6eefd417814e98a4b44571ef250425" from-iid="b761a378e2344ebca5965779cfcab86d" to="4bd5ae7fcd084643acff2504b4dd7d9c" to-iid="74de8c22f0934eff9e5c1519bac69557" />
+          </item>
+          <item id="c1ac1474ae8c4f60a5cb3416478ecc6a" iid="756705c906f94e16862857fdb793b09a" creation-date="05/17/2024 12:14:36" order-index="8" type="relation">
+            <layout line-style="oblique" start-auto-side="false" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="904" y1="128" x2="415" y2="130" start-border-pos="0.625" end-border-pos="0.625" start-local-pos="50" end-local-pos="50" name-position="166,-126" name-width="143">
+              <points>
+                <point x="904" y="128" />
+                <point x="904" y="291" />
+                <point x="415" y="290" />
+                <point x="415" y="248" />
+                <point x="415" y="207" />
+                <point x="415" y="130" />
+              </points>
+            </layout>
+            <relation from="4bd5ae7fcd084643acff2504b4dd7d9c" from-iid="74de8c22f0934eff9e5c1519bac69557" to="60d2f25ff0264e0094720199137eb85b" to-iid="c35341f4d54c4ae7bc9c9d0657add919" />
+          </item>
+          <item id="3258ffc8ff5c4245bf90836a92259c9a" iid="b65e98478c954da8ab62c1b58044b6f5" creation-date="05/17/2024 12:50:37" order-index="12" type="entity">
+            <layout ax="854" ay="-78.5" awidth="100" aheight="50" x="854" y="-78.5" width="100" height="50" expanded="854,-78.5,100,50" collapsed="0,0,0,0" />
+          </item>
+          <item id="ff9df140bb674e85baf7832ee45616fd" iid="bc8e33d10cae4d4781fbaaa9b32a157d" creation-date="05/17/2024 14:05:44" order-index="13" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="414" y1="-28" x2="415" y2="80" start-border-pos="0.625" end-border-pos="0.125" start-local-pos="50" end-local-pos="50" name-position="48,-28.5" name-width="93">
+              <points>
+                <point x="414" y="-28" />
+                <point x="415" y="80" />
+              </points>
+            </layout>
+            <relation from="179bf4edbdef4592ae5ef3c8cfa1b023" from-iid="404d8f780dae4bc2acb5ee76cde2d0c6" to="60d2f25ff0264e0094720199137eb85b" to-iid="c35341f4d54c4ae7bc9c9d0657add919" />
+          </item>
+          <item id="06ba97cce651422d8f1b951c83731164" iid="a060c6c2453c445182eb10966ada7a8b" creation-date="05/17/2024 14:10:27" order-index="14" type="relation">
+            <layout line-style="perpendicular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="904" y1="78" x2="904" y2="-28" start-border-pos="0.125" end-border-pos="0.625" start-local-pos="50" end-local-pos="50" name-position="47,35">
+              <points>
+                <point x="904" y="78" />
+                <point x="904" y="-28" />
+              </points>
+            </layout>
+            <relation from="4bd5ae7fcd084643acff2504b4dd7d9c" from-iid="74de8c22f0934eff9e5c1519bac69557" to="3258ffc8ff5c4245bf90836a92259c9a" to-iid="b65e98478c954da8ab62c1b58044b6f5" />
+          </item>
+          <item id="263824c338d74d48b40430439e4c264e" iid="c655709ad17d4fbfa30adb6d8f1c9847" creation-date="05/17/2024 14:10:49" order-index="15" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="465" y1="80" x2="854" y2="-54" start-border-pos="0.25" end-border-pos="0.8774999976158142" start-local-pos="-0.5" end-local-pos="24.5" name-position="-97,92">
+              <points>
+                <point x="465" y="80" />
+                <point x="616" y="80.5" />
+                <point x="616" y="-54" />
+                <point x="854" y="-54" />
+              </points>
+            </layout>
+            <relation from="60d2f25ff0264e0094720199137eb85b" from-iid="c35341f4d54c4ae7bc9c9d0657add919" to="3258ffc8ff5c4245bf90836a92259c9a" to-iid="b65e98478c954da8ab62c1b58044b6f5" />
+          </item>
+          <item id="e504cf56c0a84b40950bbaf39fa24086" iid="5c8580863d9c482d9f5d6998b68bc279" creation-date="05/17/2024 14:54:25" order-index="16" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-to-fields="false" auto-path="" x1="904" y1="-78" x2="904" y2="-162" start-border-pos="0.125" end-border-pos="0.625" start-local-pos="50" name-position="0,20">
+              <points>
+                <point x="904" y="-78" />
+                <point x="904" y="-162" />
+              </points>
+            </layout>
+            <relation from="3258ffc8ff5c4245bf90836a92259c9a" from-iid="b65e98478c954da8ab62c1b58044b6f5" to="15ca400185d14ce68ff46a396594ca72" to-iid="c810436209754edb804f78eed3e81406" />
+          </item>
+          <item id="3e3ff1f8cd6a49ce90d540abd4f87527" iid="093c7f269c12430e89e0603b6202f83a" creation-date="05/17/2024 14:55:04" order-index="17" type="relation">
+            <layout line-style="oblique" lock-end-point="true" lock-to-fields="false" auto-path="" x1="414" y1="-162" x2="414" y2="-78" start-border-pos="0.625" end-border-pos="0.125" end-local-pos="50" name-position="0,20">
+              <points>
+                <point x="414" y="-162" />
+                <point x="414" y="-78" />
+              </points>
+            </layout>
+            <relation from="0ab4d8de0e3444c19627bbcd7e88e6fb" from-iid="2d212181bc3c45bdb9a186e8ca161d52" to="179bf4edbdef4592ae5ef3c8cfa1b023" to-iid="404d8f780dae4bc2acb5ee76cde2d0c6" />
+          </item>
+          <item id="a02c568b410649899a7c889fb3b3d1a0" iid="11430c69093849d1a89021a182c02c39" creation-date="05/17/2024 14:59:00" order-index="18" type="entity">
+            <layout ax="1409" ay="732" awidth="100" aheight="50" x="1409" y="732" width="100" height="50" expanded="1409,732,100,50" collapsed="0,0,0,0" />
+          </item>
+        </layer>
+      </diagram>
+    </model>
+  </models>
+</sim-project>
