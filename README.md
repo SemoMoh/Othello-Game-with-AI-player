@@ -5,24 +5,24 @@
 </div>
 
 
-## Overview
+## Overview 🎮
 
 This project is an implementation of the classic board game Othello (also known as Reversi) with an AI player. Othello is a two-player strategy game where the players take turns placing their colored discs on an 8x8 board with the goal of having the majority of discs of their color when the game ends.
 
-## Links
+## Links 🔗
 - [JavaDocs](https://semomoh.github.io/Othello-Game-with-AI-player/com.cse.ai.othellogame/module-summary.html)
 - [Game Demo](https://www.youtube.com/watch?v=IXwt6i9gb7w&lc=Ugxq-iJzZZxt094c0q54AaABAg) 
 - [Download Game](https://drive.google.com/drive/u/1/folders/1cmy4UNAc_ssc8r2DEd2ZSSEjbg6zXx_c)
     - Choose the version with jre if you don't have JDK 17 or latest versions.
 
-## Features
+## Features ⭐️
 
 - Play against the computer AI.
 - Choose difficulty level for AI.
 - Interactive interface.
 - Basic graphics for the game board.
 
-## Technologies Used
+## Technologies Used 💻
 
 - Java programming language.
 - Object-oriented design principles.
@@ -34,7 +34,7 @@ This project is an implementation of the classic board game Othello (also known 
 
 Note: If the device where the program will be setup has Windows 10 version or one of the the older Windows versions, please make sure that the display size of the device is at 100% from the settings of the device.
 
-## How to Play
+## How to Play ℹ️
 
 1. **Main Menu**: Configure players, choosing either human or AI, and set AI difficulty.
 2. **Game Screen**: 
@@ -47,7 +47,7 @@ Note: If the device where the program will be setup has Windows 10 version or on
 3. **Result Screen**: Displays the winner and provides options to restart or return to the main menu.
 
 
-## AI Player
+## AI Player 🤖
 
 - The AI player uses the Minimax algorithm with alpha-beta pruning for decision-making.
 - The difficulty level can be adjusted to control the depth of the search tree explored by the AI.
@@ -77,7 +77,7 @@ Note: If the device where the program will be setup has Windows 10 version or on
   </tbody>
 </table>
 
-## License
+## License 📝
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ---
