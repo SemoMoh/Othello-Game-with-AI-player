@@ -51,7 +51,7 @@ Note: If the device where the program will be setup has Windows 10 version or on
 
 - The AI player uses the Minimax algorithm with alpha-beta pruning for decision-making.
 - The difficulty level can be adjusted to control the depth of the search tree explored by the AI.
-- 
+  
 ### AI Player default names:
 - **Black AI Player**: Batman
 - **White AI Player**: Joker
